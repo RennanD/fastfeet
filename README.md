@@ -7,7 +7,7 @@
 </h2>
 
 <h3 align="center">
-    Your order treated with great care and affection 💌
+    Your order treated with great affection 💌
 </h3>
 
 # 💾 Backend

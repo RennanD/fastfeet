@@ -1,6 +1,6 @@
-import Sequelize, { Model } from "sequelize";
+import Sequelize, { Model } from 'sequelize';
 
-import bcrypt from "bcryptjs";
+import bcrypt from 'bcryptjs';
 
 class User extends Model {
   static init(sequelize) {
@@ -9,13 +9,14 @@ class User extends Model {
         name: Sequelize.STRING,
         email: Sequelize.STRING,
         password: Sequelize.VIRTUAL,
-        password_hash: Sequelize.STRING
+        password_hash: Sequelize.STRING,
       },
       {
-        sequelize
+        sequelize,
       }
     );
   }
+
   checkPassword(password) {
     return bcrypt.compare(password, this.password_hash);
   }

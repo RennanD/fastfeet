@@ -18,20 +18,20 @@ git clone https://github.com/RennanD/fastfeet.git
 
 # ❗️ Requisites
 
-To runed this all project, you need have been installed:
+To runed this all project, you need have be installed:
 
 - [Node.js](https://nodejs.org/en/)
 - [Yarn](https://legacy.yarnpkg.com/en/) (Optional)
 
 # 💾 Backend
 
-- Restful API created with Node.js using [express](https://expressjs.com/pt-br/).
+- API created with Node.js using [express](https://expressjs.com/pt-br/).
 
 - For database use PostgresSQL with [sequelize](https://sequelize.org/v5/)
 
 ## ⚡️ Start
 
-- For use this api you need have been installed PostgresSQL, i use [Docker](https://www.docker.com/), but this is optional
+- For use this api you need have be installed PostgresSQL, I'm use [Docker](https://www.docker.com/), but this is optional
 
 ### Runing Postgres using docker: 🐋
 

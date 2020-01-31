@@ -20,8 +20,8 @@ git clone https://github.com/RennanD/fastfeet.git
 
 To runed this all project, you need have been installed:
 
-[Node.js](https://nodejs.org/en/)
-[Yarn](https://legacy.yarnpkg.com/en/) (Optional)
+- [Node.js](https://nodejs.org/en/)
+- [Yarn](https://legacy.yarnpkg.com/en/) (Optional)
 
 # 💾 Backend
 

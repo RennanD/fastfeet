@@ -13,13 +13,14 @@ class RecipientController {
       region: Yup.string().required(),
     });
 
-    if (!(await schema.isValid(req.body))) {
-      return res.status(400).json({ error: 'Validation fails' });
+    try {
+      await schema.validate(req.body);
+      const recipient = await Recipient.create(req.body);
+
+      return res.json(recipient);
+    } catch (err) {
+      return res.status(400).json({ error: err.messege });
     }
-
-    const recipient = await Recipient.create(req.body);
-
-    return res.json(recipient);
   }
 }
 

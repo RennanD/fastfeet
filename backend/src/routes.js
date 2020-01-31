@@ -1,17 +1,19 @@
-import { Router } from "express";
+import { Router } from 'express';
 
-import SessionController from "./app/controllers/SessionController";
+import SessionController from './app/controllers/SessionController';
 
-import authMiddleware from "./app/middlewares/auth";
+import authMiddleware from './app/middlewares/auth';
+import RecipientController from './app/controllers/RecipientController';
+import ZipcodeController from './app/controllers/ZipcodeController';
 
 const routes = new Router();
 
-routes.post("/sessions", SessionController.store);
+routes.post('/zipcode', ZipcodeController.show);
+
+routes.post('/sessions', SessionController.store);
 
 routes.use(authMiddleware);
 
-routes.get("/", (req, res) => {
-  return res.json({ msg: "Hello world" });
-});
+routes.post('/recipients', RecipientController.store);
 
 export default routes;

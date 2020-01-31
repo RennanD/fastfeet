@@ -8,6 +8,7 @@
     "dev:debug": "nodemon --inspect src/server.js"
   },
   "dependencies": {
+    "axios": "^0.19.2",
     "bcryptjs": "^2.4.3",
     "express": "^4.17.1",
     "jsonwebtoken": "^8.5.1",

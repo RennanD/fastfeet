@@ -25,7 +25,7 @@ To runed this all project, you need have be installed:
 
 # 💾 Backend
 
-- API created with Node.js using [express](https://expressjs.com/pt-br/).
+- API RESTFUL created with Node.js using [express](https://expressjs.com/pt-br/).
 
 - For database use PostgresSQL with [sequelize](https://sequelize.org/v5/)
 
@@ -33,7 +33,7 @@ To runed this all project, you need have be installed:
 
 - For use this api you need have be installed PostgresSQL, I'm use [Docker](https://www.docker.com/), but this is optional
 
-### Runing Postgres using docker: 🐋
+### Runing Postgres using DOCKER: 🐋
 
 ```
 docker run --name some-postgres -e POSTGRES_PASSWORD=mysecretpassword -d postgres

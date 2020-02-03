@@ -40,7 +40,7 @@ To runed this all project, you need have be the packages installed:
 docker run --name some-postgres -e POSTGRES_PASSWORD=mysecretpassword -d postgres
 ```
 
-#### If you already have a container with DOCKER, run:
+#### If you already have a container with Postgres, run:
 
 ```
 docker start "CONTAINER DOCKER ID"

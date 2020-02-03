@@ -1,8 +1,9 @@
-import express from "express";
+import express from 'express';
+import { resolve } from 'path';
 
-import routes from "./routes";
+import routes from './routes';
 
-import "./database";
+import './database';
 
 class App {
   constructor() {
@@ -10,8 +11,13 @@ class App {
     this.middlewares();
     this.routes();
   }
+
   middlewares() {
     this.server.use(express.json());
+    this.server.use(
+      '/files',
+      express.static(resolve(__dirname, '..', 'tmp', 'uploads'))
+    );
   }
 
   routes() {

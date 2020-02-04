@@ -24,6 +24,9 @@ routes.use(authMiddleware);
 
 routes.post('/recipients', RecipientController.store);
 
+routes.get('/deliverymen', DeliverymanController.index);
 routes.post('/deliverymen', DeliverymanController.store);
+routes.put('/deliverymen/:deliverymanId', DeliverymanController.update);
+routes.delete('/deliverymen/:deliverymanId', DeliverymanController.delete);
 
 export default routes;

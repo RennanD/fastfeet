@@ -10,6 +10,12 @@ class Order extends Model {
         end_date: Sequelize.DATE,
         created_at: Sequelize.DATE,
         updated_at: Sequelize.DATE,
+        cancelable: {
+          type: Sequelize.VIRTUAL,
+          get() {
+            return !this.start_date;
+          },
+        },
       },
       {
         sequelize,

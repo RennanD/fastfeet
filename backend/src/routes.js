@@ -11,6 +11,7 @@ import DeliverymanController from './app/controllers/DeliverymanController';
 import Ordercontroller from './app/controllers/Ordercontroller';
 
 import multerConfig from './config/multer';
+import DashboardController from './app/controllers/DashboardController';
 
 const routes = new Router();
 const upload = multer(multerConfig);
@@ -23,6 +24,13 @@ routes.post('/sessions', SessionController.store);
 
 // Upload files
 routes.post('/files', upload.single('file'), FileController.store);
+
+// Dashboard route for deliverymen
+
+routes.get('/deliverymen/:id/orders', DashboardController.index);
+routes.get('/deliverymen/:id/orders/:orderId', DashboardController.show);
+
+// Deliveries from deliverymen
 
 // Authenticate routes
 routes.use(authMiddleware);

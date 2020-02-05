@@ -13,7 +13,7 @@
 # Cloning this project
 
 ```
-git clone https://github.com/RennanD/fastfeet.git
+$ git clone https://github.com/RennanD/fastfeet.git
 ```
 
 # ❗️ Requisites
@@ -37,13 +37,13 @@ To runed this all project, you need have be the packages installed:
 ### Runing Postgres using DOCKER: 🐋
 
 ```
-docker run --name some-postgres -e POSTGRES_PASSWORD=mysecretpassword -d postgres
+$ docker run --name some-postgres -e POSTGRES_PASSWORD=mysecretpassword -d postgres
 ```
 
 #### If you already have a container with Postgres, run:
 
 ```
-docker start "CONTAINER DOCKER ID"
+$ docker start "CONTAINER DOCKER ID"
 ```
 
 - For background jobs I'm using Redis with DOCKER.
@@ -52,34 +52,34 @@ docker start "CONTAINER DOCKER ID"
 ### Runing Redis using DOCKER: 🐋
 
 ```
-docker run --name some-redis -d redis
+$ docker run --name some-redis -d redis
 ```
 
 #### If you already have a container with Rerdis, run:
 
 ```
-docker start "CONTAINER DOCKER ID"
+$ docker start "CONTAINER DOCKER ID"
 ```
 
 ### Now in your terminal, run:
 
 ```
-cd backend
+$ cd backend
 
 # install packeges
-yarn
+$ yarn
 
 # Create the FastFeet database
-yarn sequelize db:create
+$ yarn sequelize db:create
 
 # Set migrations in database
-yarn sequelize db:migrate
+$ yarn sequelize db:migrate
 
 # Set seeds in database
-yarn sequelize db:seed:all
+$ yarn sequelize db:seed:all
 
 # Run aplication
-yarn dev
+$ yarn dev
 ```
 
 #### To debugin, run:

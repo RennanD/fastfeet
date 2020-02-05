@@ -8,6 +8,7 @@ import RecipientController from './app/controllers/RecipientController';
 import ZipcodeController from './app/controllers/ZipcodeController';
 import FileController from './app/controllers/FileController';
 import DeliverymanController from './app/controllers/DeliverymanController';
+import Ordercontroller from './app/controllers/Ordercontroller';
 
 import multerConfig from './config/multer';
 
@@ -28,5 +29,7 @@ routes.get('/deliverymen', DeliverymanController.index);
 routes.post('/deliverymen', DeliverymanController.store);
 routes.put('/deliverymen/:deliverymanId', DeliverymanController.update);
 routes.delete('/deliverymen/:deliverymanId', DeliverymanController.delete);
+
+routes.post('/deliverymen/:id/order', Ordercontroller.store);
 
 export default routes;

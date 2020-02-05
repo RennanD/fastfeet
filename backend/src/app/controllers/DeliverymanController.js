@@ -41,7 +41,15 @@ class DeliverymanController {
           .json({ error: 'Delivery man already registered.' });
       }
 
-      const deliveryman = await Deliveryman.create(req.body);
+      const deliveryman = await Deliveryman.create(req.body, {
+        include: [
+          {
+            model: File,
+            as: 'avatart',
+            attributes: ['url', 'path'],
+          },
+        ],
+      });
 
       return res.json(deliveryman);
     } catch (err) {

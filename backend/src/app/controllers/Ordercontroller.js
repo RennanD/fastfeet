@@ -59,6 +59,7 @@ class OrderController {
       await Queue.add(NewOrderMail.key, {
         deliveryman,
         recipient,
+        order,
       });
 
       return res.json(order);

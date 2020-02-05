@@ -46,11 +46,39 @@ docker run --name some-postgres -e POSTGRES_PASSWORD=mysecretpassword -d postgre
 docker start "CONTAINER DOCKER ID"
 ```
 
+- For background jobs I'm using Redis with DOCKER.
+- If you don't want installing DOCKER, use convencional [Redis](https://redis.io/) installation.
+
+### Runing Redis using DOCKER: 🐋
+
+```
+docker run --name some-redis -d redis
+```
+
+#### If you already have a container with Rerdis, run:
+
+```
+docker start "CONTAINER DOCKER ID"
+```
+
 ### Now in your terminal, run:
 
 ```
 cd backend
+
+# install packeges
 yarn
+
+# Create the FastFeet database
+yarn sequelize db:create
+
+# Set migrations in database
+yarn sequelize db:migrate
+
+# Set seeds in database
+yarn sequelize db:seed:all
+
+# Run aplication
 yarn dev
 ```
 

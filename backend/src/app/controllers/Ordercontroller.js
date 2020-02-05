@@ -4,6 +4,8 @@ import Order from '../models/Order';
 import Deliveryman from '../models/Deliveryman';
 import Recipient from '../models/Recipient';
 
+import Mail from '../../lib/Mail';
+
 class OrderController {
   async store(req, res) {
     const { id } = req.params;
@@ -20,8 +22,12 @@ class OrderController {
         product,
       });
 
-      const deliveryman = await Deliveryman.findByPk(id);
-      const recipient = await Recipient.findByPk(recipient_id);
+      const deliveryman = await Deliveryman.findByPk(id, {
+        attributes: ['name', 'email'],
+      });
+      const recipient = await Recipient.findByPk(recipient_id, {
+        attributes: ['name', 'street', 'number', 'city', 'region'],
+      });
 
       if (!deliveryman) {
         return res.status(401).json({ error: 'Deliveryman cannot exists' });
@@ -46,6 +52,17 @@ class OrderController {
         deliveryman_id: id,
         recipient_id,
         product,
+      });
+
+      await Mail.sendMail({
+        to: `${deliveryman.name} <${deliveryman.email}>`,
+        subject: 'New Order for you!',
+        template: 'newOrder',
+        context: {
+          deliveryman: deliveryman.name,
+          recipient: recipient.name,
+          address: `${recipient.street}, N° ${recipient.number}, ${recipient.city} - ${recipient.region}`,
+        },
       });
 
       return res.json(order);

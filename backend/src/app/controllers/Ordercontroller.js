@@ -152,7 +152,7 @@ class OrderController {
   async update(req, res) {
     const { id } = req.params;
 
-    const { recipient_id } = req.body;
+    const { recipient_id, product } = req.body;
 
     const schema = Yup.object().shape({
       product: Yup.string(),
@@ -174,12 +174,25 @@ class OrderController {
         return res.status(401).json({ error: 'Recipient cannot exists.' });
       }
 
+      if (order.start_date) {
+        if (order.product !== product) {
+          return res.status(401).json({
+            error:
+              'Products that have already left for delivery cannot be changed',
+          });
+        }
+      }
+
       await order.update(req.body);
 
       return res.json(order);
     } catch (err) {
       return res.status(400).json({ error: err.messege });
     }
+  }
+
+  async delete(req, res) {
+    return res.json();
   }
 }
 export default new OrderController();

@@ -47,7 +47,7 @@ $ docker start "CONTAINER DOCKER ID"
 ```
 
 - For background jobs I'm using Redis with DOCKER.
-- If you don't want installing DOCKER, use convencional [Redis](https://redis.io/) installation.
+- If you don't want installing DOCKER, use convencional installation of [Redis](https://redis.io/) .
 
 ### Runing Redis using DOCKER: 🐋
 
@@ -66,19 +66,14 @@ $ docker start "CONTAINER DOCKER ID"
 ```
 $ cd backend
 
-# install packeges
 $ yarn
 
-# Create the FastFeet database
 $ yarn sequelize db:create
 
-# Set migrations in database
 $ yarn sequelize db:migrate
 
-# Set seeds in database
 $ yarn sequelize db:seed:all
 
-# Run aplication
 $ yarn dev
 ```
 

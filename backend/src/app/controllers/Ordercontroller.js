@@ -192,7 +192,25 @@ class OrderController {
   }
 
   async delete(req, res) {
-    return res.json();
+    const { id } = req.params;
+
+    const order = await Order.findByPk(id);
+
+    if (!order) {
+      return res.status(401).json({ error: 'Order cannot exists.' });
+    }
+
+    if (!order.cancelable) {
+      return res.status(401).json({
+        error: 'Orders that have already left for delivery cannot be canceled',
+      });
+    }
+
+    order.canceled_at = new Date();
+
+    await order.save();
+
+    return res.json({ msg: 'Canceled Successful' });
   }
 }
 export default new OrderController();

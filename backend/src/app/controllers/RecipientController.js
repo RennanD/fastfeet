@@ -11,6 +11,28 @@ class RecipientController {
     return res.json(recipients);
   }
 
+  async show(req, res) {
+    const { id } = req.params;
+
+    const recipient = await Recipient.findByPk(id, {
+      attributes: [
+        'id',
+        'name',
+        'street',
+        'number',
+        'city',
+        'region',
+        'zipcode',
+      ],
+    });
+
+    if (!recipient) {
+      return res.status(400).json({ error: 'Recipient cannot exists.' });
+    }
+
+    return res.json(recipient);
+  }
+
   async store(req, res) {
     const schema = Yup.object().shape({
       name: Yup.string().required(),

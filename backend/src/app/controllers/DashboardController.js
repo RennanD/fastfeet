@@ -1,6 +1,7 @@
 import Order from '../models/Order';
 import Deliveryman from '../models/Deliveryman';
 import Recipient from '../models/Recipient';
+import File from '../models/File';
 
 class DashboardController {
   async index(req, res) {
@@ -60,6 +61,11 @@ class DashboardController {
             'region',
             'zipcode',
           ],
+        },
+        {
+          model: File,
+          as: 'signature',
+          attributes: ['url', 'path'],
         },
       ],
     });

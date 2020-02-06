@@ -109,7 +109,12 @@ class DeliveriesController {
         .json({ error: 'The order has already left for delivery' });
     }
 
-    const delivery = await Order.findByPk(orderId);
+    const delivery = await Order.findOne({
+      where: {
+        id: orderId,
+        deliveryman_id: id,
+      },
+    });
 
     // Check if order exists.
     if (!delivery) {

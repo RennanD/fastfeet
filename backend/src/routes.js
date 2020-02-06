@@ -13,6 +13,7 @@ import DashboardController from './app/controllers/DashboardController';
 
 import multerConfig from './config/multer';
 import DeliveryiesController from './app/controllers/DeliveryiesController';
+import FinishDeliveryController from './app/controllers/FinishDeliveryController';
 
 const routes = new Router();
 const upload = multer(multerConfig);
@@ -26,16 +27,21 @@ routes.post('/sessions', SessionController.store);
 // Upload files
 routes.post('/files', upload.single('file'), FileController.store);
 
+// Dashboard route for deliverymen
+routes.get('/deliverymen/:id/orders', DashboardController.index);
+routes.get('/deliverymen/:id/orders/:orderId', DashboardController.show);
+
 // Deliveries from deliverymen
 routes.get('/deliverymen/:id/deliveries', DeliveryiesController.index);
 routes.put(
   '/deliverymen/:id/deliveries/:orderId',
   DeliveryiesController.update
 );
-
-// Dashboard route for deliverymen
-routes.get('/deliverymen/:id/orders', DashboardController.index);
-routes.get('/deliverymen/:id/orders/:orderId', DashboardController.show);
+// Finish delivery
+routes.put(
+  '/deliverymen/:id/deliveries/:orderId/finish',
+  FinishDeliveryController.update
+);
 
 // Authenticate routes
 routes.use(authMiddleware);

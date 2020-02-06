@@ -14,6 +14,7 @@ import DashboardController from './app/controllers/DashboardController';
 import multerConfig from './config/multer';
 import DeliveryiesController from './app/controllers/DeliveryiesController';
 import FinishDeliveryController from './app/controllers/FinishDeliveryController';
+import DeliveyProblemsController from './app/controllers/DeliveyProblemsController';
 
 const routes = new Router();
 const upload = multer(multerConfig);
@@ -42,6 +43,13 @@ routes.put(
   '/deliverymen/:id/deliveries/:orderId/finish',
   FinishDeliveryController.update
 );
+
+// Problems routes
+routes.get('/delivery/:id/problems', DeliveyProblemsController.show);
+routes.post('/delivery/:id/problems', DeliveyProblemsController.store);
+
+routes.get('/problems', DeliveyProblemsController.index);
+routes.delete('/problems/:id/cancel', DeliveyProblemsController.delete);
 
 // Authenticate routes
 routes.use(authMiddleware);

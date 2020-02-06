@@ -202,15 +202,13 @@ class OrderController {
 
     if (!order.cancelable) {
       return res.status(401).json({
-        error: 'Orders that have already left for delivery cannot be canceled',
+        error: 'Orders that have already left for delivery cannot be deleted',
       });
     }
 
-    order.canceled_at = new Date();
+    await order.destroy();
 
-    await order.save();
-
-    return res.json({ msg: 'Canceled Successful' });
+    return res.json({ msg: 'Deleted Successful' });
   }
 }
 export default new OrderController();

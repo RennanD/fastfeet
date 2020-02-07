@@ -4,3 +4,4 @@ node_modules
 tmp/uploads/*
 !tmp/uploads/.gitkeep
 dump.rdb
+.env

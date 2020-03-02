@@ -7,7 +7,7 @@ class DashboardController {
   async index(req, res) {
     const { id } = req.params;
 
-    const deliveryman = await Deliveryman.finddByPk(id);
+    const deliveryman = await Deliveryman.findByPk(id);
 
     if (!deliveryman) {
       return res.status(400).json({ error: 'Deliveryman not found.' });

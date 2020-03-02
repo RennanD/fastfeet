@@ -2,7 +2,7 @@ const { addBabelPlugin, override } = require('customize-cra');
 
 module.exports = override(
   addBabelPlugin([
-    'babel-pluginroot-import',
+    'babel-plugin-root-import',
     {
       rootPathSuffix: 'src',
     },

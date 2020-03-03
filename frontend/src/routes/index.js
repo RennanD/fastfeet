@@ -4,7 +4,9 @@ import { Switch } from 'react-router-dom';
 import Route from './Route';
 
 import SingIn from '~/pages/SingIn';
+
 import Orders from '~/pages/Orders';
+import Deliverymen from '~/pages/Deliverymen';
 
 export default function Routes() {
   return (
@@ -12,6 +14,7 @@ export default function Routes() {
       <Route path="/" exact component={SingIn} />
 
       <Route path="/orders" component={Orders} isPrivate />
+      <Route path="/deliverymen" component={Deliverymen} isPrivate />
     </Switch>
   );
 }

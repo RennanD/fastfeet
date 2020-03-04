@@ -1,12 +1,20 @@
 import * as Yup from 'yup';
+import { Op } from 'sequelize';
 
 import Deliveryman from '../models/Deliveryman';
 import User from '../models/User';
 import File from '../models/File';
 
 class DeliverymanController {
-  async index({ res }) {
+  async index(req, res) {
+    const { name, page = 1 } = req.query;
+
     const deliverymen = await Deliveryman.findAll({
+      where: {
+        name: {
+          [Op.iLike]: `%${name}%`,
+        },
+      },
       include: [
         {
           model: File,
@@ -15,7 +23,9 @@ class DeliverymanController {
         },
       ],
       attributes: ['id', 'name', 'email'],
-      order: ['id'],
+      order: [['created_at', 'DESC']],
+      limit: 20,
+      offset: (page - 1) * 20,
     });
 
     return res.json(deliverymen);

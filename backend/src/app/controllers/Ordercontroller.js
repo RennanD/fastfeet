@@ -13,7 +13,7 @@ import Queue from '../../lib/Queue';
 
 class OrderController {
   async index(req, res) {
-    const { product } = req.query;
+    const { product, page = 1 } = req.query;
 
     const findOrders = await Order.findAll({
       where: {
@@ -48,7 +48,9 @@ class OrderController {
           attributes: ['id', 'name', 'city', 'region'],
         },
       ],
-      order: ['created_at'],
+      order: [['created_at', 'DESC']],
+      limit: 20,
+      offset: (page - 1) * 20,
     });
 
     const orders = findOrders.map(order => {

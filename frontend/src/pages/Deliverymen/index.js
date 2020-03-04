@@ -1,10 +1,28 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
-import { MdAdd, MdSearch, MdMoreHoriz } from 'react-icons/md';
+import { MdAdd, MdSearch } from 'react-icons/md';
 
 import { Container } from './styles';
 
+import api from '~/services/api';
+import Menu from '~/components/Menu';
+
 export default function Deliverymen() {
+  const [deliverymen, setDeliverymen] = useState([]);
+  const [name, setName] = useState('');
+
+  useEffect(() => {
+    async function loadDeliverymen() {
+      const response = await api.get('/deliverymen', {
+        params: {
+          name,
+        },
+      });
+      setDeliverymen(response.data);
+    }
+    loadDeliverymen();
+  }, [name]);
+
   return (
     <Container>
       <header>
@@ -13,8 +31,13 @@ export default function Deliverymen() {
         <div>
           <div>
             <MdSearch size={16} color="#999" />
-            <input type="text" placeholder="Buscar por encomendas" />
+            <input
+              type="text"
+              placeholder="Buscar por encomendas"
+              onChange={e => setName(e.target.value)}
+            />
           </div>
+
           <button type="button">
             <MdAdd size={22} color="#fff" /> CADASTRAR
           </button>
@@ -46,28 +69,28 @@ export default function Deliverymen() {
         </thead>
 
         <tbody>
-          <tr>
-            <td>
-              <span>#01</span>
-            </td>
-            <td>
-              <span>Des</span>
-            </td>
-            <td>
-              <span>John Test</span>
-            </td>
-            <td>
-              <span>Teresina</span>
-            </td>
+          {deliverymen.map(deliveryman => (
+            <tr key={deliveryman.id}>
+              <td>
+                <span>#{deliveryman.id}</span>
+              </td>
+              <td>
+                <img src={deliveryman.avatar.url} alt="" />
+              </td>
+              <td>
+                <span>{deliveryman.name}</span>
+              </td>
+              <td>
+                <span>{deliveryman.email}</span>
+              </td>
 
-            <td>
-              <div>
-                <button type="button">
-                  <MdMoreHoriz color="#999" size={20} />{' '}
-                </button>
-              </div>
-            </td>
-          </tr>
+              <td>
+                <div>
+                  <Menu visibility={false} />
+                </div>
+              </td>
+            </tr>
+          ))}
         </tbody>
       </table>
     </Container>

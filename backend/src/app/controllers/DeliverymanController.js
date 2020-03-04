@@ -33,7 +33,7 @@ class DeliverymanController {
     try {
       await schema.validate(req.body);
 
-      const userExists = User.findOne({ where: { email } });
+      const userExists = await User.findOne({ where: { email } });
 
       if (!userExists) {
         return res

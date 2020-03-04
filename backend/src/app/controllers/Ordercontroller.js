@@ -1,5 +1,7 @@
 import * as Yup from 'yup';
 
+import { Op } from 'sequelize';
+
 import Order from '../models/Order';
 import Deliveryman from '../models/Deliveryman';
 import Recipient from '../models/Recipient';
@@ -11,8 +13,14 @@ import Queue from '../../lib/Queue';
 
 class OrderController {
   async index(req, res) {
-    const orders = await Order.findAll({
-      where: { canceled_at: null },
+    const { product } = req.query;
+
+    const findOrders = await Order.findAll({
+      where: {
+        product: {
+          [Op.iLike]: `%${product}`,
+        },
+      },
       attributes: [
         'id',
         'product',
@@ -37,9 +45,55 @@ class OrderController {
         {
           model: Recipient,
           as: 'recipient',
-          attributes: ['id', 'name', 'street', 'number'],
+          attributes: ['id', 'name', 'city', 'region'],
         },
       ],
+      order: ['created_at'],
+    });
+
+    const orders = findOrders.map(order => {
+      if (order.canceled_at) {
+        return {
+          order,
+          status: {
+            title: 'CANCELADA',
+            primary: '#DE3B3B',
+            secundary: '#FAB0B0',
+          },
+        };
+      }
+
+      if (!order.canceled_at) {
+        if (order.start_date && !order.end_date) {
+          return {
+            order,
+            status: {
+              title: 'RETIRADA',
+              primary: '#4D85EE',
+              secundary: '#BAD2FF',
+            },
+          };
+        }
+        if (order.start_date && order.end_date) {
+          return {
+            order,
+            status: {
+              title: 'ENTREGUE',
+              primary: '#2CA42B',
+              secundary: '#DFF0DF',
+            },
+          };
+        }
+      }
+
+      return {
+        order,
+        status: {
+          title: 'PENDENTE',
+          primary: '#C1BC35',
+          secundary: '#F0F0DF',
+        },
+      };
     });
 
     return res.json(orders);
@@ -49,7 +103,9 @@ class OrderController {
     const { id } = req.params;
 
     const order = await Order.findByPk(id, {
-      where: { canceled_at: null },
+      where: {
+        canceled_at: null,
+      },
       attributes: ['id', 'product', 'canceled_at', 'start_date', 'end_date'],
       include: [
         {
@@ -118,17 +174,6 @@ class OrderController {
 
       if (!recipient) {
         return res.status(401).json({ error: 'Recipient cannot exists' });
-      }
-
-      const orderExists = await Order.findOne({
-        where: {
-          recipient_id,
-          deliveryman_id: deliverymanId,
-        },
-      });
-
-      if (orderExists) {
-        return res.status(401).json({ error: 'Order already exists.' });
       }
 
       const order = await Order.create({

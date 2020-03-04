@@ -72,6 +72,7 @@ export const Wrapper = styled.div`
       color: #444;
       text-align: left;
       padding: 0 20px;
+      font-size: 16px;
 
       > div {
         display: flex;
@@ -85,7 +86,7 @@ export const Wrapper = styled.div`
         padding: 12px;
         vertical-align: middle;
         background: #fff;
-        padding: 16px 20px;
+        padding: 13px 20px;
 
         &:first-child {
           border-top-left-radius: 4px;
@@ -100,7 +101,7 @@ export const Wrapper = styled.div`
           height: 35px;
           width: 35px;
           border-radius: 50%;
-          margin-right: 5px;
+          margin-right: 10px;
         }
 
         > main {

@@ -18,6 +18,8 @@ export function* singIn({ payload }) {
 
     const { user, token } = response.data;
 
+    api.defaults.headers.Authorization = `Bearer ${token}`;
+
     yield put(singInSuccess(user, token));
     history.push('/orders');
   } catch ({ response }) {
@@ -26,4 +28,17 @@ export function* singIn({ payload }) {
   }
 }
 
-export default all([takeLatest('@auth/SING_IN_REQUEST', singIn)]);
+export function setToken({ payload }) {
+  if (!payload) {
+    return;
+  }
+
+  const { token } = payload.auth;
+
+  api.defaults.headers.Authorization = `Bearer ${token}`;
+}
+
+export default all([
+  takeLatest('@auth/SING_IN_REQUEST', singIn),
+  takeLatest('persist/REHYDRATE', setToken),
+]);

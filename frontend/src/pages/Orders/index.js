@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
 import { MdAdd, MdSearch, MdMoreHoriz } from 'react-icons/md';
 
@@ -6,7 +6,20 @@ import { Container } from './styles';
 
 import Badge from '~/components/Badge';
 
+import api from '~/services/api';
+
 export default function Orders() {
+  const [orders, setOrders] = useState([]);
+  const [product, setProduct] = useState('');
+
+  useEffect(() => {
+    async function loadOrders() {
+      const response = await api.get(`/orders?product=${product}`);
+      setOrders(response.data);
+    }
+    loadOrders();
+  }, [product]);
+
   return (
     <Container>
       <header>
@@ -15,7 +28,11 @@ export default function Orders() {
         <div>
           <div>
             <MdSearch size={16} color="#999" />
-            <input type="text" placeholder="Buscar por encomendas" />
+            <input
+              onChange={e => setProduct(e.target.value)}
+              type="text"
+              placeholder="Buscar por encomendas"
+            />
           </div>
           <button type="button">
             <MdAdd size={22} color="#fff" /> CADASTRAR
@@ -29,6 +46,7 @@ export default function Orders() {
             <th>
               <strong>ID</strong>
             </th>
+            <th>Produto</th>
             <th>
               <strong>Detinatário</strong>
             </th>
@@ -53,99 +71,48 @@ export default function Orders() {
         </thead>
 
         <tbody>
-          <tr>
-            <td>
-              <span>#01</span>
-            </td>
-            <td>
-              <span>Destinatário teste</span>
-            </td>
-            <td>
-              <main>
-                <img
-                  src="https://avatarfiles.alphacoders.com/218/thumb-218445.jpg"
-                  alt=""
+          {orders.map(({ order, status }) => (
+            <tr key={order.id}>
+              <td>
+                <span>#{order.id}</span>
+              </td>
+              <td>
+                <span>{order.product}</span>
+              </td>
+              <td>
+                <span>{order.recipient.name}</span>
+              </td>
+              <td>
+                <main>
+                  <img
+                    src={order.deliveryman.avatar.url}
+                    alt={order.deliveryman.name}
+                  />
+                  <span>{order.deliveryman.name}</span>
+                </main>
+              </td>
+              <td>
+                <span>{order.recipient.city}</span>
+              </td>
+              <td>
+                <span>{order.recipient.region}</span>
+              </td>
+              <td>
+                <Badge
+                  status={status.title}
+                  primary={status.primary}
+                  secundary={status.secundary}
                 />
-                <span>Rennan Teste</span>
-              </main>
-            </td>
-            <td>
-              <span>Teresina</span>
-            </td>
-            <td>
-              <span>Piauí</span>
-            </td>
-            <td>
-              <Badge status="CANCELADA" primary="#DE3B3B" secundary="#FAB0B0" />
-            </td>
-            <td>
-              <div>
-                <button type="button">
-                  <MdMoreHoriz color="#999" size={20} />{' '}
-                </button>
-              </div>
-            </td>
-          </tr>
-        </tbody>
-
-        <tbody>
-          <tr>
-            <td>
-              <span>#01</span>
-            </td>
-            <td>
-              <span>Destinatário teste</span>
-            </td>
-            <td>
-              <span>John Test</span>
-            </td>
-            <td>
-              <span>Teresina</span>
-            </td>
-            <td>
-              <span>Piauí</span>
-            </td>
-            <td>
-              <Badge status="ENTREGUE" primary="#2CA42B" secundary="#DFF0DF" />
-            </td>
-            <td>
-              <div>
-                <button type="button">
-                  <MdMoreHoriz color="#999" size={20} />{' '}
-                </button>
-              </div>
-            </td>
-          </tr>
-        </tbody>
-
-        <tbody>
-          <tr>
-            <td>
-              <span>#01</span>
-            </td>
-            <td>
-              <span>Destinatário teste</span>
-            </td>
-            <td>
-              <span>John Test</span>
-            </td>
-            <td>
-              <span>Teresina</span>
-            </td>
-            <td>
-              <span>Piauí</span>
-            </td>
-            <td>
-              <Badge status="RETIRADA" primary="#4D85EE" secundary="#BAD2FF" />
-            </td>
-            <td>
-              <div>
-                <button type="button">
-                  <MdMoreHoriz color="#999" size={20} />{' '}
-                </button>
-              </div>
-            </td>
-          </tr>
+              </td>
+              <td>
+                <div>
+                  <button type="button">
+                    <MdMoreHoriz color="#999" size={20} />{' '}
+                  </button>
+                </div>
+              </td>
+            </tr>
+          ))}
         </tbody>
       </table>
     </Container>

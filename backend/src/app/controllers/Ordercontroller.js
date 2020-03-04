@@ -15,7 +15,7 @@ class OrderController {
   async index(req, res) {
     const { product, page = 1 } = req.query;
 
-    const findOrders = await Order.findAll({
+    const orders = await Order.findAll({
       where: {
         product: {
           [Op.iLike]: `%${product}%`,
@@ -51,51 +51,6 @@ class OrderController {
       order: [['created_at', 'DESC']],
       limit: 20,
       offset: (page - 1) * 20,
-    });
-
-    const orders = findOrders.map(order => {
-      if (order.canceled_at) {
-        return {
-          order,
-          status: {
-            title: 'CANCELADA',
-            primary: '#DE3B3B',
-            secundary: '#FAB0B0',
-          },
-        };
-      }
-
-      if (!order.canceled_at) {
-        if (order.start_date && !order.end_date) {
-          return {
-            order,
-            status: {
-              title: 'RETIRADA',
-              primary: '#4D85EE',
-              secundary: '#BAD2FF',
-            },
-          };
-        }
-        if (order.start_date && order.end_date) {
-          return {
-            order,
-            status: {
-              title: 'ENTREGUE',
-              primary: '#2CA42B',
-              secundary: '#DFF0DF',
-            },
-          };
-        }
-      }
-
-      return {
-        order,
-        status: {
-          title: 'PENDENTE',
-          primary: '#C1BC35',
-          secundary: '#F0F0DF',
-        },
-      };
     });
 
     return res.json(orders);

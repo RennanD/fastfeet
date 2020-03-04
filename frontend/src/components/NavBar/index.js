@@ -4,7 +4,7 @@ import { Container, Content, Nav } from './styles';
 
 import logo from '~/assets/logo.svg';
 
-export default function Header() {
+export default function NavBar() {
   return (
     <Container>
       <Content>

@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 
-import { MdAdd, MdSearch, MdMoreHoriz } from 'react-icons/md';
+import { MdAdd, MdSearch } from 'react-icons/md';
 
 import { Container } from './styles';
 
 import Badge from '~/components/Badge';
+import Menu from '~/components/Menu';
 
 import api from '~/services/api';
 
@@ -106,9 +107,7 @@ export default function Orders() {
               </td>
               <td>
                 <div>
-                  <button type="button">
-                    <MdMoreHoriz color="#999" size={20} />{' '}
-                  </button>
+                  <Menu visibility />
                 </div>
               </td>
             </tr>

@@ -18,7 +18,7 @@ class OrderController {
     const findOrders = await Order.findAll({
       where: {
         product: {
-          [Op.iLike]: `%${product}`,
+          [Op.iLike]: `%${product}%`,
         },
       },
       attributes: [

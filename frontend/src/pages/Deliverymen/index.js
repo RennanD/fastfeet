@@ -4,8 +4,11 @@ import { MdAdd, MdSearch } from 'react-icons/md';
 
 import { Container } from './styles';
 
-import api from '~/services/api';
 import Menu from '~/components/Menu';
+import Header from '~/components/Header';
+
+import api from '~/services/api';
+import history from '~/services/history';
 
 export default function Deliverymen() {
   const [deliverymen, setDeliverymen] = useState([]);
@@ -23,9 +26,13 @@ export default function Deliverymen() {
     loadDeliverymen();
   }, [name]);
 
+  function handleNavigate() {
+    history.push('deliverymen/new');
+  }
+
   return (
     <Container>
-      <header>
+      <Header>
         <h2>Cadastro de encomendas</h2>
 
         <div>
@@ -38,11 +45,11 @@ export default function Deliverymen() {
             />
           </div>
 
-          <button type="button">
+          <button type="button" onClick={handleNavigate}>
             <MdAdd size={22} color="#fff" /> CADASTRAR
           </button>
         </div>
-      </header>
+      </Header>
 
       <table>
         <thead>
@@ -75,7 +82,14 @@ export default function Deliverymen() {
                 <span>#{deliveryman.id}</span>
               </td>
               <td>
-                <img src={deliveryman.avatar.url} alt="" />
+                <img
+                  src={
+                    deliveryman.avatar
+                      ? deliveryman.avatar.url
+                      : 'https://medgoldresources.com/wp-content/uploads/2018/02/avatar-placeholder.gif'
+                  }
+                  alt={deliveryman.name}
+                />
               </td>
               <td>
                 <span>{deliveryman.name}</span>

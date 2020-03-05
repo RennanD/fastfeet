@@ -6,6 +6,7 @@ import { Container } from './styles';
 
 import Badge from '~/components/Badge';
 import Menu from '~/components/Menu';
+import Header from '~/components/Header';
 
 import api from '~/services/api';
 
@@ -24,7 +25,7 @@ export default function Orders() {
 
   return (
     <Container>
-      <header>
+      <Header>
         <h2>Cadastro de encomendas</h2>
 
         <div>
@@ -40,7 +41,7 @@ export default function Orders() {
             <MdAdd size={22} color="#fff" /> CADASTRAR
           </button>
         </div>
-      </header>
+      </Header>
 
       <table>
         <thead>
@@ -87,7 +88,11 @@ export default function Orders() {
               <td>
                 <main>
                   <img
-                    src={order.deliveryman.avatar.url}
+                    src={
+                      order.deliveryman.avatar
+                        ? order.deliveryman.avatar.url
+                        : 'https://medgoldresources.com/wp-content/uploads/2018/02/avatar-placeholder.gif'
+                    }
                     alt={order.deliveryman.name}
                   />
                   <span>{order.deliveryman.name}</span>

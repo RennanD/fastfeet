@@ -37,7 +37,6 @@ class DeliverymanController {
     const schema = Yup.object().shape({
       name: Yup.string().required('Name is requirerd'),
       email: Yup.string().required('E-mail is required'),
-      avatar_id: Yup.number(),
     });
 
     try {
@@ -45,7 +44,7 @@ class DeliverymanController {
 
       const userExists = await User.findOne({ where: { email } });
 
-      if (!userExists) {
+      if (userExists) {
         return res
           .status(400)
           .json({ error: 'Delivery man already registered.' });

@@ -28,6 +28,7 @@ class OrderController {
         'start_date',
         'end_date',
         'cancelable',
+        'status',
       ],
       include: [
         {

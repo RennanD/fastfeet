@@ -17,46 +17,7 @@ export default function Orders() {
     async function loadOrders() {
       const response = await api.get(`/orders?product=${product}`);
 
-      const data = response.data.map(order => {
-        const { canceled_at, start_date, end_date } = order;
-
-        let status = {
-          title: 'PENDENTE',
-          primary: '#C1BC35',
-          secundary: '#F0F0DF',
-        };
-
-        if (canceled_at) {
-          status = {
-            title: 'CANCELADA',
-            primary: '#DE3B3B',
-            secundary: '#FAB0B0',
-          };
-        }
-
-        if (!canceled_at && start_date) {
-          if (end_date) {
-            status = {
-              title: 'ENTREGUE',
-              primary: '#2CA42B',
-              secundary: '#DFF0DF',
-            };
-          } else {
-            status = {
-              title: 'RETIRADA',
-              primary: '#4D85EE',
-              secundary: '#BAD2FF',
-            };
-          }
-        }
-
-        return {
-          ...order,
-          status,
-        };
-      });
-
-      setOrders(data);
+      setOrders(response.data);
     }
     loadOrders();
   }, [product]);
@@ -139,11 +100,7 @@ export default function Orders() {
                 <span>{order.recipient.region}</span>
               </td>
               <td>
-                <Badge
-                  status={order.status.title}
-                  primary={order.status.primary}
-                  secundary={order.status.secundary}
-                />
+                <Badge status={order.status} />
               </td>
               <td>
                 <div>

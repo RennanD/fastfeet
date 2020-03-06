@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-import { MdAdd, MdSearch } from 'react-icons/md';
+import { MdAdd, MdSearch, MdEdit, MdDeleteForever } from 'react-icons/md';
 
 import { Container } from './styles';
 
@@ -27,7 +27,7 @@ export default function Deliverymen() {
   }, [name]);
 
   function handleNavigate() {
-    history.push('/new-deliverymen');
+    history.push('/deliverymen/new');
   }
 
   return (
@@ -100,7 +100,25 @@ export default function Deliverymen() {
 
               <td>
                 <div>
-                  <Menu visibility={false} />
+                  <Menu>
+                    <li>
+                      <button
+                        type="button"
+                        onClick={() =>
+                          history.push(`/deliverymen/${deliveryman.id}/edit`)
+                        }
+                      >
+                        <MdEdit size={20} color="#4D85EE" />
+                        Editar
+                      </button>
+                    </li>
+                    <li>
+                      <button type="button">
+                        <MdDeleteForever size={20} color="#DE3B3B" />
+                        Excluir
+                      </button>
+                    </li>
+                  </Menu>
                 </div>
               </td>
             </tr>

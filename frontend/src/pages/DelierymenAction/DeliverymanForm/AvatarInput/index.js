@@ -8,7 +8,7 @@ import { Container, Label } from './styles';
 import api from '~/services/api';
 
 export default function AvatarInput() {
-  const { registerField, defaultValue } = useField('avatar_id');
+  const { defaultValue, registerField } = useField('avatar');
 
   const ref = useRef();
 
@@ -23,7 +23,7 @@ export default function AvatarInput() {
         path: 'dataset.file',
       });
     }
-  }, [defaultValue, file, ref, registerField]);
+  }, [ref, registerField]);
 
   async function handleChange(e) {
     const data = new FormData();

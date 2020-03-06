@@ -61,6 +61,7 @@ routes.post('/recipients', RecipientController.store);
 
 // CRUD deliverymen routes
 routes.get('/deliverymen', DeliverymanController.index);
+routes.get('/deliverymen/:deliverymanId', DeliverymanController.show);
 routes.post('/deliverymen', DeliverymanController.store);
 routes.put('/deliverymen/:deliverymanId', DeliverymanController.update);
 routes.delete('/deliverymen/:deliverymanId', DeliverymanController.delete);

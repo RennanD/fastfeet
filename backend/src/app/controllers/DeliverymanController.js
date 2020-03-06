@@ -5,6 +5,27 @@ import Deliveryman from '../models/Deliveryman';
 import File from '../models/File';
 
 class DeliverymanController {
+  async show(req, res) {
+    const { deliverymanId } = req.params;
+
+    const deliveryman = await Deliveryman.findOne({
+      where: { id: deliverymanId },
+      attributes: ['id', 'avatar_id', 'name', 'email'],
+      include: [
+        {
+          model: File,
+          as: 'avatar',
+          attributes: ['id', 'url', 'path'],
+        },
+      ],
+    });
+
+    if (!deliveryman)
+      return res.status(400).json({ error: 'Deliveryman not found' });
+
+    return res.json(deliveryman);
+  }
+
   async index(req, res) {
     const { name, page = 1 } = req.query;
 
@@ -42,8 +63,6 @@ class DeliverymanController {
       await schema.validate(req.body);
 
       const userExists = await Deliveryman.findOne({ where: { email } });
-
-      console.log(userExists);
 
       if (userExists) {
         return res

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 
 import * as Yup from 'yup';
+import PropTypes from 'prop-types';
 
 import { MdChevronLeft, MdCheck } from 'react-icons/md';
 
@@ -21,7 +22,7 @@ const schema = Yup.object().shape({
   avatar_id: Yup.number(),
 });
 
-export default function NewDeliveryman() {
+export default function DeliverymanForm({ initialData }) {
   const [loading, setLoading] = useState(false);
 
   async function handleSubmit(data) {
@@ -40,7 +41,7 @@ export default function NewDeliveryman() {
 
   return (
     <Container>
-      <Form onSubmit={handleSubmit} schema={schema}>
+      <Form initialData={initialData} onSubmit={handleSubmit} schema={schema}>
         <header>
           <h2>Cadastro de entregadores</h2>
 
@@ -77,3 +78,11 @@ export default function NewDeliveryman() {
     </Container>
   );
 }
+
+DeliverymanForm.propTypes = {
+  initialData: PropTypes.shape,
+};
+
+DeliverymanForm.defaultProps = {
+  initialData: {},
+};

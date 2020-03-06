@@ -27,7 +27,7 @@ export default function Deliverymen() {
   }, [name]);
 
   function handleNavigate() {
-    history.push('deliverymen/new');
+    history.push('/new-deliverymen');
   }
 
   return (

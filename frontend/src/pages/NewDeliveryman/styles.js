@@ -6,6 +6,13 @@ export const Container = styled.div`
   max-width: 900px;
   margin: 34px auto;
 
+  span {
+    color: #fb6f91;
+    align-self: flex-start;
+    margin: 0 0 10px;
+    font-weight: bold;
+  }
+
   form {
     header {
       display: flex;
@@ -42,7 +49,8 @@ export const Content = styled.div`
 
   input {
     border: 1px solid #dddddd;
-    padding: 15px;
+    padding: 0 15px;
+    height: 45px;
     border-radius: 4px;
     color: #666;
     margin: 7px 0;

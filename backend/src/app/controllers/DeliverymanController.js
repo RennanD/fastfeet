@@ -2,7 +2,6 @@ import * as Yup from 'yup';
 import { Op } from 'sequelize';
 
 import Deliveryman from '../models/Deliveryman';
-import User from '../models/User';
 import File from '../models/File';
 
 class DeliverymanController {
@@ -42,7 +41,9 @@ class DeliverymanController {
     try {
       await schema.validate(req.body);
 
-      const userExists = await User.findOne({ where: { email } });
+      const userExists = await Deliveryman.findOne({ where: { email } });
+
+      console.log(userExists);
 
       if (userExists) {
         return res

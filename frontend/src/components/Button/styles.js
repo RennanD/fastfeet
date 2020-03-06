@@ -11,6 +11,12 @@ export const Container = styled.button`
   justify-content: center;
   color: #fff;
   border: 0;
+  font-weight: bold;
+  font-size: 14px;
+
+  &:hover {
+    opacity: 0.8;
+  }
 
   strong {
     font-size: 14px;

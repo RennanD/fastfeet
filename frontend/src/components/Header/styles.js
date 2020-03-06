@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { darken } from 'polished';
 
 export const Container = styled.header`
   margin: 34px 0 15px;
@@ -54,6 +55,10 @@ export const Container = styled.header`
     font-weight: bold;
     border: 0;
     border-radius: 4px;
+
+    &:hover {
+      background: ${darken(0.08, '#7d40e7')};
+    }
   }
 
   svg {

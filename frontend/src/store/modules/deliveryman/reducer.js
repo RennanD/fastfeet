@@ -20,15 +20,6 @@ export default function deliveryman(state = INITIAL_STATE, action) {
         break;
       }
 
-      case '@deliveryman/ADD_REQUEST': {
-        draft.loading = true;
-        break;
-      }
-      case '@deliveryman/ADD_SUCCESS': {
-        draft.loading = false;
-        break;
-      }
-
       case '@deliveryman/UPDATE_REQUEST': {
         draft.loading = true;
         break;

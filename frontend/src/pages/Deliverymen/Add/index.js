@@ -1,11 +1,13 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
 
 import * as Yup from 'yup';
 
+import { toast } from 'react-toastify';
+
 import DeliverymanForm from '~/components/DeliverymanForm';
 
-import { addDeliverymanRequest } from '~/store/modules/deliveryman/actions';
+import api from '~/services/api';
+import history from '~/services/history';
 
 export default function Add() {
   const schema = Yup.object().shape({
@@ -16,10 +18,15 @@ export default function Add() {
       .required('O e-mail é obrigatório'),
   });
 
-  const dispatch = useDispatch();
+  async function handleSubmit(data) {
+    try {
+      await api.post('/deliverymen', data);
 
-  function handleSubmit(data) {
-    dispatch(addDeliverymanRequest(data));
+      toast.success('Deliveryman registered successful');
+      history.push('/deliverymen');
+    } catch ({ response }) {
+      toast.error(response.data.error);
+    }
   }
 
   return <DeliverymanForm onSubmit={handleSubmit} schema={schema} />;

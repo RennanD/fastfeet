@@ -1,22 +1,3 @@
-export function addDeliverymanRequest({ name, email, avatar_id }) {
-  return {
-    type: '@deliveryman/ADD_REQUEST',
-    payload: { name, email, avatar_id },
-  };
-}
-
-export function addDeliverymanSuccess() {
-  return {
-    type: '@deliveryman/ADD_SUCCESS',
-  };
-}
-
-export function addDeliverymanFailure() {
-  return {
-    type: '@deliveryman/ADD_FAILURE',
-  };
-}
-
 export function showDeliverymanRequest(id) {
   return {
     type: '@deliveryman/SHOW_REQUEST',

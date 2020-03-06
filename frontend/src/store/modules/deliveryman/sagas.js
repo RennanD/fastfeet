@@ -5,34 +5,12 @@ import { toast } from 'react-toastify';
 import api from '~/services/api';
 
 import {
-  addDeliverymanSuccess,
-  addDeliverymanFailure,
   showDeliverymanSuccess,
   showDeliverymanFailure,
   updateDeliverymanSuccess,
   updateDeliverymanFailure,
 } from './actions';
 import history from '~/services/history';
-
-export function* addDeliveryman({ payload }) {
-  const { name, email, avatar_id } = payload;
-
-  try {
-    yield call(api.post, '/deliverymen', {
-      name,
-      email,
-      avatar_id,
-    });
-
-    yield put(addDeliverymanSuccess());
-
-    toast.success('Deliveryman registered successful');
-    history.push('/deliverymen');
-  } catch ({ response }) {
-    yield put(addDeliverymanFailure());
-    toast.error(response.data.error);
-  }
-}
 
 export function* showDeliveryman({ payload }) {
   const { id } = payload;
@@ -70,7 +48,6 @@ export function* updateDeliveryman({ payload }) {
 }
 
 export default all([
-  takeLatest('@deliveryman/ADD_REQUEST', addDeliveryman),
   takeLatest('@deliveryman/SHOW_REQUEST', showDeliveryman),
   takeLatest('@deliveryman/UPDATE_REQUEST', updateDeliveryman),
 ]);

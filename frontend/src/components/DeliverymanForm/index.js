@@ -1,47 +1,26 @@
-import React, { useState } from 'react';
+/* eslint-disable react/jsx-props-no-spreading */
+import React from 'react';
+import { useSelector } from 'react-redux';
 
-import * as Yup from 'yup';
 import PropTypes from 'prop-types';
 
 import { MdChevronLeft, MdCheck } from 'react-icons/md';
 
 import { Form, Input } from '@rocketseat/unform';
 
-import { toast } from 'react-toastify';
 import { Container, BackButton, Content } from './styles';
 
 import AvatarInput from './AvatarInput';
 import Button from '~/components/Button';
 
 import history from '~/services/history';
-import api from '~/services/api';
 
-const schema = Yup.object().shape({
-  name: Yup.string().required('O nome é obrigatório'),
-  email: Yup.string().required('O e-mail é obrigatório'),
-  avatar_id: Yup.number(),
-});
-
-export default function DeliverymanForm({ initialData }) {
-  const [loading, setLoading] = useState(false);
-
-  async function handleSubmit(data) {
-    setLoading(true);
-    try {
-      await api.post('/deliverymen', data);
-
-      toast.success('Deliveryman registered successful');
-      setLoading(false);
-      history.push('/deliverymen');
-    } catch ({ response }) {
-      toast.error(response.data.error);
-      setLoading(false);
-    }
-  }
+export default function DeliverymanForm({ onSubmit, ...rest }) {
+  const loading = useSelector(state => state.deliveryman.loading);
 
   return (
     <Container>
-      <Form initialData={initialData} onSubmit={handleSubmit} schema={schema}>
+      <Form onSubmit={onSubmit} {...rest}>
         <header>
           <h2>Cadastro de entregadores</h2>
 
@@ -80,9 +59,5 @@ export default function DeliverymanForm({ initialData }) {
 }
 
 DeliverymanForm.propTypes = {
-  initialData: PropTypes.shape,
-};
-
-DeliverymanForm.defaultProps = {
-  initialData: {},
+  onSubmit: PropTypes.func.isRequired,
 };

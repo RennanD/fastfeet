@@ -8,8 +8,8 @@ import SingIn from '~/pages/SingIn';
 import Orders from '~/pages/Orders';
 
 import Deliverymen from '~/pages/Deliverymen';
-import NewDeliveryman from '~/pages/DelierymenAction/Add';
-import EditDeliveryman from '~/pages/DelierymenAction/Edit';
+import NewDeliveryman from '~/pages/Deliverymen/Add';
+import EditDeliveryman from '~/pages/Deliverymen/Edit';
 
 export default function Routes() {
   return (
@@ -20,11 +20,7 @@ export default function Routes() {
 
       <Route path="/deliverymen" exact component={Deliverymen} isPrivate />
       <Route path="/deliverymen/new" component={NewDeliveryman} isPrivate />
-      <Route
-        path="/deliverymen/:id/edit"
-        component={EditDeliveryman}
-        isPrivate
-      />
+      <Route path="/deliverymen/edit" component={EditDeliveryman} isPrivate />
     </Switch>
   );
 }

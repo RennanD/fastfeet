@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
 
 import { MdAdd, MdSearch, MdEdit, MdDeleteForever } from 'react-icons/md';
 
@@ -9,10 +10,13 @@ import Header from '~/components/Header';
 
 import api from '~/services/api';
 import history from '~/services/history';
+import { showDeliverymanRequest } from '~/store/modules/deliveryman/actions';
 
 export default function Deliverymen() {
   const [deliverymen, setDeliverymen] = useState([]);
   const [name, setName] = useState('');
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
     async function loadDeliverymen() {
@@ -105,7 +109,7 @@ export default function Deliverymen() {
                       <button
                         type="button"
                         onClick={() =>
-                          history.push(`/deliverymen/${deliveryman.id}/edit`)
+                          dispatch(showDeliverymanRequest(deliveryman.id))
                         }
                       >
                         <MdEdit size={20} color="#4D85EE" />

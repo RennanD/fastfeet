@@ -8,6 +8,7 @@ import Header from '~/components/Header';
 import Menu from '~/components/Menu';
 
 import api from '~/services/api';
+import history from '~/services/history';
 
 export default function Recipients() {
   const [name, setName] = useState('');
@@ -40,7 +41,7 @@ export default function Recipients() {
             />
           </div>
 
-          <button type="button">
+          <button onClick={() => history.push('/recipients/new')} type="button">
             <MdAdd size={22} color="#fff" /> CADASTRAR
           </button>
         </div>

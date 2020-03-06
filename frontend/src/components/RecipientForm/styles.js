@@ -33,7 +33,7 @@ export const Container = styled.div`
     }
     input {
       border: 1px solid #dddddd;
-      padding: 15px;
+      padding: 10px 15px;
       height: 45px;
       border-radius: 4px;
       color: #666;
@@ -48,6 +48,10 @@ export const Container = styled.div`
 
 export const TInput = styled(Input)`
   flex: 1;
+
+  input {
+    height: 45px;
+  }
 `;
 
 export const InputContainer = styled.div`

@@ -74,7 +74,7 @@ class DeliverymanController {
 
       return res.json(deliveryman);
     } catch (err) {
-      return res.status(400).json({ error: err });
+      return res.status(400).json({ error: err.message });
     }
   }
 
@@ -116,7 +116,7 @@ class DeliverymanController {
         email,
       });
     } catch (err) {
-      return res.status(400).json({ error: err });
+      return res.status(400).json({ error: err.message });
     }
   }
 

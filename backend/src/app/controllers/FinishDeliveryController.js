@@ -43,7 +43,7 @@ class FinishDeliveryController {
 
       return res.json({ msg: 'Finish successful.' });
     } catch (err) {
-      return res.status(400).json({ error: err.errors });
+      return res.status(400).json({ error: err.message });
     }
   }
 }

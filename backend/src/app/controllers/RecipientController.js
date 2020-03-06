@@ -60,7 +60,7 @@ class RecipientController {
 
       return res.json(recipient);
     } catch (err) {
-      return res.status(400).json({ error: err });
+      return res.status(400).json({ error: err.message });
     }
   }
 
@@ -89,7 +89,7 @@ class RecipientController {
 
       return res.json(recipient);
     } catch (err) {
-      return res.status(400).json({ error: err });
+      return res.status(400).json({ error: err.message });
     }
   }
 }

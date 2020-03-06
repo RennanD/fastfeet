@@ -148,7 +148,7 @@ class OrderController {
 
       return res.json(order);
     } catch (err) {
-      return res.status(400).json({ error: err });
+      return res.status(400).json({ error: err.message });
     }
   }
 
@@ -190,7 +190,7 @@ class OrderController {
 
       return res.json(order);
     } catch (err) {
-      return res.status(400).json({ error: err.messege });
+      return res.status(400).json({ error: err.message });
     }
   }
 

@@ -16,6 +16,8 @@ import {
 
 import Button from '../Button';
 
+import history from '~/services/history';
+
 export default function RecipientForm({ onSubmit, ...rest }) {
   return (
     <Container>
@@ -24,7 +26,10 @@ export default function RecipientForm({ onSubmit, ...rest }) {
           <h2>Cadastro de entregadores</h2>
 
           <div>
-            <BackButton type="button">
+            <BackButton
+              onClick={() => history.push('/recipients')}
+              type="button"
+            >
               <MdChevronLeft size={28} color="#fff" /> <strong>VOLTAR</strong>
             </BackButton>
             <Button type="submit">

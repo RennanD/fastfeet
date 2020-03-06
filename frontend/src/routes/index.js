@@ -13,6 +13,7 @@ import EditDeliveryman from '~/pages/Deliverymen/Edit';
 
 import Recipients from '~/pages/Recipients';
 import NewRecipient from '~/pages/Recipients/Add';
+import EditRecipient from '~/pages/Recipients/Edit';
 
 export default function Routes() {
   return (
@@ -27,6 +28,7 @@ export default function Routes() {
 
       <Route path="/recipients" exact component={Recipients} isPrivate />
       <Route path="/recipients/new" exact component={NewRecipient} isPrivate />
+      <Route path="/recipients-edit" component={EditRecipient} isPrivate />
     </Switch>
   );
 }

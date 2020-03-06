@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 
 import { MdSearch, MdAdd, MdEdit, MdDeleteForever } from 'react-icons/md';
 
@@ -9,10 +10,13 @@ import Menu from '~/components/Menu';
 
 import api from '~/services/api';
 import history from '~/services/history';
+import { showRecipientRequest } from '~/store/modules/recipient/actions';
 
 export default function Recipients() {
   const [name, setName] = useState('');
   const [recipients, setRecipients] = useState([]);
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
     async function loadRecipients() {
@@ -89,7 +93,12 @@ export default function Recipients() {
                 <div>
                   <Menu>
                     <li>
-                      <button type="button">
+                      <button
+                        onClick={() =>
+                          dispatch(showRecipientRequest(recipient.id))
+                        }
+                        type="button"
+                      >
                         <MdEdit size={20} color="#4D85EE" />
                         Editar
                       </button>

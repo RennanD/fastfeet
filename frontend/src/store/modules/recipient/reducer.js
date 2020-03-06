@@ -8,8 +8,20 @@ const INITIAL_STATE = {
 export default function recipient(state = INITIAL_STATE, action) {
   return produce(state, draft => {
     switch (action.type) {
+      case '@recipient/SHOW_REQUEST': {
+        draft.loading = true;
+        break;
+      }
+      case '@recipient/SHOW_SUCCESS': {
+        draft.loading = false;
+        draft.profile = action.payload.profile;
+        break;
+      }
+      case '@recipient/FAILURE': {
+        draft.loading = false;
+        break;
+      }
       default:
-        return draft;
     }
   });
 }

@@ -56,8 +56,9 @@ routes.use(authMiddleware);
 
 // CRUD recipients routes
 routes.get('/recipients', RecipientController.index);
-routes.get('/recipients/:id', RecipientController.show);
+routes.get('/recipients/:recipientId', RecipientController.show);
 routes.post('/recipients', RecipientController.store);
+routes.put('/recipients/:recipientId', RecipientController.update);
 
 // CRUD deliverymen routes
 routes.get('/deliverymen', DeliverymanController.index);

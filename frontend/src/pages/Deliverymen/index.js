@@ -30,7 +30,7 @@ export default function Deliverymen() {
       setDeliverymen(response.data);
     }
     loadDeliverymen();
-  }, [name]);
+  }, [name, deliverymen]);
 
   function handleNavigate() {
     history.push('/deliverymen/new');

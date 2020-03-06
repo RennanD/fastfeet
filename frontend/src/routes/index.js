@@ -11,6 +11,8 @@ import Deliverymen from '~/pages/Deliverymen';
 import NewDeliveryman from '~/pages/Deliverymen/Add';
 import EditDeliveryman from '~/pages/Deliverymen/Edit';
 
+import Recipients from '~/pages/Recipients';
+
 export default function Routes() {
   return (
     <Switch>
@@ -21,6 +23,8 @@ export default function Routes() {
       <Route path="/deliverymen" exact component={Deliverymen} isPrivate />
       <Route path="/deliverymen/new" component={NewDeliveryman} isPrivate />
       <Route path="/deliverymen/edit" component={EditDeliveryman} isPrivate />
+
+      <Route path="/recipients" exact component={Recipients} isPrivate />
     </Switch>
   );
 }

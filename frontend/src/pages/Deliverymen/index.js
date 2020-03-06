@@ -3,6 +3,8 @@ import { useDispatch } from 'react-redux';
 
 import { MdAdd, MdSearch, MdEdit, MdDeleteForever } from 'react-icons/md';
 
+import { toast } from 'react-toastify';
+
 import { Container } from './styles';
 
 import Menu from '~/components/Menu';
@@ -32,6 +34,15 @@ export default function Deliverymen() {
 
   function handleNavigate() {
     history.push('/deliverymen/new');
+  }
+
+  async function handleDelete(id) {
+    try {
+      await api.delete(`/deliverymen/${id}`);
+      toast.success('Deleted successful');
+    } catch ({ response }) {
+      toast.error(response.data.error);
+    }
   }
 
   return (
@@ -117,7 +128,10 @@ export default function Deliverymen() {
                       </button>
                     </li>
                     <li>
-                      <button type="button">
+                      <button
+                        type="button"
+                        onClick={() => handleDelete(deliveryman.id)}
+                      >
                         <MdDeleteForever size={20} color="#DE3B3B" />
                         Excluir
                       </button>

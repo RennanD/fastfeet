@@ -6,7 +6,7 @@ export default reducer => {
     {
       key: '@fastfeet',
       storage,
-      whitelist: ['auth'],
+      whitelist: ['auth', 'deliveryman'],
     },
     reducer
   );

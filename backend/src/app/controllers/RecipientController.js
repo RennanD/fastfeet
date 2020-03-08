@@ -92,6 +92,19 @@ class RecipientController {
       return res.status(400).json({ error: err.message });
     }
   }
+  async delete(req, res) {
+    const { recipientId } = req.params;
+
+    const recipient = await Recipient.findByPk(recipientId);
+
+    if (!recipient) {
+      return res.status(401).json({ error: 'Deliveryman cannot exists.' });
+    }
+
+    await recipient.destroy();
+
+    return res.json({ msg: 'Successful deleted.' });
+  }
 }
 
 export default new RecipientController();

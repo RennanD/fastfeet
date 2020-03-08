@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux';
 
 import { MdSearch, MdAdd, MdEdit, MdDeleteForever } from 'react-icons/md';
 
+import { toast } from 'react-toastify';
 import { Container } from './styles';
 
 import Header from '~/components/Header';
@@ -29,6 +30,15 @@ export default function Recipients() {
     }
     loadRecipients();
   }, [name]);
+
+  async function handleDelete(id) {
+    try {
+      const response = await api.delete(`/recipients/${id}`);
+      toast.success(response.data.msg);
+    } catch ({ response }) {
+      toast.error(response.data.error);
+    }
+  }
 
   return (
     <Container>
@@ -104,7 +114,10 @@ export default function Recipients() {
                       </button>
                     </li>
                     <li>
-                      <button type="button">
+                      <button
+                        onClick={() => handleDelete(recipient.id)}
+                        type="button"
+                      >
                         <MdDeleteForever size={20} color="#DE3B3B" />
                         Excluir
                       </button>

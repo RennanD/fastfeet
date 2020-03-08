@@ -57,20 +57,27 @@ routes.use(authMiddleware);
 // CRUD recipients routes
 routes.get('/recipients', RecipientController.index);
 routes.get('/recipients/:recipientId', RecipientController.show);
+
 routes.post('/recipients', RecipientController.store);
+
 routes.put('/recipients/:recipientId', RecipientController.update);
+routes.delete('/recipients/:recipientId', RecipientController.delete);
 
 // CRUD deliverymen routes
 routes.get('/deliverymen', DeliverymanController.index);
 routes.get('/deliverymen/:deliverymanId', DeliverymanController.show);
+
 routes.post('/deliverymen', DeliverymanController.store);
+
 routes.put('/deliverymen/:deliverymanId', DeliverymanController.update);
 routes.delete('/deliverymen/:deliverymanId', DeliverymanController.delete);
 
 // CRUD orders routes
 routes.get('/orders', Ordercontroller.index);
 routes.get('/orders/:id', Ordercontroller.show);
+
 routes.post('/orders/:deliverymanId', Ordercontroller.store);
+
 routes.put('/orders/:id', Ordercontroller.update);
 routes.delete('/orders/:id', Ordercontroller.delete);
 

@@ -27,6 +27,7 @@ export default function EditRecipient() {
 
   return (
     <RecipientForm
+      title="Edição de destinatários"
       onSubmit={handleSubmit}
       schema={schema}
       initialData={profile}

@@ -32,6 +32,7 @@ export default function Edit() {
 
   return (
     <DeliverymanForm
+      title="Edição de entregadores"
       onSubmit={handleSubmit}
       initialData={profile}
       schema={schema}

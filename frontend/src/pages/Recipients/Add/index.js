@@ -29,5 +29,11 @@ export default function AddRecipient() {
     }
   }
 
-  return <RecipientForm onSubmit={handleSubmit} schema={schema} />;
+  return (
+    <RecipientForm
+      title="Cadastro de destinatários"
+      onSubmit={handleSubmit}
+      schema={schema}
+    />
+  );
 }

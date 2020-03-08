@@ -15,14 +15,14 @@ import Button from '~/components/Button';
 
 import history from '~/services/history';
 
-export default function DeliverymanForm({ onSubmit, ...rest }) {
+export default function DeliverymanForm({ title, onSubmit, ...rest }) {
   const loading = useSelector(state => state.deliveryman.loading);
 
   return (
     <Container>
       <Form onSubmit={onSubmit} {...rest}>
         <header>
-          <h2>Cadastro de entregadores</h2>
+          <h2>{title}</h2>
 
           <div>
             <BackButton
@@ -60,4 +60,5 @@ export default function DeliverymanForm({ onSubmit, ...rest }) {
 
 DeliverymanForm.propTypes = {
   onSubmit: PropTypes.func.isRequired,
+  title: PropTypes.string.isRequired,
 };

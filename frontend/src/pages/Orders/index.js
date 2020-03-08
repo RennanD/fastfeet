@@ -26,7 +26,7 @@ export default function Orders() {
   return (
     <Container>
       <Header>
-        <h2>Cadastro de encomendas</h2>
+        <h2>Gerenciando encomendas</h2>
 
         <div>
           <div>

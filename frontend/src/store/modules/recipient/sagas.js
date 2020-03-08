@@ -18,7 +18,7 @@ export function* showRecipient({ payload }) {
     const response = yield call(api.get, `/recipients/${id}`);
 
     yield put(showRecipientSuccess(response.data));
-    history.push('/recipients-edit');
+    history.push('/recipients/edit');
   } catch ({ response }) {
     toast.error(response.data.error);
     yield put(recipientFailure());

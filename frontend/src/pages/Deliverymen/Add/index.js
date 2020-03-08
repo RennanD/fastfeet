@@ -29,5 +29,11 @@ export default function Add() {
     }
   }
 
-  return <DeliverymanForm onSubmit={handleSubmit} schema={schema} />;
+  return (
+    <DeliverymanForm
+      title="Cadastro de entregadores"
+      onSubmit={handleSubmit}
+      schema={schema}
+    />
+  );
 }

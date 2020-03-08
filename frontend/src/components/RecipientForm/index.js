@@ -18,12 +18,12 @@ import Button from '../Button';
 
 import history from '~/services/history';
 
-export default function RecipientForm({ onSubmit, ...rest }) {
+export default function RecipientForm({ title, onSubmit, ...rest }) {
   return (
     <Container>
       <Form onSubmit={onSubmit} {...rest}>
         <header>
-          <h2>Cadastro de entregadores</h2>
+          <h2>{title}</h2>
 
           <div>
             <BackButton
@@ -88,4 +88,5 @@ export default function RecipientForm({ onSubmit, ...rest }) {
 
 RecipientForm.propTypes = {
   onSubmit: PropTypes.func.isRequired,
+  title: PropTypes.string.isRequired,
 };

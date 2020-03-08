@@ -43,7 +43,7 @@ export default function Recipients() {
   return (
     <Container>
       <Header>
-        <h2>Cadastro de encomendas</h2>
+        <h2>Gerenciando destinatários</h2>
 
         <div>
           <div>

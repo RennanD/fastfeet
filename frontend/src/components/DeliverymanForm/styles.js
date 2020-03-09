@@ -13,21 +13,19 @@ export const Container = styled.div`
     font-weight: bold;
   }
 
-  form {
-    header {
+  header {
+    display: flex;
+    align-self: stretch;
+    align-items: center;
+    justify-content: space-between;
+
+    h2 {
+      font-size: 24px;
+      color: #444444;
+    }
+
+    div {
       display: flex;
-      align-self: stretch;
-      align-items: center;
-      justify-content: space-between;
-
-      h2 {
-        font-size: 24px;
-        color: #444444;
-      }
-
-      div {
-        display: flex;
-      }
     }
   }
 `;

@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+
 import { Input } from '@rocketseat/unform';
 
 import Button from '~/components/Button';
@@ -15,43 +16,37 @@ export const Container = styled.div`
     font-weight: bold;
   }
 
-  form {
-    header {
-      display: flex;
-      align-self: stretch;
-      align-items: center;
-      justify-content: space-between;
+  header {
+    display: flex;
+    align-self: stretch;
+    align-items: center;
+    justify-content: space-between;
 
-      h2 {
-        font-size: 24px;
-        color: #444444;
-      }
-
-      div {
-        display: flex;
-      }
+    h2 {
+      font-size: 24px;
+      color: #444444;
     }
-    input {
-      border: 1px solid #dddddd;
-      padding: 10px 15px;
-      height: 45px;
-      border-radius: 4px;
-      color: #666;
-      margin: 7px;
 
-      &::placeholder {
-        color: #999;
-      }
+    div {
+      display: flex;
+    }
+  }
+  input {
+    border: 1px solid #dddddd;
+    padding: 10px 15px;
+    height: 45px;
+    border-radius: 4px;
+    color: #666;
+    margin: 7px;
+
+    &::placeholder {
+      color: #999;
     }
   }
 `;
 
 export const TInput = styled(Input)`
   flex: 1;
-
-  input {
-    height: 45px;
-  }
 `;
 
 export const InputContainer = styled.div`

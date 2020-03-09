@@ -55,17 +55,13 @@ export default function RecipientInput({ name, ...rest }) {
             return [];
           }
           return ref.select.state.value.map(option => option.value);
+        } else {
+          if (!ref.select.state.value) {
+            return '';
+          }
+
+          return ref.select.state.value.value;
         }
-        if (!ref.select.state.value) {
-          return '';
-        }
-        return ref.current.select.state.value;
-      },
-      clearValue(ref) {
-        ref.select.select.clearValue();
-      },
-      setValue(ref, value) {
-        ref.select.select.setValue(value);
       },
     });
   }, [fieldName, registerField, rest.isMulti]);

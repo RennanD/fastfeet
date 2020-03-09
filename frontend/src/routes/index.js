@@ -6,6 +6,7 @@ import Route from './Route';
 import SingIn from '~/pages/SingIn';
 
 import Orders from '~/pages/Orders';
+import NewOrder from '~/pages/Orders/AddOrder';
 
 import Deliverymen from '~/pages/Deliverymen';
 import NewDeliveryman from '~/pages/Deliverymen/Add';
@@ -20,7 +21,8 @@ export default function Routes() {
     <Switch>
       <Route path="/" exact component={SingIn} />
 
-      <Route path="/orders" component={Orders} isPrivate />
+      <Route path="/orders" exact component={Orders} isPrivate />
+      <Route path="/orders/new" component={NewOrder} isPrivate />
 
       <Route path="/deliverymen" exact component={Deliverymen} isPrivate />
       <Route path="/deliverymen/new" component={NewDeliveryman} isPrivate />

@@ -9,6 +9,7 @@ import Menu from '~/components/Menu';
 import Header from '~/components/Header';
 
 import api from '~/services/api';
+import history from '~/services/history';
 
 export default function Orders() {
   const [orders, setOrders] = useState([]);
@@ -22,6 +23,10 @@ export default function Orders() {
     }
     loadOrders();
   }, [product]);
+
+  function handleNavigate() {
+    history.push('/orders/new');
+  }
 
   return (
     <Container>
@@ -37,7 +42,7 @@ export default function Orders() {
               placeholder="Buscar por encomendas"
             />
           </div>
-          <button type="button">
+          <button onClick={handleNavigate} type="button">
             <MdAdd size={22} color="#fff" /> CADASTRAR
           </button>
         </div>

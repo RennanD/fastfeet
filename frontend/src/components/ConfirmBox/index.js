@@ -13,7 +13,7 @@ export default function ConfirmBox({ handleConfirm, onClose }) {
       <div>
         <CancelButton onClick={onClose}>Cancelar</CancelButton>
 
-        <Button onClick={handleConfirm}>Ok</Button>
+        <Button onClick={handleConfirm}>Confirmar</Button>
       </div>
     </Container>
   );

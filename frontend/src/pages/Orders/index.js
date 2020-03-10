@@ -3,6 +3,9 @@ import React, { useState, useEffect } from 'react';
 
 import { useDispatch } from 'react-redux';
 
+import { format, parseISO } from 'date-fns';
+import { ptBR } from 'date-fns/locale';
+
 import {
   MdAdd,
   MdSearch,
@@ -14,7 +17,7 @@ import {
 import { confirmAlert } from 'react-confirm-alert';
 import { toast } from 'react-toastify';
 
-import { Container } from './styles';
+import { Container, Modal } from './styles';
 
 import Badge from '~/components/Badge';
 import Menu from '~/components/Menu';
@@ -42,6 +45,62 @@ export default function Orders() {
 
   function handleNavigate() {
     history.push('/orders/new');
+  }
+
+  async function handleShowOrder(id) {
+    const response = await api.get(`/orders/${id}`);
+
+    const order = {
+      ...response.data,
+      formatedStartDate: response.data.start_date
+        ? format(parseISO(response.data.start_date), 'dd/MM/yyyy', {
+            locale: ptBR,
+          })
+        : null,
+      formatedEndDate: response.data.end_date
+        ? format(parseISO(response.data.end_date), 'dd/MM/yyyy', {
+            locale: ptBR,
+          })
+        : null,
+    };
+
+    confirmAlert({
+      customUI: () => (
+        <Modal>
+          <div>
+            <strong>Informações da encomenda</strong>
+
+            <p>
+              {order.recipient.street}, {order.recipient.number}
+            </p>
+            <p>
+              {order.recipient.city} - {order.recipient.region}
+            </p>
+            <p>{order.recipient.zipcode}</p>
+          </div>
+
+          <div>
+            <strong>Datas</strong>
+            <p>
+              <span>Retirada:</span>{' '}
+              {order.formatedStartDate ? order.formatedStartDate : '--/--/----'}
+            </p>
+            <p>
+              <span>Entrega:</span>
+              {order.formatedEndDate ? order.formatedEndDate : '--/--/----'}
+            </p>
+          </div>
+          {order.signature && (
+            <>
+              <strong>Assinatura do destinatário</strong>
+              <main>
+                <img src={order.signature.url} alt="Assinatura" />
+              </main>
+            </>
+          )}
+        </Modal>
+      ),
+    });
   }
 
   function handleDelete(id) {
@@ -152,7 +211,10 @@ export default function Orders() {
                 <div>
                   <Menu>
                     <li>
-                      <button type="button">
+                      <button
+                        type="button"
+                        onClick={() => handleShowOrder(order.id)}
+                      >
                         <MdVisibility size={20} color="#7d40e7" />
                         Visualizar
                       </button>

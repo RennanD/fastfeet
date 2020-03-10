@@ -17,12 +17,15 @@ export default function EditOrder() {
   const dispatch = useDispatch();
 
   function handleSubmit(data) {
-    console.log(details.id);
-
     dispatch(updateOrderRequest(details.id, data));
   }
 
   return (
-    <OrderForm onSubmit={handleSubmit} schema={schema} initialData={details} />
+    <OrderForm
+      title="Edição de encomendas"
+      onSubmit={handleSubmit}
+      schema={schema}
+      initialData={details}
+    />
   );
 }

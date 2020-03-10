@@ -6,11 +6,12 @@ import PropTypes from 'prop-types';
 
 import { MdChevronLeft, MdCheck } from 'react-icons/md';
 
-import { Form, Input } from '@rocketseat/unform';
+import { Form } from '@unform/web';
 
 import { Container, BackButton, Content } from './styles';
 
 import AvatarInput from './AvatarInput';
+import Input from '~/components/Input';
 import Button from '~/components/Button';
 
 import history from '~/services/history';

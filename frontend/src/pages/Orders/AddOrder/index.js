@@ -1,5 +1,7 @@
 import React from 'react';
 
+import * as Yup from 'yup';
+
 import { toast } from 'react-toastify';
 
 import OrderForm from '~/components/OrderForm';
@@ -8,10 +10,16 @@ import api from '~/services/api';
 import history from '~/services/history';
 
 export default function AddOrder() {
-  async function handleSubmit({ recipient, deliveryman, product }) {
+  const schema = Yup.object().shape({
+    recipient_id: Yup.number().required('Informe o detinatário'),
+    deliveryman_id: Yup.number().required('Informe o entregador'),
+    product: Yup.number().required('O produto é obrigatório'),
+  });
+
+  async function handleSubmit({ recipient_id, deliveryman_id, product }) {
     try {
-      await api.post(`/orders/${deliveryman.value}`, {
-        recipient_id: recipient.value,
+      await api.post(`/orders/${deliveryman_id}`, {
+        recipient_id,
         product,
       });
       toast.success('Order created successful');
@@ -21,5 +29,11 @@ export default function AddOrder() {
     }
   }
 
-  return <OrderForm title="Cadastro de encomendas" onSubmit={handleSubmit} />;
+  return (
+    <OrderForm
+      title="Cadastro de encomendas"
+      schema={schema}
+      onSubmit={handleSubmit}
+    />
+  );
 }

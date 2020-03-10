@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { useField } from '@rocketseat/unform';
+import { useField } from '@unform/core';
+
+import PropTypes from 'prop-types';
 
 import { MdPhotoSizeSelectActual } from 'react-icons/md';
 
@@ -7,7 +9,7 @@ import { Container, Label } from './styles';
 
 import api from '~/services/api';
 
-export default function AvatarInput() {
+export default function AvatarInput({ name }) {
   const { defaultValue, registerField } = useField('avatar');
 
   const ref = useRef();
@@ -18,12 +20,12 @@ export default function AvatarInput() {
   useEffect(() => {
     if (ref.current) {
       registerField({
-        name: 'avatar_id',
+        name,
         ref: ref.current,
         path: 'dataset.file',
       });
     }
-  }, [ref, registerField]);
+  }, [name, ref, registerField]);
 
   async function handleChange(e) {
     const data = new FormData();
@@ -50,14 +52,18 @@ export default function AvatarInput() {
           </>
         )}
         <input
-          type="file"
           id="avatar"
-          accept="image/*"
+          type="file"
+          ref={ref}
           data-file={file}
           onChange={handleChange}
-          ref={ref}
+          name={name}
         />
       </Label>
     </Container>
   );
 }
+
+AvatarInput.propTypes = {
+  name: PropTypes.string.isRequired,
+};

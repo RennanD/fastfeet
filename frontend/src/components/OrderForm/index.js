@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React from 'react';
 
-import { Form } from '@rocketseat/unform';
+import { Form } from '@unform/web';
 
 import { MdChevronLeft, MdCheck } from 'react-icons/md';
 
@@ -37,12 +37,12 @@ export default function OrderForm({ title, onSubmit, ...rest }) {
           <main>
             <InputView style={{ marginRight: 10 }}>
               <strong>Destinatário</strong>
-              <RecipientInput name="recipient" />
+              <RecipientInput name="recipient_id" />
             </InputView>
 
             <InputView style={{ marginLeft: 10 }}>
               <strong>Entrgador</strong>
-              <DeliverymanInput name="deliveryman" />
+              <DeliverymanInput name="deliveryman_id" />
             </InputView>
           </main>
 

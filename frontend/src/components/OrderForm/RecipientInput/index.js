@@ -4,7 +4,7 @@ import React, { useRef, useEffect, useState } from 'react';
 
 import PropTypes from 'prop-types';
 
-import { useField } from '@rocketseat/unform';
+import { useField } from '@unform/core';
 import AsyncSelect from 'react-select/async';
 
 import api from '~/services/api';
@@ -69,6 +69,7 @@ export default function RecipientInput({ name, ...rest }) {
   return (
     <AsyncSelect
       cacheOptions
+      defaultOptions={recipients}
       loadOptions={promiseOptions}
       defaultValue={defaultValue}
       placeholder="Entregador exemplo "

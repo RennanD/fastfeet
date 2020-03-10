@@ -4,7 +4,7 @@ import React, { useRef, useEffect, useState } from 'react';
 
 import PropTypes from 'prop-types';
 
-import { useField } from '@rocketseat/unform';
+import { useField } from '@unform/core';
 import AsyncSelect from 'react-select/async';
 
 import api from '~/services/api';
@@ -41,9 +41,7 @@ export default function DeliverymanInput({ name, ...rest }) {
 
   const promiseOptions = inputValue =>
     new Promise(resolve => {
-      setTimeout(() => {
-        resolve(filterColors(inputValue));
-      }, 1000);
+      resolve(filterColors(inputValue));
     });
 
   useEffect(() => {
@@ -70,6 +68,7 @@ export default function DeliverymanInput({ name, ...rest }) {
   return (
     <AsyncSelect
       cacheOptions
+      defaultOptions={deliverymen}
       loadOptions={promiseOptions}
       defaultValue={defaultValue}
       placeholder="Destinatário exemplo "

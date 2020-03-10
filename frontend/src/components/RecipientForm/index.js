@@ -3,7 +3,7 @@ import React from 'react';
 
 import PropTypes from 'prop-types';
 
-import { Form } from '@rocketseat/unform';
+import { Form } from '@unform/web';
 
 import { MdChevronLeft, MdCheck } from 'react-icons/md';
 

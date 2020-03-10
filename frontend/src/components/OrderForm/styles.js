@@ -1,6 +1,6 @@
 import styled from 'styled-components';
-import { Input } from '@rocketseat/unform';
 
+import Input from '../Input';
 import Button from '../Button';
 
 export const Container = styled.div`

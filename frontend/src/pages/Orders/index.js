@@ -1,6 +1,14 @@
 import React, { useState, useEffect } from 'react';
 
-import { MdAdd, MdSearch } from 'react-icons/md';
+import { useDispatch } from 'react-redux';
+
+import {
+  MdAdd,
+  MdSearch,
+  MdEdit,
+  MdDeleteForever,
+  MdVisibility,
+} from 'react-icons/md';
 
 import { Container } from './styles';
 
@@ -10,10 +18,13 @@ import Header from '~/components/Header';
 
 import api from '~/services/api';
 import history from '~/services/history';
+import { showOrderRequest } from '~/store/modules/order/actions';
 
 export default function Orders() {
   const [orders, setOrders] = useState([]);
   const [product, setProduct] = useState('');
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
     async function loadOrders() {
@@ -114,7 +125,29 @@ export default function Orders() {
               </td>
               <td>
                 <div>
-                  <Menu visibility />
+                  <Menu>
+                    <li>
+                      <button type="button">
+                        <MdVisibility size={20} color="#7d40e7" />
+                        Visualizar
+                      </button>
+                    </li>
+                    <li>
+                      <button
+                        type="button"
+                        onClick={() => dispatch(showOrderRequest(order.id))}
+                      >
+                        <MdEdit size={20} color="#4D85EE" />
+                        Editar
+                      </button>
+                    </li>
+                    <li>
+                      <button type="button">
+                        <MdDeleteForever size={20} color="#DE3B3B" />
+                        Excluir
+                      </button>
+                    </li>
+                  </Menu>
                 </div>
               </td>
             </tr>

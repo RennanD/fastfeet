@@ -9,11 +9,11 @@ import AsyncSelect from 'react-select/async';
 
 import api from '~/services/api';
 
-export default function RecipientInput({ name, ...rest }) {
+export default function RecipientInput({ ...rest }) {
   const [recipients, setRecipients] = useState([]);
 
   const recipientRef = useRef(null);
-  const { fieldName, defaultValue, registerField } = useField(name);
+  const { fieldName, defaultValue, registerField } = useField('recipient');
 
   useEffect(() => {
     async function loadData() {
@@ -46,7 +46,7 @@ export default function RecipientInput({ name, ...rest }) {
 
   useEffect(() => {
     registerField({
-      name: fieldName,
+      name: 'recipient_id',
       ref: recipientRef.current,
       path: 'select.state.value',
       getValue: ref => {

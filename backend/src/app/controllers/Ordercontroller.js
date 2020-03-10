@@ -163,11 +163,12 @@ class OrderController {
   async update(req, res) {
     const { id } = req.params;
 
-    const { recipient_id, product } = req.body;
+    const { recipient_id, deliveryman_id } = req.body;
 
     const schema = Yup.object().shape({
       product: Yup.string(),
       recipient_id: Yup.number(),
+      deliveryman_id: Yup.number(),
     });
 
     try {
@@ -180,18 +181,21 @@ class OrderController {
       }
 
       const recipientExists = await Recipient.findByPk(recipient_id);
+      const deliverymanExists = await Deliveryman.findByPk(deliveryman_id);
 
       if (!recipientExists) {
         return res.status(401).json({ error: 'Recipient cannot exists.' });
       }
 
-      if (order.start_date) {
-        if (order.product !== product) {
-          return res.status(401).json({
-            error:
-              'Products that have already left for delivery cannot be changed',
-          });
-        }
+      if (!deliverymanExists) {
+        return res.status(401).json({ error: 'Recipient cannot exists.' });
+      }
+
+      if (order.start_date && order.deliveryman_id !== deliveryman_id) {
+        return res.status(401).json({
+          error:
+            ' The order has left for delivery, you cannot change the delivery man',
+        });
       }
 
       await order.update(req.body);

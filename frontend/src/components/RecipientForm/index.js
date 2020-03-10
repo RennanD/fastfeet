@@ -16,6 +16,7 @@ import {
 } from './styles';
 
 import Button from '../Button';
+import MaskInput from '../MaskInput';
 
 import history from '~/services/history';
 
@@ -51,12 +52,12 @@ export default function RecipientForm({ title, onSubmit, ...rest }) {
           <main>
             <InputContainer style={{ flex: 2 }}>
               <strong>Rua</strong>
-              <TInput name="street" placeholder="Rua recanto das palmeiras" />
+              <TInput name="street" placeholder="Rua exemplo" />
             </InputContainer>
 
             <InputContainer>
               <strong>Número</strong>
-              <TInput name="number" placeholder="1212" />
+              <TInput name="number" placeholder="0000" />
             </InputContainer>
 
             <InputContainer>
@@ -68,17 +69,21 @@ export default function RecipientForm({ title, onSubmit, ...rest }) {
           <main>
             <InputContainer>
               <strong>Cidade</strong>
-              <TInput name="city" placeholder="Campinas" />
+              <TInput name="city" placeholder="Cidade Exemplo" />
             </InputContainer>
 
             <InputContainer>
               <strong>Estado</strong>
-              <TInput name="region" placeholder="São Paulo" />
+              <TInput name="region" placeholder="Estado Exemplo" />
             </InputContainer>
 
             <InputContainer>
               <strong>CEP</strong>
-              <TInput name="zipcode" placeholder="64000-00" />
+              <MaskInput
+                mask="99999-999"
+                name="zipcode"
+                placeholder="64000-00"
+              />
             </InputContainer>
           </main>
         </Content>

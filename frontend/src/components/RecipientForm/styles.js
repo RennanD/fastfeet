@@ -58,6 +58,10 @@ export const InputContainer = styled.div`
     font-size: 14px;
     color: #444444;
   }
+
+  input {
+    height: 40px;
+  }
 `;
 
 export const Content = styled.div`

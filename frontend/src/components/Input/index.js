@@ -6,10 +6,10 @@ import PropTypes from 'prop-types';
 import { useField } from '@unform/core';
 
 export default function Input({ name, ...rest }) {
-  const inputRef = React.useRef(null);
+  const inputRef = useRef(null);
   const { fieldName, defaultValue, registerField } = useField(name);
 
-  React.useEffect(() => {
+  useEffect(() => {
     registerField({
       name: fieldName,
       ref: inputRef.current,

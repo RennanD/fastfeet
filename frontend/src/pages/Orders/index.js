@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React, { useState, useEffect } from 'react';
 
 import { useDispatch } from 'react-redux';
@@ -10,11 +11,15 @@ import {
   MdVisibility,
 } from 'react-icons/md';
 
+import { confirmAlert } from 'react-confirm-alert';
+import { toast } from 'react-toastify';
+
 import { Container } from './styles';
 
 import Badge from '~/components/Badge';
 import Menu from '~/components/Menu';
 import Header from '~/components/Header';
+import ConfirmBox from '~/components/ConfirmBox';
 
 import api from '~/services/api';
 import history from '~/services/history';
@@ -37,6 +42,26 @@ export default function Orders() {
 
   function handleNavigate() {
     history.push('/orders/new');
+  }
+
+  function handleDelete(id) {
+    confirmAlert({
+      customUI: ({ onClose }) => (
+        <ConfirmBox
+          onClose={onClose}
+          handleConfirm={async () => {
+            try {
+              const response = await api.delete(`/orders/${id}`);
+              toast.success(response.data.msg);
+              onClose();
+            } catch ({ response }) {
+              toast.error(response.data.error);
+              onClose();
+            }
+          }}
+        />
+      ),
+    });
   }
 
   return (
@@ -142,7 +167,10 @@ export default function Orders() {
                       </button>
                     </li>
                     <li>
-                      <button type="button">
+                      <button
+                        type="button"
+                        onClick={() => handleDelete(order.id)}
+                      >
                         <MdDeleteForever size={20} color="#DE3B3B" />
                         Excluir
                       </button>

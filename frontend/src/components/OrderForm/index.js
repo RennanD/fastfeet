@@ -13,6 +13,8 @@ import RecipientInput from './RecipientInput';
 import DeliverymanInput from './DeliverymanInput';
 import Button from '../Button';
 
+import history from '~/services/history';
+
 export default function OrderForm({ title, onSubmit, ...rest }) {
   return (
     <Container>
@@ -21,7 +23,7 @@ export default function OrderForm({ title, onSubmit, ...rest }) {
           <h2>{title}</h2>
 
           <div>
-            <BackButton type="button">
+            <BackButton type="button" onClick={() => history.push('/orders')}>
               <MdChevronLeft size={28} color="#fff" /> <strong>VOLTAR</strong>
             </BackButton>
             <Button type="submit">

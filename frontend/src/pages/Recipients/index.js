@@ -1,16 +1,21 @@
+/* eslint-disable react/prop-types */
 import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 
 import { MdSearch, MdAdd, MdEdit, MdDeleteForever } from 'react-icons/md';
 
 import { toast } from 'react-toastify';
+import { confirmAlert } from 'react-confirm-alert';
+
 import { Container } from './styles';
 
 import Header from '~/components/Header';
 import Menu from '~/components/Menu';
+import ConfirmBox from '~/components/ConfirmBox';
 
 import api from '~/services/api';
 import history from '~/services/history';
+
 import { showRecipientRequest } from '~/store/modules/recipient/actions';
 
 export default function Recipients() {
@@ -31,13 +36,24 @@ export default function Recipients() {
     loadRecipients();
   }, [name]);
 
-  async function handleDelete(id) {
-    try {
-      const response = await api.delete(`/recipients/${id}`);
-      toast.success(response.data.msg);
-    } catch ({ response }) {
-      toast.error(response.data.error);
-    }
+  function handleDelete(id) {
+    confirmAlert({
+      customUI: ({ onClose }) => (
+        <ConfirmBox
+          onClose={onClose}
+          handleConfirm={async () => {
+            try {
+              const response = await api.delete(`/recipients/${id}`);
+              toast.success(response.data.msg);
+              onClose();
+            } catch ({ response }) {
+              toast.error(response.data.error);
+              onClose();
+            }
+          }}
+        />
+      ),
+    });
   }
 
   return (

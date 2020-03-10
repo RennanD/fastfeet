@@ -71,7 +71,7 @@ export default function DeliverymanInput({ ...rest }) {
       defaultOptions={deliverymen}
       loadOptions={promiseOptions}
       defaultValue={defaultValue}
-      placeholder="Destinatário exemplo "
+      placeholder="Entregador exemplo "
       ref={deliverymanRef}
       classNamePrefix="react-select"
       {...rest}

@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux';
 import { MdAdd, MdSearch, MdEdit, MdDeleteForever } from 'react-icons/md';
 
 import { toast } from 'react-toastify';
+import { confirmAlert } from 'react-confirm-alert';
 
 import { Container } from './styles';
 
@@ -13,6 +14,7 @@ import Header from '~/components/Header';
 import api from '~/services/api';
 import history from '~/services/history';
 import { showDeliverymanRequest } from '~/store/modules/deliveryman/actions';
+import ConfirmBox from '~/components/ConfirmBox';
 
 export default function Deliverymen() {
   const [deliverymen, setDeliverymen] = useState([]);
@@ -36,13 +38,25 @@ export default function Deliverymen() {
     history.push('/deliverymen/new');
   }
 
-  async function handleDelete(id) {
-    try {
-      await api.delete(`/deliverymen/${id}`);
-      toast.success('Deleted successful');
-    } catch ({ response }) {
-      toast.error(response.data.error);
-    }
+  function handleDelete(id) {
+    confirmAlert({
+      // eslint-disable-next-line react/prop-types
+      customUI: ({ onClose }) => (
+        <ConfirmBox
+          onClose={onClose}
+          handleConfirm={async () => {
+            try {
+              const response = await api.delete(`/deliverymen/${id}`);
+              toast.success(response.data.msg);
+              onClose();
+            } catch ({ response }) {
+              toast.error(response.data.error);
+              onClose();
+            }
+          }}
+        />
+      ),
+    });
   }
 
   return (

@@ -72,7 +72,7 @@ export default function RecipientInput({ ...rest }) {
       defaultOptions={recipients}
       loadOptions={promiseOptions}
       defaultValue={defaultValue}
-      placeholder="Entregador exemplo "
+      placeholder="Destinatário exemplo "
       ref={recipientRef}
       classNamePrefix="react-select"
       {...rest}

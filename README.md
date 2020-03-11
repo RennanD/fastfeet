@@ -47,7 +47,7 @@ $ docker start "CONTAINER DOCKER ID"
 ```
 
 - For background jobs I'm using Redis with DOCKER.
-- If you don't want installing DOCKER, use convencional installation of [Redis](https://redis.io/) .
+- If you don't want installing DOCKER, use convencional installation of [Redis](https://chocolatey.org/packages/redis-64) via [Chocolatey](https://chocolatey.org/docs/installation) .
 
 ### Runing Redis using DOCKER: 🐋
 

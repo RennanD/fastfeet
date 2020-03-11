@@ -17,6 +17,16 @@ export default function recipient(state = INITIAL_STATE, action) {
         draft.profile = action.payload.profile;
         break;
       }
+      case '@recipient/UPDATE_REQUEST': {
+        draft.loading = true;
+        break;
+      }
+
+      case '@recipient/UPDATE_SUCCESS': {
+        draft.loading = false;
+        draft.profile = null;
+        break;
+      }
       case '@recipient/FAILURE': {
         draft.loading = false;
         break;

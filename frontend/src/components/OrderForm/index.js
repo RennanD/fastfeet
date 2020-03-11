@@ -1,5 +1,6 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React from 'react';
+import { useSelector } from 'react-redux';
 
 import { Form } from '@unform/web';
 
@@ -16,6 +17,8 @@ import Button from '../Button';
 import history from '~/services/history';
 
 export default function OrderForm({ title, onSubmit, ...rest }) {
+  const loading = useSelector(state => state.order.loading);
+
   return (
     <Container>
       <Form onSubmit={onSubmit} {...rest}>
@@ -27,10 +30,14 @@ export default function OrderForm({ title, onSubmit, ...rest }) {
               <MdChevronLeft size={28} color="#fff" /> <strong>VOLTAR</strong>
             </BackButton>
             <Button type="submit">
-              <>
-                <MdCheck size={24} color="#fff" />
-                <strong>SALVAR</strong>
-              </>
+              {loading ? (
+                'Salvando...'
+              ) : (
+                <>
+                  <MdCheck size={24} color="#fff" />
+                  <strong>SALVAR</strong>
+                </>
+              )}
             </Button>
           </div>
         </header>

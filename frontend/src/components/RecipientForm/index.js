@@ -1,5 +1,6 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React from 'react';
+import { useSelector } from 'react-redux';
 
 import PropTypes from 'prop-types';
 
@@ -21,6 +22,8 @@ import MaskInput from '../MaskInput';
 import history from '~/services/history';
 
 export default function RecipientForm({ title, onSubmit, ...rest }) {
+  const loading = useSelector(state => state.recipient.loading);
+
   return (
     <Container>
       <Form onSubmit={onSubmit} {...rest}>
@@ -35,10 +38,14 @@ export default function RecipientForm({ title, onSubmit, ...rest }) {
               <MdChevronLeft size={28} color="#fff" /> <strong>VOLTAR</strong>
             </BackButton>
             <Button type="submit">
-              <>
-                <MdCheck size={24} color="#fff" />
-                <strong>SALVAR</strong>
-              </>
+              {loading ? (
+                'Salvando...'
+              ) : (
+                <>
+                  <MdCheck size={24} color="#fff" />
+                  <strong>SALVAR</strong>
+                </>
+              )}
             </Button>
           </div>
         </header>

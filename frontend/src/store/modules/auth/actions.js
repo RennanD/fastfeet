@@ -12,6 +12,12 @@ export function singInSuccess(user, token) {
   };
 }
 
+export function singOut() {
+  return {
+    type: '@auth/SING_OUT',
+  };
+}
+
 export function singFailure() {
   return {
     type: '@auth/SING_FAILURE',

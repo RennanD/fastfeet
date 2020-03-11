@@ -40,6 +40,7 @@ export const Modal = styled.div`
     height: 100px;
     align-self: center;
     text-align: center;
+    background: #eee;
   }
 
   main {

@@ -47,6 +47,11 @@ export const ActionList = styled.ul`
       color: #444;
       font-size: 16px;
 
+      &:disabled {
+        cursor: not-allowed;
+        opacity: 0.5;
+      }
+
       svg {
         margin-right: 10px;
       }

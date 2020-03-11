@@ -1,60 +1,36 @@
 /* eslint-disable react/prop-types */
 import React, { useState, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
 
-import { MdSearch, MdAdd, MdEdit, MdDeleteForever } from 'react-icons/md';
-
-import { toast } from 'react-toastify';
-import { confirmAlert } from 'react-confirm-alert';
+import { MdSearch, MdAdd } from 'react-icons/md';
 
 import { Container } from './styles';
 
+import RecipientItem from './RecipientItem';
+import ShimmerLoader from '~/components/ShimmerLoader';
+import EmptyList from '~/components/EmptyList';
 import Header from '~/components/Header';
-import Menu from '~/components/Menu';
-import ConfirmBox from '~/components/ConfirmBox';
 
 import api from '~/services/api';
 import history from '~/services/history';
 
-import { showRecipientRequest } from '~/store/modules/recipient/actions';
-
 export default function Recipients() {
   const [name, setName] = useState('');
+  const [loading, setLoading] = useState(false);
   const [recipients, setRecipients] = useState([]);
-
-  const dispatch = useDispatch();
 
   useEffect(() => {
     async function loadRecipients() {
+      setLoading(true);
       const response = await api.get('/recipients', {
         params: {
           name,
         },
       });
       setRecipients(response.data);
+      setLoading(false);
     }
     loadRecipients();
   }, [name]);
-
-  function handleDelete(id) {
-    confirmAlert({
-      customUI: ({ onClose }) => (
-        <ConfirmBox
-          onClose={onClose}
-          handleConfirm={async () => {
-            try {
-              const response = await api.delete(`/recipients/${id}`);
-              toast.success(response.data.msg);
-              onClose();
-            } catch ({ response }) {
-              toast.error(response.data.error);
-              onClose();
-            }
-          }}
-        />
-      ),
-    });
-  }
 
   return (
     <Container>
@@ -77,74 +53,38 @@ export default function Recipients() {
         </div>
       </Header>
 
-      <table>
-        <thead>
-          <tr>
-            <th>
-              <strong>ID</strong>
-            </th>
-            <th>
-              <strong>Nome</strong>
-            </th>
-            <th>
-              <strong>Endereço</strong>
-            </th>
+      {loading ? (
+        <ShimmerLoader />
+      ) : (
+        <table>
+          {!recipients.length ? (
+            <EmptyList />
+          ) : (
+            <>
+              <thead>
+                <tr>
+                  <th>
+                    <strong>ID</strong>
+                  </th>
+                  <th>
+                    <strong>Nome</strong>
+                  </th>
+                  <th>
+                    <strong>Endereço</strong>
+                  </th>
 
-            <th>
-              <div>
-                <strong>Ações</strong>
-              </div>
-            </th>
-          </tr>
-        </thead>
-
-        <tbody>
-          {recipients.map(recipient => (
-            <tr key={recipient.id}>
-              <td>
-                <span>#{recipient.id}</span>
-              </td>
-
-              <td>
-                <span>{recipient.name}</span>
-              </td>
-              <td>
-                <span>
-                  {recipient.street}, {recipient.number}, {recipient.city} -{' '}
-                  {recipient.region}{' '}
-                </span>
-              </td>
-
-              <td>
-                <div>
-                  <Menu>
-                    <li>
-                      <button
-                        onClick={() =>
-                          dispatch(showRecipientRequest(recipient.id))
-                        }
-                        type="button"
-                      >
-                        <MdEdit size={20} color="#4D85EE" />
-                        Editar
-                      </button>
-                    </li>
-                    <li>
-                      <button
-                        onClick={() => handleDelete(recipient.id)}
-                        type="button"
-                      >
-                        <MdDeleteForever size={20} color="#DE3B3B" />
-                        Excluir
-                      </button>
-                    </li>
-                  </Menu>
-                </div>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+                  <th>
+                    <div>
+                      <strong>Ações</strong>
+                    </div>
+                  </th>
+                </tr>
+              </thead>
+              <RecipientItem recipients={recipients} />
+            </>
+          )}
+        </table>
+      )}
     </Container>
   );
 }

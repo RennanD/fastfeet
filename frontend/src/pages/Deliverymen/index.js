@@ -1,62 +1,38 @@
 import React, { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
 
-import { MdAdd, MdSearch, MdEdit, MdDeleteForever } from 'react-icons/md';
-
-import { toast } from 'react-toastify';
-import { confirmAlert } from 'react-confirm-alert';
+import { MdAdd, MdSearch } from 'react-icons/md';
 
 import { Container } from './styles';
 
-import Menu from '~/components/Menu';
+import DeliverymanItem from './DeliverymanItem';
+import ShimmerLoader from '~/components/ShimmerLoader';
+import EmptyList from '~/components/EmptyList';
 import Header from '~/components/Header';
 
 import api from '~/services/api';
 import history from '~/services/history';
-import { showDeliverymanRequest } from '~/store/modules/deliveryman/actions';
-import ConfirmBox from '~/components/ConfirmBox';
 
 export default function Deliverymen() {
   const [deliverymen, setDeliverymen] = useState([]);
+  const [loading, setLoading] = useState(false);
   const [name, setName] = useState('');
-
-  const dispatch = useDispatch();
 
   useEffect(() => {
     async function loadDeliverymen() {
+      setLoading(true);
       const response = await api.get('/deliverymen', {
         params: {
           name,
         },
       });
       setDeliverymen(response.data);
+      setLoading(false);
     }
     loadDeliverymen();
   }, [name]);
 
   function handleNavigate() {
     history.push('/deliverymen/new');
-  }
-
-  function handleDelete(id) {
-    confirmAlert({
-      // eslint-disable-next-line react/prop-types
-      customUI: ({ onClose }) => (
-        <ConfirmBox
-          onClose={onClose}
-          handleConfirm={async () => {
-            try {
-              const response = await api.delete(`/deliverymen/${id}`);
-              toast.success(response.data.msg);
-              onClose();
-            } catch ({ response }) {
-              toast.error(response.data.error);
-              onClose();
-            }
-          }}
-        />
-      ),
-    });
   }
 
   return (
@@ -80,83 +56,42 @@ export default function Deliverymen() {
         </div>
       </Header>
 
-      <table>
-        <thead>
-          <tr>
-            <th>
-              <strong>ID</strong>
-            </th>
-            <th>
-              <strong>Foto</strong>
-            </th>
-            <th>
-              <strong>Nome</strong>
-            </th>
-            <th>
-              <strong>E-mail</strong>
-            </th>
+      {loading ? (
+        <ShimmerLoader />
+      ) : (
+        <table>
+          {!deliverymen.length ? (
+            <EmptyList />
+          ) : (
+            <>
+              <thead>
+                <tr>
+                  <th>
+                    <strong>ID</strong>
+                  </th>
+                  <th>
+                    <strong>Foto</strong>
+                  </th>
+                  <th>
+                    <strong>Nome</strong>
+                  </th>
+                  <th>
+                    <strong>E-mail</strong>
+                  </th>
 
-            <th>
-              <div>
-                <strong>Ações</strong>
-              </div>
-            </th>
-          </tr>
-        </thead>
+                  <th>
+                    <div>
+                      <strong>Ações</strong>
+                    </div>
+                  </th>
+                </tr>
+              </thead>
 
-        <tbody>
-          {deliverymen.map(deliveryman => (
-            <tr key={deliveryman.id}>
-              <td>
-                <span>#{deliveryman.id}</span>
-              </td>
-              <td>
-                <img
-                  src={
-                    deliveryman.avatar
-                      ? deliveryman.avatar.url
-                      : 'https://medgoldresources.com/wp-content/uploads/2018/02/avatar-placeholder.gif'
-                  }
-                  alt={deliveryman.name}
-                />
-              </td>
-              <td>
-                <span>{deliveryman.name}</span>
-              </td>
-              <td>
-                <span>{deliveryman.email}</span>
-              </td>
-
-              <td>
-                <div>
-                  <Menu>
-                    <li>
-                      <button
-                        type="button"
-                        onClick={() =>
-                          dispatch(showDeliverymanRequest(deliveryman.id))
-                        }
-                      >
-                        <MdEdit size={20} color="#4D85EE" />
-                        Editar
-                      </button>
-                    </li>
-                    <li>
-                      <button
-                        type="button"
-                        onClick={() => handleDelete(deliveryman.id)}
-                      >
-                        <MdDeleteForever size={20} color="#DE3B3B" />
-                        Excluir
-                      </button>
-                    </li>
-                  </Menu>
-                </div>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+              <DeliverymanItem deliverymen={deliverymen} />
+            </>
+          )}
+        </table>
+      )}
     </Container>
   );
 }

@@ -9,6 +9,7 @@ import OrderItem from './OrderItem';
 import ShimmerLoader from '~/components/ShimmerLoader';
 import EmptyList from '~/components/EmptyList';
 import Header from '~/components/Header';
+import Pagination from '~/components/Pagination';
 
 import api from '~/services/api';
 import history from '~/services/history';
@@ -17,22 +18,30 @@ export default function Orders() {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(false);
   const [product, setProduct] = useState('');
+  const [lengthOrders, setLengthOrders] = useState(0);
+
+  async function loadOrders(page) {
+    setLoading(true);
+    const response = await api.get(`/orders?product=${product}`, {
+      params: {
+        page,
+      },
+    });
+
+    const data = response.data.map(order => ({
+      ...order,
+      disabled: order.end_date,
+    }));
+
+    setLengthOrders(response.data.length);
+    setOrders(data);
+    setLoading(false);
+  }
 
   useEffect(() => {
-    async function loadOrders() {
-      setLoading(true);
-      const response = await api.get(`/orders?product=${product}`);
-
-      const data = response.data.map(order => ({
-        ...order,
-        disabled: order.end_date,
-      }));
-
-      setOrders(data);
-      setLoading(false);
-    }
-    loadOrders();
-  }, [product]);
+    loadOrders(1);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   function handleNavigate() {
     history.push('/orders/new');
@@ -103,6 +112,7 @@ export default function Orders() {
           )}
         </table>
       )}
+      <Pagination loadItems={loadOrders} itemsLenght={lengthOrders} />
     </Container>
   );
 }

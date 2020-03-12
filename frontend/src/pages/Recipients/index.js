@@ -9,6 +9,7 @@ import RecipientItem from './RecipientItem';
 import ShimmerLoader from '~/components/ShimmerLoader';
 import EmptyList from '~/components/EmptyList';
 import Header from '~/components/Header';
+import Pagination from '~/components/Pagination';
 
 import api from '~/services/api';
 import history from '~/services/history';
@@ -17,20 +18,25 @@ export default function Recipients() {
   const [name, setName] = useState('');
   const [loading, setLoading] = useState(false);
   const [recipients, setRecipients] = useState([]);
+  const [lengthRecipient, setLengthDeliverymen] = useState(0);
+
+  async function loadRecipients(page) {
+    setLoading(true);
+    const response = await api.get('/recipients', {
+      params: {
+        name,
+        page,
+      },
+    });
+    setLengthDeliverymen(response.data.length);
+    setRecipients(response.data);
+    setLoading(false);
+  }
 
   useEffect(() => {
-    async function loadRecipients() {
-      setLoading(true);
-      const response = await api.get('/recipients', {
-        params: {
-          name,
-        },
-      });
-      setRecipients(response.data);
-      setLoading(false);
-    }
-    loadRecipients();
-  }, [name]);
+    loadRecipients(1);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <Container>
@@ -85,6 +91,7 @@ export default function Recipients() {
           )}
         </table>
       )}
+      <Pagination loadItems={loadRecipients} itemsLenght={lengthRecipient} />
     </Container>
   );
 }

@@ -11,25 +11,32 @@ import Header from '~/components/Header';
 
 import api from '~/services/api';
 import history from '~/services/history';
+import Pagination from '~/components/Pagination';
 
 export default function Deliverymen() {
   const [deliverymen, setDeliverymen] = useState([]);
+  const [lengthDeliverymen, setLengthDeliverymen] = useState(0);
+
   const [loading, setLoading] = useState(false);
   const [name, setName] = useState('');
 
+  async function loadDeliverymen(page) {
+    setLoading(true);
+    const response = await api.get('/deliverymen', {
+      params: {
+        name,
+        page,
+      },
+    });
+    setLengthDeliverymen(response.data.length);
+    setDeliverymen(response.data);
+    setLoading(false);
+  }
+
   useEffect(() => {
-    async function loadDeliverymen() {
-      setLoading(true);
-      const response = await api.get('/deliverymen', {
-        params: {
-          name,
-        },
-      });
-      setDeliverymen(response.data);
-      setLoading(false);
-    }
-    loadDeliverymen();
-  }, [name]);
+    loadDeliverymen(1);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   function handleNavigate() {
     history.push('/deliverymen/new');
@@ -92,6 +99,7 @@ export default function Deliverymen() {
           )}
         </table>
       )}
+      <Pagination loadItems={loadDeliverymen} itemsLenght={lengthDeliverymen} />
     </Container>
   );
 }

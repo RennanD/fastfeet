@@ -8,7 +8,7 @@ import { Container, ActionList } from './styles';
 
 import { useOnClickOutside } from '~/hooks';
 
-export default function Menu({ children }) {
+export default function Menu({ children, style }) {
   const menuRef = useRef();
 
   const [visible, setVisible] = useState(false);
@@ -29,13 +29,18 @@ export default function Menu({ children }) {
         <MdMoreHoriz color="#999" size={20} />
       </button>
 
-      <ActionList ref={menuRef} visible={visible}>
+      <ActionList style={style} ref={menuRef} visible={visible}>
         {children}
       </ActionList>
     </Container>
   );
 }
 
+Menu.defaultProps = {
+  style: {},
+};
+
 Menu.propTypes = {
   children: PropTypes.node.isRequired,
+  style: PropTypes.node,
 };

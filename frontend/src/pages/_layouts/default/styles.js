@@ -19,9 +19,12 @@ export const Wrapper = styled.div`
         justify-content: flex-end;
       }
     }
-
     tbody {
       td {
+        text-overflow: ellipsis;
+
+        -webkit-line-clamp: 1;
+        -webkit-box-orient: vertical;
         padding: 12px;
         vertical-align: middle;
         background: #fff;
@@ -57,6 +60,8 @@ export const Wrapper = styled.div`
         span {
           font-size: 16px;
           color: #666;
+
+          margin: 0;
         }
 
         button {

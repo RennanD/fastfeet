@@ -17,6 +17,8 @@ import Recipients from '~/pages/Recipients';
 import NewRecipient from '~/pages/Recipients/Add';
 import EditRecipient from '~/pages/Recipients/Edit';
 
+import Problems from '~/pages/Problems';
+
 export default function Routes() {
   return (
     <Switch>
@@ -33,6 +35,8 @@ export default function Routes() {
       <Route path="/recipients" exact component={Recipients} isPrivate />
       <Route path="/recipients/new" exact component={NewRecipient} isPrivate />
       <Route path="/recipients/edit" component={EditRecipient} isPrivate />
+
+      <Route path="/problems" component={Problems} isPrivate />
     </Switch>
   );
 }

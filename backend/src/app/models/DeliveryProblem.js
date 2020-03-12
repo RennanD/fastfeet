@@ -5,7 +5,7 @@ class DeliveryProblem extends Model {
     super.init(
       {
         delivery_id: Sequelize.INTEGER,
-        description: Sequelize.STRING,
+        description: Sequelize.TEXT,
         created_at: Sequelize.DATE,
         updated_at: Sequelize.DATE,
       },

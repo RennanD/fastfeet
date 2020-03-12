@@ -9,6 +9,7 @@ import Queue from '../../lib/Queue';
 
 class DeliveyProblemsController {
   async index(req, res) {
+    const { page = 1 } = req.query;
     const deliveryPromblens = await DeliveryProblem.findAll({
       include: [
         {
@@ -30,6 +31,9 @@ class DeliveyProblemsController {
         },
       ],
       attributes: ['id', 'description'],
+      order: [['created_at', 'DESC']],
+      limit: 20,
+      offset: (page - 1) * 20,
     });
 
     return res.json(deliveryPromblens);
@@ -38,33 +42,14 @@ class DeliveyProblemsController {
   async show(req, res) {
     const { id } = req.params;
 
-    const deliveryPromblens = await DeliveryProblem.findAll({
-      where: {
-        delivery_id: id,
-      },
-      include: [
-        {
-          model: Order,
-          as: 'delivery',
-          attributes: ['id', 'product'],
-          include: [
-            {
-              model: Deliveryman,
-              as: 'deliveryman',
-              attributes: ['id', 'name'],
-            },
-            {
-              model: Recipient,
-              as: 'recipient',
-              attributes: ['name', 'street', 'number', 'city', 'region'],
-            },
-          ],
-        },
-      ],
+    const deliveryPromblem = await DeliveryProblem.findByPk(id, {
       attributes: ['id', 'description'],
     });
 
-    return res.json(deliveryPromblens);
+    if (!deliveryPromblem)
+      return res.status(400).json({ error: 'Problem not found' });
+
+    return res.json(deliveryPromblem);
   }
 
   async store(req, res) {

@@ -45,14 +45,16 @@ routes.put(
 );
 
 // Problems routes
-routes.get('/delivery/:id/problems', DeliveyProblemsController.show);
 routes.post('/delivery/:id/problems', DeliveyProblemsController.store);
 
 routes.get('/problems', DeliveyProblemsController.index);
-routes.delete('/problems/:id/cancel', DeliveyProblemsController.delete);
+routes.get('/problems/:id/', DeliveyProblemsController.show);
 
 // Authenticate routes
 routes.use(authMiddleware);
+
+// Auth Problem routes
+routes.delete('/problems/:id/cancel', DeliveyProblemsController.delete);
 
 // CRUD recipients routes
 routes.get('/recipients', RecipientController.index);

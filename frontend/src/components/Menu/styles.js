@@ -11,8 +11,8 @@ export const Container = styled.div`
 
 export const ActionList = styled.ul`
   position: absolute;
-  width: 150px;
-  left: calc(50% - 75px);
+  width: 220px;
+  left: calc(50% - 110px);
   top: calc(100%);
   background: #fff;
   border-radius: 4px;
@@ -34,6 +34,9 @@ export const ActionList = styled.ul`
   }
 
   li {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     & + li {
       margin-top: 5px;
       padding-top: 5px;

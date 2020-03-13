@@ -7,7 +7,7 @@ import { Container, TInput } from './styles';
 
 export default function Input({ name, ...rest }) {
   const inputRef = useRef(null);
-  const { fieldName, registerField } = useField(name);
+  const { fieldName, registerField, defaultValue = '' } = useField(name);
 
   useEffect(() => {
     registerField({
@@ -19,7 +19,12 @@ export default function Input({ name, ...rest }) {
 
   return (
     <Container>
-      <TInput placeholder="Digite seu ID de cadastro" {...rest} />
+      <TInput
+        ref={inputRef}
+        defaultValue={defaultValue}
+        placeholder="Digite seu ID de cadastro"
+        {...rest}
+      />
     </Container>
   );
 }

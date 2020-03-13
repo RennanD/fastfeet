@@ -32,6 +32,8 @@ routes.post('/files', upload.single('file'), FileController.store);
 routes.get('/deliverymen/:id/orders', DashboardController.index);
 routes.get('/deliverymen/:id/orders/:orderId', DashboardController.show);
 
+routes.get('/deliverymen/:deliverymanId', DeliverymanController.show);
+
 // Deliveries from deliverymen
 routes.get('/deliverymen/:id/deliveries', DeliveryiesController.index);
 routes.put(
@@ -67,7 +69,6 @@ routes.delete('/recipients/:recipientId', RecipientController.delete);
 
 // CRUD deliverymen routes
 routes.get('/deliverymen', DeliverymanController.index);
-routes.get('/deliverymen/:deliverymanId', DeliverymanController.show);
 
 routes.post('/deliverymen', DeliverymanController.store);
 

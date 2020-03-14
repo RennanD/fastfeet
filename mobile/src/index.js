@@ -12,13 +12,13 @@ import { store, persistor } from './store';
 
 export default function src() {
   return (
-    <Provider store={store}>
-      <PersistGate persistor={persistor}>
-        <NavigationContainer>
+    <NavigationContainer>
+      <Provider store={store}>
+        <PersistGate persistor={persistor}>
           <StatusBar backgroundColor="#fafafa" barStyle="dark-content" />
           <Routes />
-        </NavigationContainer>
-      </PersistGate>
-    </Provider>
+        </PersistGate>
+      </Provider>
+    </NavigationContainer>
   );
 }

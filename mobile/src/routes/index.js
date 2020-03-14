@@ -1,20 +1,9 @@
-import React from 'react';
+import { useSelector } from 'react-redux';
 
-import { createStackNavigator } from '@react-navigation/stack';
+import createRoutes from './Route';
 
-import AppRoutes from './App.routes';
+export default function App() {
+  const signed = useSelector(state => state.auth.signed);
 
-import Login from '~/screens/Login';
-
-export default function Routes() {
-  const signed = false;
-  const { Navigator, Screen } = createStackNavigator();
-
-  if (!signed) {
-    return (
-      <Navigator headerMode="none">
-        <Screen name="Login" component={Login} />
-      </Navigator>
-    );
-  }
+  return createRoutes(signed);
 }

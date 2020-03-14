@@ -13,7 +13,6 @@ module.exports = {
   parserOptions: {
     ecmaFeatures: {
       jsx: true,
-      experimentalObjectRestSpread: true,
     },
     ecmaVersion: 2018,
     sourceType: 'module',
@@ -33,15 +32,6 @@ module.exports = {
     'no-console': ['error', { allow: ['tron'] }],
     'react-hooks/rules-of-hooks': 'error',
     'react-hooks/exhaustive-deps': 'warn',
-    'react/jsx-props-no-spreading': [
-      'enabled',
-      {
-        html: 'ignore' | 'enforce',
-        custom: 'ignore' | 'enforce',
-        explicitSpread: 'ignore' | 'enforce',
-        exceptions: ['string'],
-      },
-    ],
   },
   settings: {
     'import/resolver': {

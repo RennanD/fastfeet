@@ -40,7 +40,7 @@ class DeliveriesController {
         {
           model: Recipient,
           as: 'recipient',
-          attributes: ['name', 'zipcode'],
+          attributes: ['name', 'city'],
         },
       ],
     });

@@ -15,7 +15,7 @@ export default function src() {
     <NavigationContainer>
       <Provider store={store}>
         <PersistGate persistor={persistor}>
-          <StatusBar backgroundColor="#fafafa" barStyle="dark-content" />
+          <StatusBar backgroundColor="#fff" barStyle="dark-content" />
           <Routes />
         </PersistGate>
       </Provider>

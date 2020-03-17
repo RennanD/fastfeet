@@ -5,10 +5,9 @@ import { StatusBar } from 'react-native';
 
 import { Form } from '@unform/mobile';
 
-import { Container, Logo, SubmitButton, LoginForm } from './styles';
+import { Container, Logo, SubmitButton } from './styles';
 
 import Input from '~/components/Input';
-import Button from '~/components/Button';
 
 import logo from '~/assets/mobile-logo.png';
 

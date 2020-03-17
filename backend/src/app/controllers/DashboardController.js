@@ -23,10 +23,18 @@ class DashboardController {
         {
           model: Recipient,
           as: 'recipient',
-          attributes: ['id', 'name', 'zipcode'],
+          attributes: ['id', 'name', 'city'],
         },
       ],
-      attributes: ['id', 'product'],
+      attributes: [
+        'id',
+        'product',
+        'status',
+        'created_at',
+        'canceled_at',
+        'start_date',
+        'end_date',
+      ],
     });
 
     return res.json(order);

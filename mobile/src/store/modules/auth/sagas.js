@@ -1,4 +1,8 @@
 import { all, takeLatest, call, put } from 'redux-saga/effects';
+
+import { format, parseISO } from 'date-fns';
+import { ptBR } from 'date-fns/locale';
+
 import Snackbar from 'react-native-snackbar';
 
 import api from '~/services/api';
@@ -10,7 +14,14 @@ export function* singIn({ payload }) {
 
     const response = yield call(api.get, `/deliverymen/${id}`);
 
-    yield put(singInSuccess(response.data.id, response.data));
+    const data = {
+      ...response.data,
+      registeredDate: format(parseISO(response.data.created_at), 'dd/MM/yyyy', {
+        locale: ptBR,
+      }),
+    };
+
+    yield put(singInSuccess(data.id, data));
   } catch ({ response }) {
     yield put(singFailure());
     Snackbar.show({

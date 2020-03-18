@@ -1,6 +1,6 @@
 import 'react-native-gesture-handler';
 import React, { useRef } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { StatusBar } from 'react-native';
 
 import { Form } from '@unform/mobile';
@@ -17,6 +17,8 @@ export default function Login() {
   const formRef = useRef(null);
   const dispatch = useDispatch();
 
+  const loading = useSelector(state => state.auth.loading);
+
   function handleSubmit({ user_id }) {
     dispatch(singInRequest(Number(user_id)));
   }
@@ -30,7 +32,10 @@ export default function Login() {
         <Form ref={formRef} onSubmit={handleSubmit}>
           <Input name="user_id" keyboardType="number-pad" type="email" />
 
-          <SubmitButton onPress={() => formRef.current.submitForm()}>
+          <SubmitButton
+            loading={loading}
+            onPress={() => formRef.current.submitForm()}
+          >
             Entrar no sistema
           </SubmitButton>
         </Form>

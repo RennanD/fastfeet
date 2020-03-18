@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import { Animated, TouchableOpacity } from 'react-native';
+
+import { useSelector, useDispatch } from 'react-redux';
 
 import { format, parseISO } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
-
-import { Animated } from 'react-native';
 
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
@@ -28,11 +28,18 @@ import OrderCard from '~/components/OrderCard';
 
 import api from '~/services/api';
 
+import { singOut } from '~/store/modules/auth/actions';
+
 export default function Home() {
   const deliveryman = useSelector(state => state.user.profile);
   const userId = useSelector(state => state.auth.userId);
 
-  const [orders, setOrders] = useState([]);
+  const dispatch = useDispatch();
+
+  const [activeTab, setActiveTab] = useState('pending');
+
+  const [pedingOrders, setPendingOrders] = useState([]);
+  const [deliveries, setDeliveries] = useState([]);
 
   const [active, setActive] = useState(0);
   const [xTabOne, setXTabOne] = useState(0);
@@ -40,51 +47,47 @@ export default function Home() {
   const [xTabTwo] = useState(0);
   const [translateX] = useState(new Animated.Value(0));
 
-  async function loadPendingOrders() {
-    const response = await api.get(`/deliverymen/${userId}/orders`);
-
-    const data = response.data.map(order => ({
-      ...order,
-      dateFormatted: format(parseISO(order.created_at), 'dd/MM/yyyy', {
-        locale: ptBR,
-      }),
-      currentPosition: order.status === 'PENDENTE' ? 1 : 2,
-    }));
-    console.tron.log(data);
-
-    setOrders(data);
-  }
-
-  async function loadDeliveries() {
-    try {
-      const response = await api.get(`/deliverymen/${userId}/deliveries`);
-      const data = response.data.map(order => ({
-        ...order,
-        dateFormatted: format(parseISO(order.end_date), 'dd/MM/yyyy', {
-          locale: ptBR,
-        }),
-        currentPosition: 3,
-      }));
-
-      setOrders(data);
-    } catch ({ response }) {
-      console.tron.log(response);
-    }
-  }
-
   useEffect(() => {
-    loadPendingOrders();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    async function loadDeliveries() {
+      try {
+        const ordersResponse = await api.get(`/deliverymen/${userId}/orders`);
+        const deliveriesResponse = await api.get(
+          `/deliverymen/${userId}/deliveries`
+        );
 
-  function handleSlide(value, transform, loadFunc) {
+        const dataOrders = ordersResponse.data.map(order => ({
+          ...order,
+          dateFormatted: format(parseISO(order.created_at), 'dd/MM/yyyy', {
+            locale: ptBR,
+          }),
+          currentPosition: order.status === 'PENDENTE' ? 1 : 2,
+        }));
+
+        const dataDeliveries = deliveriesResponse.data.map(delivery => ({
+          ...delivery,
+          dateFormatted: format(parseISO(delivery.end_date), 'dd/MM/yyyy', {
+            locale: ptBR,
+          }),
+          currentPosition: 3,
+        }));
+
+        setPendingOrders(dataOrders);
+        setDeliveries(dataDeliveries);
+      } catch ({ response }) {
+        console.tron.log(response);
+      }
+    }
+    loadDeliveries();
+  }, [userId]);
+
+  function handleSlide(value, transform, tab) {
+    setActiveTab(tab);
     setActive(value);
+
     Animated.spring(translateX, {
       toValue: transform,
       delay: 100,
     }).start();
-
-    loadFunc();
   }
 
   return (
@@ -102,7 +105,9 @@ export default function Home() {
           <UserName>{deliveryman.name}</UserName>
         </InfoView>
 
-        <Icon name="login-variant" color="#E74040" size={30} />
+        <TouchableOpacity onPress={() => dispatch(singOut())}>
+          <Icon name="login-variant" color="#E74040" size={30} />
+        </TouchableOpacity>
       </Header>
 
       <ActionsView>
@@ -111,7 +116,7 @@ export default function Home() {
         <TabBar>
           <Overlay style={{ transform: [{ translateX }] }} />
           <Tab
-            onPress={() => handleSlide(0, xTabTwo, loadPendingOrders)}
+            onPress={() => handleSlide(0, xTabTwo, 'pending')}
             onLayout={event => setXTabOne(event.nativeEvent.layout.x)}
           >
             <TabText style={{ color: active === 1 ? '#999999' : '#7d40e7' }}>
@@ -120,7 +125,7 @@ export default function Home() {
           </Tab>
 
           <Tab
-            onPress={() => handleSlide(1, xTabOne, loadDeliveries)}
+            onPress={() => handleSlide(1, xTabOne, 'finish')}
             onLayout={event => setXTabOne(event.nativeEvent.layout.x)}
           >
             <TabText style={{ color: active === 0 ? '#999999' : '#7d40e7' }}>
@@ -130,11 +135,19 @@ export default function Home() {
         </TabBar>
       </ActionsView>
 
-      <List>
-        {orders.map(order => (
-          <OrderCard key={Number(order.id)} order={order} />
-        ))}
-      </List>
+      {activeTab === 'finish' ? (
+        <List>
+          {deliveries.map(delivery => (
+            <OrderCard key={delivery.id} order={delivery} />
+          ))}
+        </List>
+      ) : (
+        <List>
+          {pedingOrders.map(order => (
+            <OrderCard key={order.id} order={order} />
+          ))}
+        </List>
+      )}
     </Container>
   );
 }

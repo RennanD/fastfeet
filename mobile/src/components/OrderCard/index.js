@@ -28,10 +28,10 @@ export default function OrderCard({ order }) {
           width: 0,
           height: 1,
         },
-        shadowOpacity: 0.2,
-        shadowRadius: 1.41,
+        shadowOpacity: 0.18,
+        shadowRadius: 1.0,
 
-        elevation: 2,
+        elevation: 1,
       }}
     >
       <Top>

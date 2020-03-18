@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-props-no-spreading */
 import React, { useRef, useEffect } from 'react';
 import { useField } from '@unform/core';
 

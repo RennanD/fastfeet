@@ -8,7 +8,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 
 import Login from '~/screens/Login';
 
-import Home from '~/screens/Home';
+import StackRoutes from './Stack.routes';
 import Profile from '~/screens/Profile';
 
 export default function createRouter(isSigned = false) {
@@ -38,7 +38,7 @@ export default function createRouter(isSigned = false) {
             <Icon name="reorder-horizontal" size={24} color={color} />
           ),
         }}
-        component={Home}
+        component={StackRoutes}
       />
       <Tab.Screen
         name="Profile"

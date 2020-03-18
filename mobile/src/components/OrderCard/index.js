@@ -1,5 +1,7 @@
 import React from 'react';
 
+import { useNavigation } from '@react-navigation/native';
+
 import PropTypes from 'prop-types';
 
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -20,6 +22,8 @@ import {
 } from './styles';
 
 export default function OrderCard({ order }) {
+  const navigation = useNavigation();
+
   return (
     <Container
       style={{
@@ -60,7 +64,7 @@ export default function OrderCard({ order }) {
         </InfoView>
 
         <InfoView>
-          <LinkButton>
+          <LinkButton onPress={() => navigation.navigate('Details')}>
             <LinkText>Ver detalhes</LinkText>
           </LinkButton>
         </InfoView>

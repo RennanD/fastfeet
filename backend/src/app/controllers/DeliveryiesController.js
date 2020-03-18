@@ -35,7 +35,7 @@ class DeliveriesController {
           [Op.ne]: null,
         },
       },
-      attributes: ['product', 'start_date', 'end_date'],
+      attributes: ['id', 'product', 'start_date', 'end_date'],
       include: [
         {
           model: Recipient,

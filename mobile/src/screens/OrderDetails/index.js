@@ -67,7 +67,7 @@ export default function OrderDetails() {
         >
           <Top>
             <Icon name="calendar" size={22} color="#7D40E7" />
-            <Title>Informaçoes da encomenda</Title>
+            <Title>Status da encomenda</Title>
           </Top>
 
           <Label>STATUS</Label>

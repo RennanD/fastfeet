@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React from 'react';
-import { ActivityIndicator, ViewPropTypes } from 'react-native';
+import { ActivityIndicator } from 'react-native';
 
 import PropTypes from 'prop-types';
 
@@ -21,7 +21,9 @@ export default function Button({ children, loading, style, ...rest }) {
 Button.propTypes = {
   children: PropTypes.string.isRequired,
   loading: PropTypes.bool,
-  style: ViewPropTypes.style.isRequired,
+  style: PropTypes.objectOf(
+    PropTypes.oneOfType([PropTypes.string, PropTypes.number])
+  ).isRequired,
 };
 
 Button.defaultProps = {

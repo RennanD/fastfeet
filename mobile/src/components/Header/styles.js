@@ -1,10 +1,12 @@
 import styled from 'styled-components/native';
+import { Platform } from 'react-native';
 
 export const Container = styled.View`
-  height: 155px;
+  height: ${Platform.OS === 'ios' ? 165 : 155}px;
   background: #7d40e7;
   padding: 15px;
   position: relative;
+  padding-top: ${Platform.OS === 'ios' ? `45px` : 0};
 `;
 
 export const Top = styled.View`

@@ -20,7 +20,7 @@ export default function Login() {
   const loading = useSelector(state => state.auth.loading);
 
   function handleSubmit({ user_id }) {
-    dispatch(singInRequest(Number(user_id)));
+    dispatch(singInRequest(user_id));
   }
 
   return (

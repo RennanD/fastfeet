@@ -1,5 +1,7 @@
 import styled from 'styled-components/native';
 
+import ShimmerPlaceHolder from 'react-native-shimmer-placeholder';
+
 export const Background = styled.View`
   flex: 1;
   background: #fff;
@@ -9,7 +11,7 @@ export const Container = styled.View`
   flex: 1;
   align-items: center;
   padding: 10px;
-  margin-top: -80px;
+  margin-top: -70px;
 `;
 
 export const Card = styled.View`
@@ -45,6 +47,20 @@ export const Info = styled.Text`
   font-size: 16px;
   color: #666;
   margin-bottom: 10px;
+`;
+
+export const ShimmerTitle = styled(ShimmerPlaceHolder)`
+  height: 15px;
+  border-radius: 10px;
+  width: 200px;
+  margin: 10px 0 10px;
+`;
+
+export const ShimmerInfo = styled(ShimmerPlaceHolder)`
+  height: 12px;
+  width: 120px;
+  border-radius: 10px;
+  margin-bottom: 5px;
 `;
 
 export const DateView = styled.View`

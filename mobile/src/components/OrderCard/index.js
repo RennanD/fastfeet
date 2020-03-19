@@ -22,7 +22,11 @@ import {
 } from './styles';
 
 export default function OrderCard({ order }) {
-  const navigation = useNavigation();
+  const { navigate } = useNavigation();
+
+  function handleShowOrder(id) {
+    navigate('Details', { order_id: id });
+  }
 
   return (
     <Container
@@ -64,7 +68,7 @@ export default function OrderCard({ order }) {
         </InfoView>
 
         <InfoView>
-          <LinkButton onPress={() => navigation.navigate('Details')}>
+          <LinkButton onPress={() => handleShowOrder(order.id)}>
             <LinkText>Ver detalhes</LinkText>
           </LinkButton>
         </InfoView>

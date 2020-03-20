@@ -1,12 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 
+import { useNavigation } from '@react-navigation/native';
+
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+
+import SnackBar from 'react-native-snackbar';
 
 import { format, parseISO } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
 import PropTypes from 'prop-types';
 
+import { ActivityIndicator } from 'react-native';
 import {
   Container,
   Card,
@@ -28,10 +33,13 @@ import Header from '~/components/Header';
 import api from '~/services/api';
 
 export default function OrderDetails({ route }) {
+  const { navigate } = useNavigation();
+
   const userId = useSelector(state => state.auth.userId);
   const { order_id } = route.params;
 
   const [order, setOrder] = useState({});
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     async function showOrder() {
@@ -41,6 +49,7 @@ export default function OrderDetails({ route }) {
 
       const data = {
         ...response.data,
+        delivered: !!response.data.end_date,
         startDateFormatted: response.data.start_date
           ? format(parseISO(response.data.start_date), 'dd/MM/yyyy', {
               locale: ptBR,
@@ -57,6 +66,28 @@ export default function OrderDetails({ route }) {
     }
     showOrder();
   }, [userId, order_id]);
+
+  async function handleInitDelivery() {
+    setLoading(true);
+    try {
+      const response = await api.put(
+        `/deliverymen/${userId}/deliveries/${order.id}`
+      );
+      SnackBar.show({
+        text: response.data.msg,
+        backgroundColor: '#2CA42B',
+      });
+      setLoading(false);
+      navigate('Home');
+    } catch ({ response }) {
+      SnackBar.show({
+        text: response.data.error,
+        backgroundColor: '#DE3B3B',
+        duration: SnackBar.LENGTH_LONG,
+      });
+      setLoading(false);
+    }
+  }
 
   return (
     <Background>
@@ -141,12 +172,13 @@ export default function OrderDetails({ route }) {
               elevation: 1,
             }}
           >
-            <ActionButton>
+            <ActionButton disabled={order.delivered}>
               <Icon name="close-circle-outline" color="#E74040" size={28} />
               <TextButton>Informar problema</TextButton>
             </ActionButton>
 
             <ActionButton
+              disabled={order.delivered}
               style={{
                 borderLeftColor: '#ddd',
                 borderRightColor: '#ddd',
@@ -158,10 +190,36 @@ export default function OrderDetails({ route }) {
               <TextButton>Visualizar problemas</TextButton>
             </ActionButton>
 
-            <ActionButton>
-              <Icon name="check-circle-outline" color="#7D40E7" size={28} />
-              <TextButton>Confirmar entrega</TextButton>
-            </ActionButton>
+            {order.start_date ? (
+              <ActionButton disabled={order.delivered}>
+                {loading ? (
+                  <ActivityIndicator size={20} color="#444" />
+                ) : (
+                  <>
+                    <Icon
+                      name="check-circle-outline"
+                      color="#7D40E7"
+                      size={28}
+                    />
+                    <TextButton>Confirmar entrega</TextButton>
+                  </>
+                )}
+              </ActionButton>
+            ) : (
+              <ActionButton
+                onPress={handleInitDelivery}
+                disabled={order.delivered}
+              >
+                {loading ? (
+                  <ActivityIndicator size={20} color="#444" />
+                ) : (
+                  <>
+                    <Icon name="truck-delivery" color="#7D40E7" size={28} />
+                    <TextButton>Retirar entrega</TextButton>
+                  </>
+                )}
+              </ActionButton>
+            )}
           </ButtonView>
         </Container>
       ) : (

@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Animated, TouchableOpacity } from 'react-native';
 
+import { useIsFocused } from '@react-navigation/native';
+
 import { useSelector, useDispatch } from 'react-redux';
 
 import { format, parseISO } from 'date-fns';
@@ -36,6 +38,8 @@ import api from '~/services/api';
 import { singOut } from '~/store/modules/auth/actions';
 
 export default function Home() {
+  const isFocused = useIsFocused();
+
   const deliveryman = useSelector(state => state.user.profile);
   const userId = useSelector(state => state.auth.userId);
 
@@ -85,8 +89,10 @@ export default function Home() {
         setLoading(false);
       }
     }
-    loadDeliveries();
-  }, [userId]);
+    if (isFocused) {
+      loadDeliveries();
+    }
+  }, [userId, isFocused]);
 
   function handleSlide(value, transform, tab) {
     setActiveTab(tab);
@@ -159,7 +165,7 @@ export default function Home() {
       )}
       {activeTab === 'finish' ? (
         <>
-          {deliveries.length >= 0 ? (
+          {deliveries.length <= 0 ? (
             <Empty>
               <Icon name="close-box-multiple-outline" size={36} color="#999" />
               <EmptyText>Não há encomendas para listar</EmptyText>
@@ -174,7 +180,7 @@ export default function Home() {
         </>
       ) : (
         <>
-          {pendingOrders.lenght >= 0 ? (
+          {pendingOrders.lenght <= 0 ? (
             <Empty>
               <Icon name="close-box-multiple-outline" size={36} color="#999" />
               <EmptyText>Não há encomendas para listar</EmptyText>

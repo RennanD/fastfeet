@@ -76,12 +76,13 @@ export const ButtonView = styled.View`
   flex-direction: row;
   border: 1px solid #fafafa;
   border-radius: 4px;
+  background: #f8f9fd;
 `;
 
 export const ActionButton = styled.TouchableOpacity`
   padding: 20px;
   flex: 1;
-  background: #f8f9fd;
+  opacity: ${props => (props.disabled ? 0.8 : 1)};
   align-items: center;
 `;
 

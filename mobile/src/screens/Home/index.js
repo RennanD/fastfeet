@@ -22,6 +22,11 @@ import {
   TabText,
   List,
   Overlay,
+  ShimmerCard,
+  ShimmerTitle,
+  ShimmerStepper,
+  Empty,
+  EmptyText,
 } from './styles';
 
 import OrderCard from '~/components/OrderCard';
@@ -38,7 +43,9 @@ export default function Home() {
 
   const [activeTab, setActiveTab] = useState('pending');
 
-  const [pedingOrders, setPendingOrders] = useState([]);
+  const [loading, setLoading] = useState(false);
+
+  const [pendingOrders, setPendingOrders] = useState([]);
   const [deliveries, setDeliveries] = useState([]);
 
   const [active, setActive] = useState(0);
@@ -50,6 +57,7 @@ export default function Home() {
   useEffect(() => {
     async function loadDeliveries() {
       try {
+        setLoading(true);
         const ordersResponse = await api.get(`/deliverymen/${userId}/orders`);
         const deliveriesResponse = await api.get(
           `/deliverymen/${userId}/deliveries`
@@ -70,11 +78,11 @@ export default function Home() {
           }),
           currentPosition: 3,
         }));
-
+        setLoading(false);
         setPendingOrders(dataOrders);
         setDeliveries(dataDeliveries);
       } catch ({ response }) {
-        console.tron.log(response);
+        setLoading(false);
       }
     }
     loadDeliveries();
@@ -134,19 +142,51 @@ export default function Home() {
           </Tab>
         </TabBar>
       </ActionsView>
+      {loading && (
+        <>
+          <ShimmerCard>
+            <ShimmerTitle autoRun />
+            <ShimmerStepper autoRun />
+            <ShimmerStepper autoRun />
+          </ShimmerCard>
 
+          <ShimmerCard>
+            <ShimmerTitle autoRun />
+            <ShimmerStepper autoRun />
+            <ShimmerStepper autoRun />
+          </ShimmerCard>
+        </>
+      )}
       {activeTab === 'finish' ? (
-        <List>
-          {deliveries.map(delivery => (
-            <OrderCard key={delivery.id} order={delivery} />
-          ))}
-        </List>
+        <>
+          {deliveries.length >= 0 ? (
+            <Empty>
+              <Icon name="close-box-multiple-outline" size={36} color="#999" />
+              <EmptyText>Não há encomendas para listar</EmptyText>
+            </Empty>
+          ) : (
+            <List>
+              {deliveries.map(delivery => (
+                <OrderCard key={delivery.id} order={delivery} />
+              ))}
+            </List>
+          )}
+        </>
       ) : (
-        <List>
-          {pedingOrders.map(order => (
-            <OrderCard key={order.id} order={order} />
-          ))}
-        </List>
+        <>
+          {pendingOrders.lenght >= 0 ? (
+            <Empty>
+              <Icon name="close-box-multiple-outline" size={36} color="#999" />
+              <EmptyText>Não há encomendas para listar</EmptyText>
+            </Empty>
+          ) : (
+            <List>
+              {pendingOrders.map(order => (
+                <OrderCard key={order.id} order={order} />
+              ))}
+            </List>
+          )}
+        </>
       )}
     </Container>
   );

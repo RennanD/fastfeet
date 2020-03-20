@@ -7,7 +7,7 @@ import Recipient from '../models/Recipient';
 import CancellationMail from '../jobs/CancellationMail';
 import Queue from '../../lib/Queue';
 
-class DeliveyProblemsController {
+class ProblemsController {
   async index(req, res) {
     const { page = 1 } = req.query;
     const deliveryPromblens = await DeliveryProblem.findAll({
@@ -135,4 +135,4 @@ class DeliveyProblemsController {
   }
 }
 
-export default new DeliveyProblemsController();
+export default new ProblemsController();

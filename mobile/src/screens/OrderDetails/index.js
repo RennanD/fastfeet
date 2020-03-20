@@ -89,6 +89,10 @@ export default function OrderDetails({ route }) {
     }
   }
 
+  function handleInfromProblem() {
+    navigate('InformProblem', { order_id });
+  }
+
   return (
     <Background>
       <Header title="Entrega 01" />
@@ -172,7 +176,10 @@ export default function OrderDetails({ route }) {
               elevation: 1,
             }}
           >
-            <ActionButton disabled={order.delivered}>
+            <ActionButton
+              onPress={handleInfromProblem}
+              disabled={order.delivered}
+            >
               <Icon name="close-circle-outline" color="#E74040" size={28} />
               <TextButton>Informar problema</TextButton>
             </ActionButton>

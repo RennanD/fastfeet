@@ -10,11 +10,12 @@ import FileController from './app/controllers/FileController';
 import DeliverymanController from './app/controllers/DeliverymanController';
 import Ordercontroller from './app/controllers/Ordercontroller';
 import DashboardController from './app/controllers/DashboardController';
-
-import multerConfig from './config/multer';
 import DeliveryiesController from './app/controllers/DeliveryiesController';
 import FinishDeliveryController from './app/controllers/FinishDeliveryController';
-import DeliveyProblemsController from './app/controllers/DeliveyProblemsController';
+import ProblemsController from './app/controllers/ProblemsController';
+import DeliveryProblemsController from './app/controllers/DeliveryProblemsController';
+
+import multerConfig from './config/multer';
 
 const routes = new Router();
 const upload = multer(multerConfig);
@@ -47,16 +48,17 @@ routes.put(
 );
 
 // Problems routes
-routes.post('/delivery/:id/problems', DeliveyProblemsController.store);
+routes.post('/delivery/:id/problems', ProblemsController.store);
+routes.get('/delivery/:id/problems', DeliveryProblemsController.index);
 
-routes.get('/problems', DeliveyProblemsController.index);
-routes.get('/problems/:id/', DeliveyProblemsController.show);
+routes.get('/problems', ProblemsController.index);
+routes.get('/problems/:id/', ProblemsController.show);
 
 // Authenticate routes
 routes.use(authMiddleware);
 
 // Auth Problem routes
-routes.delete('/problems/:id/cancel', DeliveyProblemsController.delete);
+routes.delete('/problems/:id/cancel', ProblemsController.delete);
 
 // CRUD recipients routes
 routes.get('/recipients', RecipientController.index);

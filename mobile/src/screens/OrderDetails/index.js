@@ -93,9 +93,13 @@ export default function OrderDetails({ route }) {
     navigate('InformProblem', { order_id });
   }
 
+  function handleShowProblems() {
+    navigate('Problems', { order_id, product: order.product });
+  }
+
   return (
     <Background>
-      <Header title="Entrega 01" />
+      <Header title="Detalhes da encomenda" />
       {order.recipient ? (
         <Container>
           <Card
@@ -186,6 +190,7 @@ export default function OrderDetails({ route }) {
 
             <ActionButton
               disabled={order.delivered}
+              onPress={handleShowProblems}
               style={{
                 borderLeftColor: '#ddd',
                 borderRightColor: '#ddd',

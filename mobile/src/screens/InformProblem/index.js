@@ -38,7 +38,7 @@ export default function InformProblem({ route }) {
 
   return (
     <Container>
-      <Header />
+      <Header title="Informar problema" />
       <Content>
         <Form ref={formRef} onSubmit={handleSubmit}>
           <TextArea name="description" />

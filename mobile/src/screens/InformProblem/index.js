@@ -2,6 +2,8 @@ import React, { useState, useRef } from 'react';
 import { Form } from '@unform/mobile';
 import SnackBar from 'react-native-snackbar';
 
+import { useNavigation } from '@react-navigation/native';
+
 import PropTypes from 'prop-types';
 
 import { Container, Content, SumbitButton } from './styles';
@@ -12,6 +14,8 @@ import api from '~/services/api';
 
 export default function InformProblem({ route }) {
   const formRef = useRef(null);
+
+  const { goBack } = useNavigation();
 
   const [loading, setLoading] = useState(false);
 
@@ -27,6 +31,7 @@ export default function InformProblem({ route }) {
         backgroundColor: '#2CA42B',
       });
       setLoading(false);
+      goBack();
     } catch ({ response }) {
       SnackBar.show({
         text: response.data.error,

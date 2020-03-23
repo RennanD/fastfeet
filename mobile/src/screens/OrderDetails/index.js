@@ -97,6 +97,10 @@ export default function OrderDetails({ route }) {
     navigate('Problems', { order_id, product: order.product });
   }
 
+  function handleConfirmDelivery() {
+    navigate('ConfirmDelivery', { order_id });
+  }
+
   return (
     <Background>
       <Header title="Detalhes da encomenda" />
@@ -203,19 +207,12 @@ export default function OrderDetails({ route }) {
             </ActionButton>
 
             {order.start_date ? (
-              <ActionButton disabled={order.delivered}>
-                {loading ? (
-                  <ActivityIndicator size={20} color="#444" />
-                ) : (
-                  <>
-                    <Icon
-                      name="check-circle-outline"
-                      color="#7D40E7"
-                      size={28}
-                    />
-                    <TextButton>Confirmar entrega</TextButton>
-                  </>
-                )}
+              <ActionButton
+                onPress={handleConfirmDelivery}
+                disabled={order.delivered}
+              >
+                <Icon name="check-circle-outline" color="#7D40E7" size={28} />
+                <TextButton>Confirmar entrega</TextButton>
               </ActionButton>
             ) : (
               <ActionButton

@@ -38,6 +38,8 @@ target 'fastfeet' do
 
   pod 'BVLinearGradient', :path => '../node_modules/react-native-linear-gradient'
 
+  pod 'react-native-camera', :path => '../node_modules/react-native-camera'
+
   target 'fastfeetTests' do
     inherit! :search_paths
     # Pods for testing

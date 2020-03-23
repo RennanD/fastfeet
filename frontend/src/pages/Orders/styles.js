@@ -37,7 +37,9 @@ export const Modal = styled.div`
   }
 
   img {
-    height: 100px;
+    margin-top: 5px;
+    height: 150px;
+    width: 300px;
     align-self: center;
     text-align: center;
     background: #eee;

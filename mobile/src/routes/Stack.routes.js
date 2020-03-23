@@ -5,6 +5,7 @@ import Home from '~/screens/Home';
 import Details from '~/screens/OrderDetails';
 import InformProblem from '~/screens/InformProblem';
 import Problems from '~/screens/Problems';
+import ConfirmDelivery from '~/screens/ConfirmDelivery';
 
 export default function StackRoutes() {
   const { Navigator, Screen } = createStackNavigator();
@@ -15,6 +16,7 @@ export default function StackRoutes() {
       <Screen name="Details" component={Details} />
       <Screen name="InformProblem" component={InformProblem} />
       <Screen name="Problems" component={Problems} />
+      <Screen name="ConfirmDelivery" component={ConfirmDelivery} />
     </Navigator>
   );
 }

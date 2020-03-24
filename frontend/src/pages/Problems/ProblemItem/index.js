@@ -4,6 +4,8 @@ import { MdCancel, MdVisibility } from 'react-icons/md';
 
 import PropTypes from 'prop-types';
 
+import { toast } from 'react-toastify';
+
 import { confirmAlert } from 'react-confirm-alert';
 
 import { ProblemMenu, Modal, ProblemTitle } from './styles';
@@ -21,6 +23,16 @@ export default function ProblemItem({ problems }) {
         </Modal>
       ),
     });
+  }
+
+  async function handleCancelDelivery(id) {
+    try {
+      const response = await api.delete(`/problems/${id}/cancel`);
+
+      toast.success(response.data.msg);
+    } catch ({ response }) {
+      toast.error(response.data.error);
+    }
   }
 
   return (
@@ -48,7 +60,10 @@ export default function ProblemItem({ problems }) {
                   </button>
                 </li>
                 <li>
-                  <button type="button">
+                  <button
+                    onClick={() => handleCancelDelivery(problem.id)}
+                    type="button"
+                  >
                     <MdCancel size={20} color="#DE3B3B" />
                     Cancelar encomenda
                   </button>

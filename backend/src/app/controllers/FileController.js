@@ -2,7 +2,6 @@ import File from '../models/File';
 
 class FileController {
   async store(req, res) {
-    console.log('oi');
     const { originalname: name, filename: path } = req.file;
 
     try {
@@ -13,7 +12,6 @@ class FileController {
 
       return res.json(file);
     } catch (err) {
-      console.log(err);
       return res.json({ error: 'erro' });
     }
   }

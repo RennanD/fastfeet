@@ -1,5 +1,3 @@
-/* eslint-disable no-else-return */
-/* eslint-disable react/jsx-props-no-spreading */
 import React, { useRef, useEffect, useState } from 'react';
 
 import PropTypes from 'prop-types';
@@ -57,12 +55,11 @@ export default function SelectInput({ name, label, input_item, ...rest }) {
             return [];
           }
           return ref.select.state.value.map(option => option.value);
-        } else {
-          if (!ref.select.state.value) {
-            return '';
-          }
-          return ref.select.state.value.value;
         }
+        if (!ref.select.state.value) {
+          return '';
+        }
+        return ref.select.state.value.value;
       },
     });
   }, [fieldName, registerField, rest.isMulti]);

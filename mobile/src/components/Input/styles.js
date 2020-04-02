@@ -7,6 +7,7 @@ export const Container = styled.View`
   background: #fff;
   flex-direction: row;
   align-items: center;
+  border: 2px solid ${props => (props.error ? '#fb6f91' : '#fff')};
 `;
 
 export const TInput = styled.TextInput.attrs({
@@ -16,4 +17,12 @@ export const TInput = styled.TextInput.attrs({
   font-size: 14px;
   margin-left: 10px;
   color: #333;
+`;
+
+export const Error = styled.Text`
+  color: #fb6f91;
+  font-size: 16px;
+  margin-bottom: 5px;
+  align-self: flex-start;
+  font-weight: bold;
 `;

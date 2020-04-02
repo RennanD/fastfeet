@@ -3,6 +3,7 @@ import React, { useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { StatusBar } from 'react-native';
 
+import * as Yup from 'yup';
 import { Form } from '@unform/mobile';
 
 import { Container, Logo, SubmitButton } from './styles';
@@ -19,8 +20,25 @@ export default function Login() {
 
   const loading = useSelector(state => state.auth.loading);
 
-  function handleSubmit({ user_id }) {
-    dispatch(singInRequest(user_id));
+  async function handleSubmit({ user_id }) {
+    const schema = Yup.object().shape({
+      user_id: Yup.string().required('Digite seu ID para continuar.'),
+    });
+
+    try {
+      await schema.validate({ user_id });
+      dispatch(singInRequest(user_id));
+    } catch (err) {
+      if (err instanceof Yup.ValidationError) {
+        const errorMesseges = {};
+
+        err.errors.forEach(error => {
+          errorMesseges.user_id = error;
+        });
+
+        formRef.current.setErrors(errorMesseges);
+      }
+    }
   }
 
   return (

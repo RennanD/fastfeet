@@ -4,11 +4,11 @@ import { useField } from '@unform/core';
 
 import PropTypes from 'prop-types';
 
-import { Container } from './styles';
+import { Container, Error } from './styles';
 
 export default function TextArea({ name, ...rest }) {
   const inputRef = useRef(null);
-  const { fieldName, registerField, defaultValue = '' } = useField(name);
+  const { fieldName, registerField, defaultValue = '', error } = useField(name);
 
   useEffect(() => {
     registerField({
@@ -19,14 +19,18 @@ export default function TextArea({ name, ...rest }) {
   }, [registerField, fieldName]);
 
   return (
-    <Container
-      multiline
-      numberOfLines={10}
-      placeholder="Inclua aqui o problema que ocorreu na entrega."
-      ref={inputRef}
-      defaultValue={defaultValue}
-      {...rest}
-    />
+    <>
+      <Container
+        multiline
+        error={error}
+        numberOfLines={10}
+        placeholder="Inclua aqui o problema que ocorreu na entrega."
+        ref={inputRef}
+        defaultValue={defaultValue}
+        {...rest}
+      />
+      {error && <Error>* {error}</Error>}
+    </>
   );
 }
 

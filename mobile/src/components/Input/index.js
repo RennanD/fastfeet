@@ -4,11 +4,11 @@ import { useField } from '@unform/core';
 
 import PropTypes from 'prop-types';
 
-import { Container, TInput } from './styles';
+import { Container, TInput, Error } from './styles';
 
 export default function Input({ name, ...rest }) {
   const inputRef = useRef(null);
-  const { fieldName, registerField, defaultValue = '' } = useField(name);
+  const { fieldName, registerField, defaultValue = '', error } = useField(name);
 
   useEffect(() => {
     registerField({
@@ -19,14 +19,17 @@ export default function Input({ name, ...rest }) {
   }, [registerField, fieldName]);
 
   return (
-    <Container>
-      <TInput
-        ref={inputRef}
-        defaultValue={defaultValue}
-        placeholder="Digite seu ID de cadastro"
-        {...rest}
-      />
-    </Container>
+    <>
+      {error && <Error>* {error}</Error>}
+      <Container error={error}>
+        <TInput
+          ref={inputRef}
+          defaultValue={defaultValue}
+          placeholder="Digite seu ID de cadastro"
+          {...rest}
+        />
+      </Container>
+    </>
   );
 }
 

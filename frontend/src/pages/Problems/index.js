@@ -61,12 +61,16 @@ export default function Problems() {
                   </th>
                 </tr>
               </thead>
-              <ProblemItem problems={problems} />
+              {problems.map(problem => (
+                <ProblemItem problem={problem} />
+              ))}
             </>
           )}
         </table>
       )}
-      <Pagination loadItems={loadProblems} itemsLenght={lengthProblems} />
+      {problems.length > 5 && (
+        <Pagination loadItems={loadProblems} itemsLenght={lengthProblems} />
+      )}
     </Container>
   );
 }

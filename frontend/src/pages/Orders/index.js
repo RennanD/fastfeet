@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import React, { useState, useEffect } from 'react';
 
 import { MdAdd, MdSearch } from 'react-icons/md';
@@ -15,6 +14,17 @@ import api from '~/services/api';
 import history from '~/services/history';
 
 export default function Orders() {
+  const labels = [
+    'ID',
+    'Produto',
+    'Detinatário',
+    'Entregador',
+    'Cidade',
+    'Estado',
+    'Status',
+    'Ações',
+  ];
+
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(false);
   const [product, setProduct] = useState('');
@@ -76,43 +86,24 @@ export default function Orders() {
             <>
               <thead>
                 <tr>
-                  <th>
-                    <strong>ID</strong>
-                  </th>
-                  <th>Produto</th>
-                  <th>
-                    <strong>Detinatário</strong>
-                  </th>
-                  <th>
-                    <strong>Entregador</strong>
-                  </th>
-                  <th>
-                    <strong>Cidade</strong>
-                  </th>
-                  <th>
-                    <strong>Estado</strong>
-                  </th>
-                  <th>
-                    <strong>Status</strong>
-                  </th>
-                  <th>
-                    <div>
-                      <strong>Ações</strong>
-                    </div>
-                  </th>
+                  {labels.map(label => (
+                    <th key={label}>
+                      <strong>{label}</strong>
+                    </th>
+                  ))}
                 </tr>
               </thead>
 
-              {!orders.length ? (
-                <strong>não há encomendas cadastradas</strong>
-              ) : (
-                <OrderItem orders={orders} />
-              )}
+              {orders.map(order => (
+                <OrderItem order={order} />
+              ))}
             </>
           )}
         </table>
       )}
-      <Pagination loadItems={loadOrders} itemsLenght={lengthOrders} />
+      {orders.length > 20 && (
+        <Pagination loadItems={loadOrders} itemsLenght={lengthOrders} />
+      )}
     </Container>
   );
 }

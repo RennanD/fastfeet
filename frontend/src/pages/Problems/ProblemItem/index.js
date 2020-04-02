@@ -12,7 +12,7 @@ import { ProblemMenu, Modal, ProblemTitle } from './styles';
 
 import api from '~/services/api';
 
-export default function ProblemItem({ problems }) {
+export default function ProblemItem({ problem }) {
   async function handleShowProblem(id) {
     const response = await api.get(`/problems/${id}`);
     confirmAlert({
@@ -37,47 +37,44 @@ export default function ProblemItem({ problems }) {
 
   return (
     <tbody>
-      {problems.map(problem => (
-        <tr key={problem.id}>
-          <td>
-            <span>#{problem.delivery.id}</span>
-          </td>
+      <tr key={problem.id}>
+        <td>
+          <span>#{problem.delivery.id}</span>
+        </td>
 
-          <td>
-            <ProblemTitle>{problem.description}</ProblemTitle>
-          </td>
+        <td>
+          <ProblemTitle>{problem.description}</ProblemTitle>
+        </td>
 
-          <td>
-            <div>
-              <ProblemMenu>
-                <li>
-                  <button
-                    type="button"
-                    onClick={() => handleShowProblem(problem.id)}
-                  >
-                    <MdVisibility size={20} color="#4D85EE" />
-                    Visualizar
-                  </button>
-                </li>
-                <li>
-                  <button
-                    onClick={() => handleCancelDelivery(problem.id)}
-                    type="button"
-                  >
-                    <MdCancel size={20} color="#DE3B3B" />
-                    Cancelar encomenda
-                  </button>
-                </li>
-              </ProblemMenu>
-            </div>
-          </td>
-        </tr>
-      ))}
+        <td>
+          <div>
+            <ProblemMenu>
+              <li>
+                <button
+                  type="button"
+                  onClick={() => handleShowProblem(problem.id)}
+                >
+                  <MdVisibility size={20} color="#4D85EE" />
+                  Visualizar
+                </button>
+              </li>
+              <li>
+                <button
+                  onClick={() => handleCancelDelivery(problem.id)}
+                  type="button"
+                >
+                  <MdCancel size={20} color="#DE3B3B" />
+                  Cancelar encomenda
+                </button>
+              </li>
+            </ProblemMenu>
+          </div>
+        </td>
+      </tr>
     </tbody>
   );
 }
 
 ProblemItem.propTypes = {
-  // eslint-disable-next-line react/forbid-prop-types
-  problems: PropTypes.array.isRequired,
+  problem: PropTypes.shape().isRequired,
 };

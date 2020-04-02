@@ -11,8 +11,8 @@ export const Container = styled.div`
 
 export const ActionList = styled.ul`
   position: absolute;
-  width: 220px;
-  left: calc(50% - 110px);
+  width: 200px;
+  left: calc(50% - 100px);
   top: calc(100%);
   background: #fff;
   border-radius: 4px;
@@ -48,7 +48,7 @@ export const ActionList = styled.ul`
       display: flex;
       align-items: center;
       color: #444;
-      font-size: 16px;
+      font-size: 14px;
 
       &:disabled {
         cursor: not-allowed;

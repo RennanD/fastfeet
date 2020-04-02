@@ -14,6 +14,8 @@ import history from '~/services/history';
 import Pagination from '~/components/Pagination';
 
 export default function Deliverymen() {
+  const labels = ['ID', 'Foto', 'Nome', 'E-mail', 'Ações'];
+
   const [deliverymen, setDeliverymen] = useState([]);
   const [lengthDeliverymen, setLengthDeliverymen] = useState(0);
 
@@ -73,33 +75,27 @@ export default function Deliverymen() {
             <>
               <thead>
                 <tr>
-                  <th>
-                    <strong>ID</strong>
-                  </th>
-                  <th>
-                    <strong>Foto</strong>
-                  </th>
-                  <th>
-                    <strong>Nome</strong>
-                  </th>
-                  <th>
-                    <strong>E-mail</strong>
-                  </th>
-
-                  <th>
-                    <div>
-                      <strong>Ações</strong>
-                    </div>
-                  </th>
+                  {labels.map(label => (
+                    <th key={label}>
+                      <strong>{label}</strong>
+                    </th>
+                  ))}
                 </tr>
               </thead>
 
-              <DeliverymanItem deliverymen={deliverymen} />
+              {deliverymen.map(deliveryman => (
+                <DeliverymanItem deliveryman={deliveryman} />
+              ))}
             </>
           )}
         </table>
       )}
-      <Pagination loadItems={loadDeliverymen} itemsLenght={lengthDeliverymen} />
+      {deliverymen.length > 5 && (
+        <Pagination
+          loadItems={loadDeliverymen}
+          itemsLenght={lengthDeliverymen}
+        />
+      )}
     </Container>
   );
 }

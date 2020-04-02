@@ -15,7 +15,7 @@ import api from '~/services/api';
 
 import { showRecipientRequest } from '~/store/modules/recipient/actions';
 
-export default function RecipientItem({ recipients }) {
+export default function RecipientItem({ recipient }) {
   const dispatch = useDispatch();
 
   function handleDelete(id) {
@@ -41,53 +41,50 @@ export default function RecipientItem({ recipients }) {
 
   return (
     <tbody>
-      {recipients.map(recipient => (
-        <tr key={recipient.id}>
-          <td>
-            <span>#{recipient.id}</span>
-          </td>
+      <tr key={recipient.id}>
+        <td>
+          <span>#{recipient.id}</span>
+        </td>
 
-          <td>
-            <span>{recipient.name}</span>
-          </td>
-          <td>
-            <span>
-              {recipient.street}, {recipient.number}, {recipient.city} -{' '}
-              {recipient.region}{' '}
-            </span>
-          </td>
+        <td>
+          <span>{recipient.name}</span>
+        </td>
+        <td>
+          <span>
+            {recipient.street}, {recipient.number}, {recipient.city} -{' '}
+            {recipient.region}{' '}
+          </span>
+        </td>
 
-          <td>
-            <div>
-              <Menu>
-                <li>
-                  <button
-                    onClick={() => dispatch(showRecipientRequest(recipient.id))}
-                    type="button"
-                  >
-                    <MdEdit size={20} color="#4D85EE" />
-                    Editar
-                  </button>
-                </li>
-                <li>
-                  <button
-                    onClick={() => handleDelete(recipient.id)}
-                    type="button"
-                  >
-                    <MdDeleteForever size={20} color="#DE3B3B" />
-                    Excluir
-                  </button>
-                </li>
-              </Menu>
-            </div>
-          </td>
-        </tr>
-      ))}
+        <td>
+          <div>
+            <Menu>
+              <li>
+                <button
+                  onClick={() => dispatch(showRecipientRequest(recipient.id))}
+                  type="button"
+                >
+                  <MdEdit size={20} color="#4D85EE" />
+                  Editar
+                </button>
+              </li>
+              <li>
+                <button
+                  onClick={() => handleDelete(recipient.id)}
+                  type="button"
+                >
+                  <MdDeleteForever size={20} color="#DE3B3B" />
+                  Excluir
+                </button>
+              </li>
+            </Menu>
+          </div>
+        </td>
+      </tr>
     </tbody>
   );
 }
 
 RecipientItem.propTypes = {
-  // eslint-disable-next-line react/forbid-prop-types
-  recipients: PropTypes.array.isRequired,
+  recipient: PropTypes.shape().isRequired,
 };

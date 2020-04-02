@@ -15,6 +15,8 @@ import api from '~/services/api';
 import history from '~/services/history';
 
 export default function Recipients() {
+  const labels = ['ID', 'Nome', 'Endereço', 'Ações'];
+
   const [name, setName] = useState('');
   const [loading, setLoading] = useState(false);
   const [recipients, setRecipients] = useState([]);
@@ -69,29 +71,23 @@ export default function Recipients() {
             <>
               <thead>
                 <tr>
-                  <th>
-                    <strong>ID</strong>
-                  </th>
-                  <th>
-                    <strong>Nome</strong>
-                  </th>
-                  <th>
-                    <strong>Endereço</strong>
-                  </th>
-
-                  <th>
-                    <div>
-                      <strong>Ações</strong>
-                    </div>
-                  </th>
+                  {labels.map(label => (
+                    <th key={label}>
+                      <strong>{label}</strong>
+                    </th>
+                  ))}
                 </tr>
               </thead>
-              <RecipientItem recipients={recipients} />
+              {recipients.map(recipient => (
+                <RecipientItem recipient={recipient} />
+              ))}
             </>
           )}
         </table>
       )}
-      <Pagination loadItems={loadRecipients} itemsLenght={lengthRecipient} />
+      {recipients.length > 5 && (
+        <Pagination loadItems={loadRecipients} itemsLenght={lengthRecipient} />
+      )}
     </Container>
   );
 }

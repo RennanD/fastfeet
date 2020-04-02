@@ -15,7 +15,7 @@ import ConfirmBox from '~/components/ConfirmBox';
 import { showDeliverymanRequest } from '~/store/modules/deliveryman/actions';
 import api from '~/services/api';
 
-export default function DeliverymanItem({ deliverymen }) {
+export default function DeliverymanItem({ deliveryman }) {
   const dispatch = useDispatch();
 
   function handleDelete(id) {
@@ -41,61 +41,58 @@ export default function DeliverymanItem({ deliverymen }) {
 
   return (
     <tbody>
-      {deliverymen.map(deliveryman => (
-        <tr key={deliveryman.id}>
-          <td>
-            <span>#{deliveryman.id}</span>
-          </td>
-          <td>
-            <img
-              src={
-                deliveryman.avatar
-                  ? deliveryman.avatar.url
-                  : 'https://medgoldresources.com/wp-content/uploads/2018/02/avatar-placeholder.gif'
-              }
-              alt={deliveryman.name}
-            />
-          </td>
-          <td>
-            <span>{deliveryman.name}</span>
-          </td>
-          <td>
-            <span>{deliveryman.email}</span>
-          </td>
+      <tr key={deliveryman.id}>
+        <td>
+          <span>#{deliveryman.id}</span>
+        </td>
+        <td>
+          <img
+            src={
+              deliveryman.avatar
+                ? deliveryman.avatar.url
+                : 'https://medgoldresources.com/wp-content/uploads/2018/02/avatar-placeholder.gif'
+            }
+            alt={deliveryman.name}
+          />
+        </td>
+        <td>
+          <span>{deliveryman.name}</span>
+        </td>
+        <td>
+          <span>{deliveryman.email}</span>
+        </td>
 
-          <td>
-            <div>
-              <Menu>
-                <li>
-                  <button
-                    type="button"
-                    onClick={() =>
-                      dispatch(showDeliverymanRequest(deliveryman.id))
-                    }
-                  >
-                    <MdEdit size={20} color="#4D85EE" />
-                    Editar
-                  </button>
-                </li>
-                <li>
-                  <button
-                    type="button"
-                    onClick={() => handleDelete(deliveryman.id)}
-                  >
-                    <MdDeleteForever size={20} color="#DE3B3B" />
-                    Excluir
-                  </button>
-                </li>
-              </Menu>
-            </div>
-          </td>
-        </tr>
-      ))}
+        <td>
+          <div>
+            <Menu>
+              <li>
+                <button
+                  type="button"
+                  onClick={() =>
+                    dispatch(showDeliverymanRequest(deliveryman.id))
+                  }
+                >
+                  <MdEdit size={20} color="#4D85EE" />
+                  Editar
+                </button>
+              </li>
+              <li>
+                <button
+                  type="button"
+                  onClick={() => handleDelete(deliveryman.id)}
+                >
+                  <MdDeleteForever size={20} color="#DE3B3B" />
+                  Excluir
+                </button>
+              </li>
+            </Menu>
+          </div>
+        </td>
+      </tr>
     </tbody>
   );
 }
 
 DeliverymanItem.propTypes = {
-  // eslint-disable-next-line react/forbid-prop-types
-  deliverymen: PropTypes.array.isRequired,
+  deliveryman: PropTypes.shape().isRequired,
 };

@@ -1,39 +1,73 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
+import { Form } from '@unform/web';
 import * as Yup from 'yup';
 
-import { Form, Input } from '@rocketseat/unform';
+import { toast } from 'react-toastify';
+
+import Input from '~/components/Input';
 
 import logo from '~/assets/logo.svg';
 import { singInRequest } from '~/store/modules/auth/actions';
 
-const schema = Yup.object().shape({
-  email: Yup.string()
-    .email('Insira um e-mail válido')
-    .required('O e-mail é obrigatório'),
-  password: Yup.string().required('A senha é obrigatória'),
-});
-
 export default function SingIn() {
   const loading = useSelector(state => state.auth.loading);
-
   const dispatch = useDispatch();
 
-  function handleSubmit({ email, password }) {
-    dispatch(singInRequest(email, password));
+  const formRef = useRef();
+
+  async function handleSubmit({ email, password }) {
+    const schema = Yup.object().shape({
+      email: Yup.string()
+        .email('Insira um e-mail válido')
+        .required('O e-mail é obrigatório'),
+      password: Yup.string().required('A senha é obrigatória'),
+    });
+
+    try {
+      await schema.validate(
+        { email, password },
+        {
+          abortEarly: false,
+        }
+      );
+      dispatch(singInRequest(email, password));
+    } catch (err) {
+      if (err instanceof Yup.ValidationError) {
+        const errorMesseges = {};
+
+        err.inner.forEach(error => {
+          errorMesseges[error.path] = error.message;
+        });
+
+        formRef.current.setErrors(errorMesseges);
+      } else {
+        const { response } = err;
+
+        toast.error(response.data.error);
+      }
+    }
   }
 
   return (
     <>
       <img src={logo} alt="FastFeet" />
 
-      <Form onSubmit={handleSubmit} schema={schema}>
-        <strong>SEU E-MAIL</strong>
-        <Input name="email" type="email" placeholder="exemplo@fastfeet.com" />
+      <Form ref={formRef} onSubmit={handleSubmit}>
+        <Input
+          name="email"
+          label="SEU E-MAIL"
+          type="email"
+          placeholder="exemplo@fastfeet.com"
+        />
 
-        <strong>SUA SENHA</strong>
-        <Input name="password" type="password" placeholder="********" />
+        <Input
+          name="password"
+          type="password"
+          label="SUA SENHA"
+          placeholder="********"
+        />
 
         <button type="submit">{loading ? 'Carregando...' : 'Acessar'}</button>
       </Form>

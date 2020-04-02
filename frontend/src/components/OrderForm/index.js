@@ -2,70 +2,66 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 
-import { Form } from '@unform/web';
-
 import { MdChevronLeft, MdCheck } from 'react-icons/md';
 
 import PropTypes from 'prop-types';
 
-import { Container, Content, InputView, BackButton, TInput } from './styles';
+import { Container, Content, InputGroup, BackButton } from './styles';
 
-import RecipientInput from './RecipientInput';
-import DeliverymanInput from './DeliverymanInput';
+import SelectInput from './SelectInput';
 import Button from '../Button';
 
 import history from '~/services/history';
+import Input from '../Input';
 
-export default function OrderForm({ title, onSubmit, ...rest }) {
+export default function OrderForm({ title }) {
   const loading = useSelector(state => state.order.loading);
 
   return (
     <Container>
-      <Form onSubmit={onSubmit} {...rest}>
-        <header>
-          <h2>{title}</h2>
+      <header>
+        <h2>{title}</h2>
 
-          <div>
-            <BackButton type="button" onClick={() => history.push('/orders')}>
-              <MdChevronLeft size={28} color="#fff" /> <strong>VOLTAR</strong>
-            </BackButton>
-            <Button type="submit">
-              {loading ? (
-                'Salvando...'
-              ) : (
-                <>
-                  <MdCheck size={24} color="#fff" />
-                  <strong>SALVAR</strong>
-                </>
-              )}
-            </Button>
-          </div>
-        </header>
+        <div>
+          <BackButton type="button" onClick={() => history.push('/orders')}>
+            <MdChevronLeft size={28} color="#fff" /> <strong>VOLTAR</strong>
+          </BackButton>
+          <Button type="submit">
+            {loading ? (
+              'Salvando...'
+            ) : (
+              <>
+                <MdCheck size={24} color="#fff" />
+                <strong>SALVAR</strong>
+              </>
+            )}
+          </Button>
+        </div>
+      </header>
 
-        <Content>
-          <main>
-            <InputView style={{ marginRight: 10 }}>
-              <strong>Destinatário</strong>
-              <RecipientInput name="recipient_id" />
-            </InputView>
+      <Content>
+        <InputGroup>
+          <SelectInput
+            label="Destinatário"
+            name="recipient_id"
+            input_item="recipients"
+            placeholder="Destinatário Teste"
+          />
 
-            <InputView style={{ marginLeft: 10 }}>
-              <strong>Entrgador</strong>
-              <DeliverymanInput name="deliveryman_id" />
-            </InputView>
-          </main>
+          <SelectInput
+            label="Entregador"
+            name="deliveryman_id"
+            placeholder="Entregador Teste"
+            input_item="deliverymen"
+          />
+        </InputGroup>
 
-          <InputView>
-            <strong>Produto</strong>
-            <TInput name="product" />
-          </InputView>
-        </Content>
-      </Form>
+        <Input label="Produto" name="product" />
+      </Content>
     </Container>
   );
 }
 
 OrderForm.propTypes = {
   title: PropTypes.string.isRequired,
-  onSubmit: PropTypes.func.isRequired,
 };

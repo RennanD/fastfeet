@@ -28,31 +28,7 @@ export const Content = styled.div`
     margin-top: 30px;
 
     strong {
-      font-size: 14px;
-      font-weight: bold;
-      color: #444;
-      align-self: flex-start;
-      margin: 10px 0 15px;
-    }
-
-    input {
-      border: 1px solid #ddd;
-      border-radius: 4px;
-      height: 46px;
-      padding: 0 15px;
-      color: #444;
-      margin: 0 0 10px;
-
-      &::placeholder {
-        color: #999;
-      }
-    }
-
-    span {
-      color: #fb6f91;
-      align-self: flex-start;
-      margin: 0 0 10px;
-      font-weight: bold;
+      margin: 5px 0;
     }
 
     button {

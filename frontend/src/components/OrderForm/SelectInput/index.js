@@ -7,34 +7,36 @@ import PropTypes from 'prop-types';
 import { useField } from '@unform/core';
 import AsyncSelect from 'react-select/async';
 
+import { Container, LabelContainer } from './styles';
+
 import api from '~/services/api';
 
-export default function RecipientInput({ ...rest }) {
-  const [recipients, setRecipients] = useState([]);
+export default function SelectInput({ name, label, input_item, ...rest }) {
+  const [selectData, setSelectData] = useState([]);
 
-  const recipientRef = useRef(null);
-  const { fieldName, defaultValue, registerField } = useField('recipient');
+  const selectRef = useRef(null);
+  const { fieldName, defaultValue, registerField, error } = useField(name);
 
   useEffect(() => {
     async function loadData() {
-      const response = await api.get('/recipients', {
+      const response = await api.get(`/${input_item}`, {
         params: {
           name: '',
         },
       });
 
-      const data = response.data.map(recipient => ({
-        value: recipient.id,
-        label: recipient.name,
+      const data = response.data.map(item => ({
+        value: item.id,
+        label: item.name,
       }));
 
-      setRecipients(data);
+      setSelectData(data);
     }
     loadData();
-  }, []);
+  }, [input_item]);
 
   const filterColors = inputValue => {
-    return recipients.filter(i =>
+    return selectData.filter(i =>
       i.label.toLowerCase().includes(inputValue.toLowerCase())
     );
   };
@@ -46,8 +48,8 @@ export default function RecipientInput({ ...rest }) {
 
   useEffect(() => {
     registerField({
-      name: 'recipient_id',
-      ref: recipientRef.current,
+      name: fieldName,
+      ref: selectRef.current,
       path: 'select.state.value',
       getValue: ref => {
         if (rest.isMulti) {
@@ -59,7 +61,6 @@ export default function RecipientInput({ ...rest }) {
           if (!ref.select.state.value) {
             return '';
           }
-
           return ref.select.state.value.value;
         }
       },
@@ -67,19 +68,26 @@ export default function RecipientInput({ ...rest }) {
   }, [fieldName, registerField, rest.isMulti]);
 
   return (
-    <AsyncSelect
-      cacheOptions
-      defaultOptions={recipients}
-      loadOptions={promiseOptions}
-      defaultValue={defaultValue}
-      placeholder="Destinatário exemplo "
-      ref={recipientRef}
-      classNamePrefix="react-select"
-      {...rest}
-    />
+    <Container error={error}>
+      <LabelContainer>
+        <strong>{label}</strong>
+        {error && <span>{error}</span>}
+      </LabelContainer>
+      <AsyncSelect
+        cacheOptions
+        defaultOptions={selectData}
+        loadOptions={promiseOptions}
+        defaultValue={defaultValue}
+        ref={selectRef}
+        classNamePrefix="react-select"
+        {...rest}
+      />
+    </Container>
   );
 }
 
-RecipientInput.propTypes = {
+SelectInput.propTypes = {
   name: PropTypes.string.isRequired,
+  label: PropTypes.string.isRequired,
+  input_item: PropTypes.string.isRequired,
 };

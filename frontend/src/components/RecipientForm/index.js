@@ -4,102 +4,74 @@ import { useSelector } from 'react-redux';
 
 import PropTypes from 'prop-types';
 
-import { Form } from '@unform/web';
-
 import { MdChevronLeft, MdCheck } from 'react-icons/md';
 
-import {
-  Container,
-  Content,
-  TInput,
-  InputContainer,
-  BackButton,
-} from './styles';
+import { Container, Content, InputGroup, BackButton } from './styles';
 
 import Button from '../Button';
 import MaskInput from '../MaskInput';
+import Input from '~/components/Input';
 
 import history from '~/services/history';
 
-export default function RecipientForm({ title, onSubmit, ...rest }) {
+export default function RecipientForm({ title }) {
   const loading = useSelector(state => state.recipient.loading);
 
   return (
     <Container>
-      <Form onSubmit={onSubmit} {...rest}>
-        <header>
-          <h2>{title}</h2>
+      <header>
+        <h2>{title}</h2>
 
-          <div>
-            <BackButton
-              onClick={() => history.push('/recipients')}
-              type="button"
-            >
-              <MdChevronLeft size={28} color="#fff" /> <strong>VOLTAR</strong>
-            </BackButton>
-            <Button type="submit">
-              {loading ? (
-                'Salvando...'
-              ) : (
-                <>
-                  <MdCheck size={24} color="#fff" />
-                  <strong>SALVAR</strong>
-                </>
-              )}
-            </Button>
-          </div>
-        </header>
+        <div>
+          <BackButton onClick={() => history.push('/recipients')} type="button">
+            <MdChevronLeft size={28} color="#fff" /> <strong>VOLTAR</strong>
+          </BackButton>
+          <Button type="submit">
+            {loading ? (
+              'Salvando...'
+            ) : (
+              <>
+                <MdCheck size={24} color="#fff" />
+                <strong>SALVAR</strong>
+              </>
+            )}
+          </Button>
+        </div>
+      </header>
 
-        <Content>
-          <InputContainer>
-            <strong>Nome</strong>
-            <TInput name="name" placeholder="Desinatário exemplo" />
-          </InputContainer>
+      <Content>
+        <Input label="Nome" name="name" placeholder="Desinatário exemplo" />
 
-          <main>
-            <InputContainer style={{ flex: 2 }}>
-              <strong>Rua</strong>
-              <TInput name="street" placeholder="Rua exemplo" />
-            </InputContainer>
+        <InputGroup>
+          <Input
+            style={{ flex: 2 }}
+            label="Rua"
+            name="street"
+            placeholder="Rua exemplo"
+          />
 
-            <InputContainer>
-              <strong>Número</strong>
-              <TInput name="number" placeholder="0000" />
-            </InputContainer>
+          <Input label="Número" name="number" placeholder="0000" />
 
-            <InputContainer>
-              <strong>Complemento</strong>
-              <TInput name="complement" />
-            </InputContainer>
-          </main>
+          <Input label="Complemento" name="complement" />
+        </InputGroup>
 
-          <main>
-            <InputContainer>
-              <strong>Cidade</strong>
-              <TInput name="city" placeholder="Cidade Exemplo" />
-            </InputContainer>
+        <InputGroup>
+          <Input label="Cidade" name="city" placeholder="Cidade Exemplo" />
 
-            <InputContainer>
-              <strong>Estado</strong>
-              <TInput name="region" placeholder="Estado Exemplo" />
-            </InputContainer>
+          <Input label="Estado" name="region" placeholder="Estado Exemplo" />
 
-            <InputContainer>
-              <strong>CEP</strong>
-              <MaskInput
-                mask="99999-999"
-                name="zipcode"
-                placeholder="64000-00"
-              />
-            </InputContainer>
-          </main>
-        </Content>
-      </Form>
+          <MaskInput
+            label="CEP"
+            mask="99999-999"
+            name="zipcode"
+            placeholder="64000-00"
+          />
+        </InputGroup>
+      </Content>
     </Container>
   );
 }
 
 RecipientForm.propTypes = {
-  onSubmit: PropTypes.func.isRequired,
   title: PropTypes.string.isRequired,
 };

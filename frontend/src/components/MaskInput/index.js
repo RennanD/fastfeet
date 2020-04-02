@@ -7,9 +7,11 @@ import ReactInputMask from 'react-input-mask';
 
 import { useField } from '@unform/core';
 
-export default function MaskInput({ name, ...rest }) {
+import { Container, LabelContainer } from './styles';
+
+export default function MaskInput({ name, label, ...rest }) {
   const inputRef = useRef(null);
-  const { fieldName, registerField, defaultValue } = useField(name);
+  const { fieldName, registerField, defaultValue, error } = useField(name);
   useEffect(() => {
     registerField({
       name: fieldName,
@@ -19,10 +21,17 @@ export default function MaskInput({ name, ...rest }) {
   }, [fieldName, registerField]);
 
   return (
-    <ReactInputMask ref={inputRef} defaultValue={defaultValue} {...rest} />
+    <Container error={error}>
+      <LabelContainer>
+        <strong>{label}</strong>
+        {error && <span>{error} *</span>}
+      </LabelContainer>
+      <ReactInputMask ref={inputRef} defaultValue={defaultValue} {...rest} />
+    </Container>
   );
 }
 
 MaskInput.propTypes = {
   name: Proptypes.string.isRequired,
+  label: Proptypes.string.isRequired,
 };

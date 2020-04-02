@@ -7,10 +7,12 @@ export const Container = styled.div`
   flex: 1;
   margin: 5px;
 
+  .react-select__control {
+    border: 1px solid ${props => (props.error ? '#fb6f91' : '#ddd')};
+  }
+
   input {
-    border: 1px solid ${props => (props.error ? '#fb6f91' : '#dddddd')};
     padding: 12px 15px;
-    height: 45px;
     border-radius: 4px;
     color: #666;
     margin: 7px 0;
@@ -24,6 +26,7 @@ export const Container = styled.div`
 export const LabelContainer = styled.div`
   display: flex;
   align-items: baseline;
+  margin-bottom: 7px;
 
   span {
     color: #fb6f91;

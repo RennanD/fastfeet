@@ -7,6 +7,7 @@ import { ptBR } from 'date-fns/locale';
 
 import { List, ShimmerCard, ShimmerStepper, ShimmerTitle } from '../styles';
 
+import EmptyList from '~/components/EmptyList';
 import OrderCard from '~/components/OrderCard';
 
 import api from '~/services/api';
@@ -18,6 +19,8 @@ export default function Pendings() {
   const [loadingMore, setLoadingMore] = useState(false);
 
   const [pendingOrders, setPendingOrders] = useState([]);
+  const [empty] = useState(!pendingOrders.length);
+
   const [page, setPage] = useState(1);
   const [total, setTotal] = useState(0);
 
@@ -31,7 +34,7 @@ export default function Pendings() {
         setLoading(true);
       }
 
-      if (total > pendingOrders.length) {
+      if (total > pendingOrders.length && pendingOrders.length >= 5) {
         setLoadingMore(true);
       }
 
@@ -70,23 +73,31 @@ export default function Pendings() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  return loading ? (
-    <ShimmerCard>
-      <ShimmerTitle autoRun />
-      <ShimmerStepper autoRun />
-      <ShimmerStepper autoRun />
-    </ShimmerCard>
-  ) : (
+  if (loading) {
+    return (
+      <ShimmerCard>
+        <ShimmerTitle autoRun />
+        <ShimmerStepper autoRun />
+        <ShimmerStepper autoRun />
+      </ShimmerCard>
+    );
+  }
+
+  return (
     <>
-      <List
-        data={pendingOrders}
-        keyExtractor={order => String(order.id)}
-        onEndReached={loadOrders}
-        onEndReachedThreshold={0.1}
-        renderItem={({ item: order }) => (
-          <OrderCard key={order.id} order={order} />
-        )}
-      />
+      {!empty ? (
+        <EmptyList />
+      ) : (
+        <List
+          data={pendingOrders}
+          keyExtractor={order => String(order.id)}
+          onEndReached={loadOrders}
+          onEndReachedThreshold={0.1}
+          renderItem={({ item: order }) => (
+            <OrderCard key={order.id} order={order} />
+          )}
+        />
+      )}
       {loadingMore && (
         <ActivityIndicator
           size={28}

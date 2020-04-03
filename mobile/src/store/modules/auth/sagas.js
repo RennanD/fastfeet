@@ -1,3 +1,4 @@
+import { Keyboard } from 'react-native';
 import { all, takeLatest, call, put } from 'redux-saga/effects';
 
 import { format, parseISO } from 'date-fns';
@@ -23,10 +24,11 @@ export function* singIn({ payload }) {
 
     yield put(singInSuccess(data.id, data));
   } catch ({ response }) {
+    Keyboard.dismiss();
     yield put(singFailure());
     Snackbar.show({
       text: response.data.error,
-      duration: Snackbar.LENGTH_SHORT,
+      duration: Snackbar.LENGTH_LONG,
       backgroundColor: '#E74040',
     });
   }

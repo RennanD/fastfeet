@@ -6,7 +6,7 @@ export const Container = styled.View`
   background: #7d40e7;
   padding: 15px;
   position: relative;
-  padding-top: ${Platform.OS === 'ios' ? `45px` : 0};
+  padding-top: ${Platform.OS === 'ios' ? 45 : 25}px;
 `;
 
 export const Top = styled.View`

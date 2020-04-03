@@ -17,7 +17,7 @@ export default function Header({ title }) {
       <Container>
         <Top>
           <TouchableOpacity onPress={() => navigation.goBack()}>
-            <Icon name="chevron-left" size={30} color="#fff" />
+            <Icon name="chevron-left" size={32} color="#fff" />
           </TouchableOpacity>
 
           <Title>{title}</Title>

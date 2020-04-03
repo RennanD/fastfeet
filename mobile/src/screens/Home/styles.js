@@ -110,15 +110,3 @@ export const ShimmerStepper = styled(ShimmerPlaceHolder)`
   width: 100%;
   border-radius: 10px;
 `;
-
-export const Empty = styled.View`
-  flex: 1;
-  align-items: center;
-  justify-content: center;
-`;
-
-export const EmptyText = styled.Text`
-  font-size: 24px;
-  color: #999;
-  text-align: center;
-`;

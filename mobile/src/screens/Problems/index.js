@@ -19,6 +19,8 @@ import {
 } from './styles';
 
 import Header from '~/components/Header';
+import EmptyList from '~/components/EmptyList';
+
 import api from '~/services/api';
 
 export default function Problems({ route }) {
@@ -64,16 +66,22 @@ export default function Problems({ route }) {
             </ShimmerCard>
           </>
         ) : (
-          <ListProblems
-            data={problems}
-            keyExtractor={problem => String(problem.id)}
-            renderItem={({ item }) => (
-              <Card>
-                <Problem>{item.description}</Problem>
-                <DateText>{item.dateFormated}</DateText>
-              </Card>
+          <>
+            {!problems.length ? (
+              <EmptyList />
+            ) : (
+              <ListProblems
+                data={problems}
+                keyExtractor={problem => String(problem.id)}
+                renderItem={({ item }) => (
+                  <Card>
+                    <Problem>{item.description}</Problem>
+                    <DateText>{item.dateFormated}</DateText>
+                  </Card>
+                )}
+              />
             )}
-          />
+          </>
         )}
       </Content>
     </Container>

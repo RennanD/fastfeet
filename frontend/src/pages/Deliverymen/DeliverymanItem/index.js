@@ -6,38 +6,12 @@ import PropTypes from 'prop-types';
 
 import { MdEdit, MdDeleteForever } from 'react-icons/md';
 
-import { toast } from 'react-toastify';
-import { confirmAlert } from 'react-confirm-alert';
-
 import Menu from '~/components/Menu';
-import ConfirmBox from '~/components/ConfirmBox';
 
 import { showDeliverymanRequest } from '~/store/modules/deliveryman/actions';
-import api from '~/services/api';
 
-export default function DeliverymanItem({ deliveryman }) {
+export default function DeliverymanItem({ deliveryman, onDelete }) {
   const dispatch = useDispatch();
-
-  function handleDelete(id) {
-    confirmAlert({
-      // eslint-disable-next-line react/prop-types
-      customUI: ({ onClose }) => (
-        <ConfirmBox
-          onClose={onClose}
-          handleConfirm={async () => {
-            try {
-              const response = await api.delete(`/deliverymen/${id}`);
-              toast.success(response.data.msg);
-              onClose();
-            } catch ({ response }) {
-              toast.error(response.data.error);
-              onClose();
-            }
-          }}
-        />
-      ),
-    });
-  }
 
   return (
     <tbody>
@@ -77,10 +51,7 @@ export default function DeliverymanItem({ deliveryman }) {
                 </button>
               </li>
               <li>
-                <button
-                  type="button"
-                  onClick={() => handleDelete(deliveryman.id)}
-                >
+                <button type="button" onClick={() => onDelete(deliveryman.id)}>
                   <MdDeleteForever size={20} color="#DE3B3B" />
                   Excluir
                 </button>
@@ -95,4 +66,5 @@ export default function DeliverymanItem({ deliveryman }) {
 
 DeliverymanItem.propTypes = {
   deliveryman: PropTypes.shape().isRequired,
+  onDelete: PropTypes.func.isRequired,
 };

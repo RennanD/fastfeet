@@ -5,39 +5,12 @@ import { MdEdit, MdDeleteForever } from 'react-icons/md';
 
 import PropTypes from 'prop-types';
 
-import { toast } from 'react-toastify';
-import { confirmAlert } from 'react-confirm-alert';
-
 import Menu from '~/components/Menu';
-import ConfirmBox from '~/components/ConfirmBox';
-
-import api from '~/services/api';
 
 import { showRecipientRequest } from '~/store/modules/recipient/actions';
 
-export default function RecipientItem({ recipient }) {
+export default function RecipientItem({ recipient, onDelete }) {
   const dispatch = useDispatch();
-
-  function handleDelete(id) {
-    confirmAlert({
-      // eslint-disable-next-line react/prop-types
-      customUI: ({ onClose }) => (
-        <ConfirmBox
-          onClose={onClose}
-          handleConfirm={async () => {
-            try {
-              const response = await api.delete(`/recipients/${id}`);
-              toast.success(response.data.msg);
-              onClose();
-            } catch ({ response }) {
-              toast.error(response.data.error);
-              onClose();
-            }
-          }}
-        />
-      ),
-    });
-  }
 
   return (
     <tbody>
@@ -69,10 +42,7 @@ export default function RecipientItem({ recipient }) {
                 </button>
               </li>
               <li>
-                <button
-                  onClick={() => handleDelete(recipient.id)}
-                  type="button"
-                >
+                <button onClick={() => onDelete(recipient.id)} type="button">
                   <MdDeleteForever size={20} color="#DE3B3B" />
                   Excluir
                 </button>
@@ -87,4 +57,5 @@ export default function RecipientItem({ recipient }) {
 
 RecipientItem.propTypes = {
   recipient: PropTypes.shape().isRequired,
+  onDelete: PropTypes.func.isRequired,
 };

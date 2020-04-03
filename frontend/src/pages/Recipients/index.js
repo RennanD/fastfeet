@@ -3,12 +3,16 @@ import React, { useState, useEffect } from 'react';
 
 import { MdSearch, MdAdd } from 'react-icons/md';
 
+import { confirmAlert } from 'react-confirm-alert';
+import { toast } from 'react-toastify';
+
 import { Container } from './styles';
 
 import RecipientItem from './RecipientItem';
 import ShimmerLoader from '~/components/ShimmerLoader';
 import EmptyList from '~/components/EmptyList';
 import Header from '~/components/Header';
+import ConfirmBox from '~/components/ConfirmBox';
 import Pagination from '~/components/Pagination';
 
 import api from '~/services/api';
@@ -33,6 +37,31 @@ export default function Recipients() {
     setLengthDeliverymen(response.data.length);
     setRecipients(response.data);
     setLoading(false);
+  }
+
+  function handleDelete(id) {
+    confirmAlert({
+      // eslint-disable-next-line react/prop-types
+      customUI: ({ onClose }) => (
+        <ConfirmBox
+          onClose={onClose}
+          handleConfirm={async () => {
+            try {
+              const response = await api.delete(`/recipients/${id}`);
+              setRecipients(
+                recipients.filter(recipient => recipient.id !== id)
+              );
+              toast.success(response.data.msg);
+
+              onClose();
+            } catch ({ response }) {
+              toast.error(response.data.error);
+              onClose();
+            }
+          }}
+        />
+      ),
+    });
   }
 
   useEffect(() => {
@@ -79,7 +108,7 @@ export default function Recipients() {
                 </tr>
               </thead>
               {recipients.map(recipient => (
-                <RecipientItem recipient={recipient} />
+                <RecipientItem recipient={recipient} onDelete={handleDelete} />
               ))}
             </>
           )}

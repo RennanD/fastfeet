@@ -10,18 +10,17 @@ import { format, parseISO } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
 
 import { confirmAlert } from 'react-confirm-alert';
-import { toast } from 'react-toastify';
 
 import Badge from '~/components/Badge';
 import Menu from '~/components/Menu';
-import ConfirmBox from '~/components/ConfirmBox';
+
 import OrderModal from '~/components/OrderModal';
 
 import api from '~/services/api';
 
 import { showOrderRequest } from '~/store/modules/order/actions';
 
-export default function OrderItem({ order }) {
+export default function OrderItem({ order, onDelete }) {
   const dispatch = useDispatch();
 
   async function handleShowOrder(id) {
@@ -43,27 +42,6 @@ export default function OrderItem({ order }) {
 
     confirmAlert({
       customUI: () => <OrderModal order={orderDetail} />,
-    });
-  }
-
-  function handleDelete(id) {
-    confirmAlert({
-      // eslint-disable-next-line react/prop-types
-      customUI: ({ onClose }) => (
-        <ConfirmBox
-          onClose={onClose}
-          handleConfirm={async () => {
-            try {
-              const response = await api.delete(`/orders/${id}`);
-              toast.success(response.data.msg);
-              onClose();
-            } catch ({ response }) {
-              toast.error(response.data.error);
-              onClose();
-            }
-          }}
-        />
-      ),
     });
   }
 
@@ -121,7 +99,7 @@ export default function OrderItem({ order }) {
                 </button>
               </li>
               <li>
-                <button type="button" onClick={() => handleDelete(order.id)}>
+                <button type="button" onClick={() => onDelete(order.id)}>
                   <MdDeleteForever size={20} color="#DE3B3B" />
                   Excluir
                 </button>
@@ -136,4 +114,5 @@ export default function OrderItem({ order }) {
 
 OrderItem.propTypes = {
   order: PropTypes.shape().isRequired,
+  onDelete: PropTypes.func.isRequired,
 };

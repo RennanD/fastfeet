@@ -2,12 +2,16 @@ import React, { useState, useEffect } from 'react';
 
 import { MdAdd, MdSearch } from 'react-icons/md';
 
+import { confirmAlert } from 'react-confirm-alert';
+import { toast } from 'react-toastify';
+
 import { Container } from './styles';
 
 import OrderItem from './OrderItem';
 import ShimmerLoader from '~/components/ShimmerLoader';
 import EmptyList from '~/components/EmptyList';
 import Header from '~/components/Header';
+import ConfirmBox from '~/components/ConfirmBox';
 import Pagination from '~/components/Pagination';
 
 import api from '~/services/api';
@@ -53,6 +57,28 @@ export default function Orders() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  function handleDelete(id) {
+    confirmAlert({
+      // eslint-disable-next-line react/prop-types
+      customUI: ({ onClose }) => (
+        <ConfirmBox
+          onClose={onClose}
+          handleConfirm={async () => {
+            try {
+              const response = await api.delete(`/orders/${id}`);
+              setOrders(orders.filter(order => order.id !== id));
+              toast.success(response.data.msg);
+              onClose();
+            } catch ({ response }) {
+              toast.error(response.data.error);
+              onClose();
+            }
+          }}
+        />
+      ),
+    });
+  }
+
   function handleNavigate() {
     history.push('/orders/new');
   }
@@ -95,7 +121,7 @@ export default function Orders() {
               </thead>
 
               {orders.map(order => (
-                <OrderItem order={order} />
+                <OrderItem order={order} onDelete={handleDelete} />
               ))}
             </>
           )}

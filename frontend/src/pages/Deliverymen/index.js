@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 
 import { MdAdd, MdSearch } from 'react-icons/md';
 
+import { confirmAlert } from 'react-confirm-alert';
+import { toast } from 'react-toastify';
 import { Container } from './styles';
 
 import DeliverymanItem from './DeliverymanItem';
@@ -12,6 +14,7 @@ import Header from '~/components/Header';
 import api from '~/services/api';
 import history from '~/services/history';
 import Pagination from '~/components/Pagination';
+import ConfirmBox from '~/components/ConfirmBox';
 
 export default function Deliverymen() {
   const labels = ['ID', 'Foto', 'Nome', 'E-mail', 'Ações'];
@@ -42,6 +45,30 @@ export default function Deliverymen() {
 
   function handleNavigate() {
     history.push('/deliverymen/new');
+  }
+
+  function handleDelete(id) {
+    confirmAlert({
+      // eslint-disable-next-line react/prop-types
+      customUI: ({ onClose }) => (
+        <ConfirmBox
+          onClose={onClose}
+          handleConfirm={async () => {
+            try {
+              const response = await api.delete(`/deliverymen/${id}`);
+              setDeliverymen(
+                deliverymen.filter(deliveryman => deliveryman.id !== id)
+              );
+              toast.success(response.data.msg);
+              onClose();
+            } catch ({ response }) {
+              toast.error(response.data.error);
+              onClose();
+            }
+          }}
+        />
+      ),
+    });
   }
 
   return (
@@ -84,7 +111,10 @@ export default function Deliverymen() {
               </thead>
 
               {deliverymen.map(deliveryman => (
-                <DeliverymanItem deliveryman={deliveryman} />
+                <DeliverymanItem
+                  deliveryman={deliveryman}
+                  onDelete={handleDelete}
+                />
               ))}
             </>
           )}

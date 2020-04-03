@@ -13,6 +13,9 @@ import {
   Card,
   Problem,
   DateText,
+  ShimmerProblem,
+  ShimmerCard,
+  ShimmerDate,
 } from './styles';
 
 import Header from '~/components/Header';
@@ -20,11 +23,13 @@ import api from '~/services/api';
 
 export default function Problems({ route }) {
   const [problems, setProblems] = useState([]);
+  const [loading, setLoading] = useState([]);
 
   const { order_id, product } = route.params;
 
   useEffect(() => {
     async function loadingProblems() {
+      setLoading(true);
       const response = await api.get(`/delivery/${order_id}/problems`);
 
       const data = response.data.map(problem => ({
@@ -34,6 +39,7 @@ export default function Problems({ route }) {
         }),
       }));
 
+      setLoading(false);
       setProblems(data);
     }
     loadingProblems();
@@ -45,16 +51,30 @@ export default function Problems({ route }) {
 
       <Content>
         <Title>{product}</Title>
-        <ListProblems
-          data={problems}
-          keyExtractor={problem => String(problem.id)}
-          renderItem={({ item }) => (
-            <Card>
-              <Problem>{item.description}</Problem>
-              <DateText>{item.dateFormated}</DateText>
-            </Card>
-          )}
-        />
+        {loading ? (
+          <>
+            <ShimmerCard>
+              <ShimmerProblem autoRun />
+              <ShimmerDate autoRun />
+            </ShimmerCard>
+
+            <ShimmerCard>
+              <ShimmerProblem autoRun />
+              <ShimmerDate autoRun />
+            </ShimmerCard>
+          </>
+        ) : (
+          <ListProblems
+            data={problems}
+            keyExtractor={problem => String(problem.id)}
+            renderItem={({ item }) => (
+              <Card>
+                <Problem>{item.description}</Problem>
+                <DateText>{item.dateFormated}</DateText>
+              </Card>
+            )}
+          />
+        )}
       </Content>
     </Container>
   );

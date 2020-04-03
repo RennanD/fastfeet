@@ -68,7 +68,7 @@ export default function Problems() {
           )}
         </table>
       )}
-      {problems.length > 5 && (
+      {problems.length > 0 && (
         <Pagination loadItems={loadProblems} itemsLenght={lengthProblems} />
       )}
     </Container>

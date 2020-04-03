@@ -10,6 +10,9 @@ import Queue from '../../lib/Queue';
 class ProblemsController {
   async index(req, res) {
     const { page = 1 } = req.query;
+
+    const count = await DeliveryProblem.count();
+
     const deliveryPromblens = await DeliveryProblem.findAll({
       include: [
         {
@@ -36,6 +39,7 @@ class ProblemsController {
       offset: (page - 1) * 5,
     });
 
+    res.header('X-Total-Count', count);
     return res.json(deliveryPromblens);
   }
 

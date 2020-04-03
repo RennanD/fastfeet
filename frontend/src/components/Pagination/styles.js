@@ -4,6 +4,7 @@ export const Container = styled.div`
   display: flex;
   justify-content: center;
   margin-bottom: 20px;
+  bottom: 0;
 `;
 
 export const PageButton = styled.button`

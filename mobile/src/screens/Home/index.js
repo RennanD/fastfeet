@@ -1,12 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Animated, TouchableOpacity } from 'react-native';
 
-import { useIsFocused } from '@react-navigation/native';
-
 import { useSelector, useDispatch } from 'react-redux';
-
-import { format, parseISO } from 'date-fns';
-import { ptBR } from 'date-fns/locale';
 
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
@@ -22,77 +17,26 @@ import {
   Title,
   Tab,
   TabText,
-  List,
   Overlay,
-  ShimmerCard,
-  ShimmerTitle,
-  ShimmerStepper,
-  Empty,
-  EmptyText,
 } from './styles';
 
-import OrderCard from '~/components/OrderCard';
-
-import api from '~/services/api';
+import Pendings from './Pendings';
+import Deliveries from './Deliveries';
 
 import { singOut } from '~/store/modules/auth/actions';
 
 export default function Home() {
-  const isFocused = useIsFocused();
-
   const deliveryman = useSelector(state => state.user.profile);
-  const userId = useSelector(state => state.auth.userId);
 
   const dispatch = useDispatch();
 
   const [activeTab, setActiveTab] = useState('pending');
-
-  const [loading, setLoading] = useState(false);
-
-  const [pendingOrders, setPendingOrders] = useState([]);
-  const [deliveries, setDeliveries] = useState([]);
 
   const [active, setActive] = useState(0);
   const [xTabOne, setXTabOne] = useState(0);
 
   const [xTabTwo] = useState(0);
   const [translateX] = useState(new Animated.Value(0));
-
-  useEffect(() => {
-    async function loadDeliveries() {
-      try {
-        setLoading(true);
-        const ordersResponse = await api.get(`/deliverymen/${userId}/orders`);
-        const deliveriesResponse = await api.get(
-          `/deliverymen/${userId}/deliveries`
-        );
-
-        const dataOrders = ordersResponse.data.map(order => ({
-          ...order,
-          dateFormatted: format(parseISO(order.created_at), 'dd/MM/yyyy', {
-            locale: ptBR,
-          }),
-          currentPosition: order.status === 'PENDENTE' ? 1 : 2,
-        }));
-
-        const dataDeliveries = deliveriesResponse.data.map(delivery => ({
-          ...delivery,
-          dateFormatted: format(parseISO(delivery.end_date), 'dd/MM/yyyy', {
-            locale: ptBR,
-          }),
-          currentPosition: 3,
-        }));
-        setLoading(false);
-        setPendingOrders(dataOrders);
-        setDeliveries(dataDeliveries);
-      } catch ({ response }) {
-        setLoading(false);
-      }
-    }
-    if (isFocused) {
-      loadDeliveries();
-    }
-  }, [userId, isFocused]);
 
   function handleSlide(value, transform, tab) {
     setActiveTab(tab);
@@ -148,52 +92,8 @@ export default function Home() {
           </Tab>
         </TabBar>
       </ActionsView>
-      {loading && (
-        <>
-          <ShimmerCard>
-            <ShimmerTitle autoRun />
-            <ShimmerStepper autoRun />
-            <ShimmerStepper autoRun />
-          </ShimmerCard>
 
-          <ShimmerCard>
-            <ShimmerTitle autoRun />
-            <ShimmerStepper autoRun />
-            <ShimmerStepper autoRun />
-          </ShimmerCard>
-        </>
-      )}
-      {activeTab === 'finish' ? (
-        <>
-          {deliveries.length <= 0 ? (
-            <Empty>
-              <Icon name="close-box-multiple-outline" size={36} color="#999" />
-              <EmptyText>Não há encomendas para listar</EmptyText>
-            </Empty>
-          ) : (
-            <List>
-              {deliveries.map(delivery => (
-                <OrderCard key={delivery.id} order={delivery} />
-              ))}
-            </List>
-          )}
-        </>
-      ) : (
-        <>
-          {pendingOrders.lenght <= 0 ? (
-            <Empty>
-              <Icon name="close-box-multiple-outline" size={36} color="#999" />
-              <EmptyText>Não há encomendas para listar</EmptyText>
-            </Empty>
-          ) : (
-            <List>
-              {pendingOrders.map(order => (
-                <OrderCard key={order.id} order={order} />
-              ))}
-            </List>
-          )}
-        </>
-      )}
+      {activeTab === 'pending' ? <Pendings /> : <Deliveries />}
     </Container>
   );
 }

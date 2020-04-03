@@ -15,6 +15,8 @@ class OrderController {
   async index(req, res) {
     const { product, page = 1 } = req.query;
 
+    const countOrders = await Order.count();
+
     const orders = await Order.findAll({
       where: {
         product: {
@@ -53,6 +55,8 @@ class OrderController {
       limit: 5,
       offset: (page - 1) * 5,
     });
+
+    res.header('X-Total-Count', countOrders);
 
     return res.json(orders);
   }

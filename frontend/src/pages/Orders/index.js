@@ -101,7 +101,7 @@ export default function Orders() {
           )}
         </table>
       )}
-      {orders.length > 20 && (
+      {orders.length > 0 && (
         <Pagination loadItems={loadOrders} itemsLenght={lengthOrders} />
       )}
     </Container>

@@ -80,7 +80,7 @@ export const TabText = styled.Text`
   padding: 5px 0;
 `;
 
-export const List = styled.ScrollView.attrs({
+export const List = styled.FlatList.attrs({
   showsVerticalScrollIndicator: false,
   contentContainerStyle: {
     paddingVertical: 15,

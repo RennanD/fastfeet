@@ -90,7 +90,7 @@ export default function Deliverymen() {
           )}
         </table>
       )}
-      {deliverymen.length > 5 && (
+      {deliverymen.length > 0 && (
         <Pagination
           loadItems={loadDeliverymen}
           itemsLenght={lengthDeliverymen}

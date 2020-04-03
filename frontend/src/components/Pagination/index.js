@@ -20,7 +20,7 @@ export default function Pagination({ loadItems, itemsLenght }) {
   }
 
   function nextPage() {
-    if (itemsLenght < 20) {
+    if (itemsLenght < 4) {
       return;
     }
 
@@ -35,7 +35,7 @@ export default function Pagination({ loadItems, itemsLenght }) {
       <PageButton disabled={page === 1} onClick={prevPage}>
         <MdChevronLeft color="#fff" size={20} />
       </PageButton>
-      <PageButton disabled={itemsLenght < 20} onClick={nextPage}>
+      <PageButton disabled={itemsLenght < 5} onClick={nextPage}>
         <MdChevronRight color="#fff" size={20} />
       </PageButton>
     </Container>

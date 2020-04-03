@@ -25,6 +25,8 @@ class RecipientController {
   async show(req, res) {
     const { recipientId } = req.params;
 
+    const count = await Recipient.count();
+
     const recipient = await Recipient.findByPk(recipientId, {
       attributes: [
         'id',
@@ -40,6 +42,8 @@ class RecipientController {
     if (!recipient) {
       return res.status(400).json({ error: 'Recipient cannot exists.' });
     }
+
+    res.header('X-Total-Count', count);
 
     return res.json(recipient);
   }

@@ -29,6 +29,8 @@ class DeliverymanController {
   async index(req, res) {
     const { name, page = 1 } = req.query;
 
+    const count = await Deliveryman.count();
+
     const deliverymen = await Deliveryman.findAll({
       where: {
         name: {
@@ -48,6 +50,7 @@ class DeliverymanController {
       offset: (page - 1) * 5,
     });
 
+    res.header('X-Total-Count', count);
     return res.json(deliverymen);
   }
 

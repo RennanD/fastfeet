@@ -6,12 +6,14 @@ import File from '../models/File';
 class DashboardController {
   async index(req, res) {
     const { id } = req.params;
-
+    const { page = 1 } = req.query;
     const deliveryman = await Deliveryman.findByPk(id);
 
     if (!deliveryman) {
       return res.status(400).json({ error: 'Deliveryman not found.' });
     }
+
+    const countOrders = await Order.count();
 
     const order = await Order.findAll({
       where: {
@@ -35,7 +37,12 @@ class DashboardController {
         'start_date',
         'end_date',
       ],
+      order: [['created_at', 'DESC']],
+      limit: 5,
+      offset: (page - 1) * 5,
     });
+
+    res.header('X-Total-Count', countOrders);
 
     return res.json(order);
   }

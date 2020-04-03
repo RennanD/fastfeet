@@ -85,7 +85,7 @@ export default function Recipients() {
           )}
         </table>
       )}
-      {recipients.length > 5 && (
+      {recipients.length > 0 && (
         <Pagination loadItems={loadRecipients} itemsLenght={lengthRecipient} />
       )}
     </Container>

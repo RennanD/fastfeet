@@ -17,7 +17,7 @@ export default function Profile() {
         source={{
           uri:
             profile.avatar.url ||
-            'https://avatars1.githubusercontent.com/u/15038553?s=460&u=86c88160916f81df81c7c7c15b021a171d341771&v=4',
+            'https://medgoldresources.com/wp-content/uploads/2018/02/avatar-placeholder.gif',
         }}
       />
 

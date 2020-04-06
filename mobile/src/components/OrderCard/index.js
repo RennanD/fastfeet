@@ -19,6 +19,7 @@ import {
   LinkButton,
   LinkText,
   Body,
+  styles,
 } from './styles';
 
 export default function OrderCard({ order }) {
@@ -29,19 +30,7 @@ export default function OrderCard({ order }) {
   }
 
   return (
-    <Container
-      style={{
-        shadowColor: '#000',
-        shadowOffset: {
-          width: 0,
-          height: 1,
-        },
-        shadowOpacity: 0.18,
-        shadowRadius: 1.0,
-
-        elevation: 1,
-      }}
-    >
+    <Container style={styles.shadowBox}>
       <Top>
         <Icon name="truck" size={24} color="#7d40e7" />
         <Title>{order.product}</Title>

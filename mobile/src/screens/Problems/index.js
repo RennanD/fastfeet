@@ -1,8 +1,5 @@
 import React, { useEffect, useState } from 'react';
 
-import { format, parseISO } from 'date-fns';
-import { ptBR } from 'date-fns/locale';
-
 import PropTypes from 'prop-types';
 
 import {
@@ -23,6 +20,8 @@ import EmptyList from '~/components/EmptyList';
 
 import api from '~/services/api';
 
+import formatDate from '~/utils/formatDate';
+
 export default function Problems({ route }) {
   const [problems, setProblems] = useState([]);
   const [loading, setLoading] = useState([]);
@@ -36,9 +35,7 @@ export default function Problems({ route }) {
 
       const data = response.data.map(problem => ({
         ...problem,
-        dateFormated: format(parseISO(problem.created_at), 'dd/MM/yyyy', {
-          locale: ptBR,
-        }),
+        dateFormated: formatDate(problem.created_at),
       }));
 
       setLoading(false);

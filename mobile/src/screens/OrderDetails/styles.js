@@ -1,6 +1,6 @@
 import styled from 'styled-components/native';
 
-import ShimmerPlaceHolder from 'react-native-shimmer-placeholder';
+import { StyleSheet } from 'react-native';
 
 export const Background = styled.View`
   flex: 1;
@@ -49,20 +49,6 @@ export const Info = styled.Text`
   margin-bottom: 10px;
 `;
 
-export const ShimmerTitle = styled(ShimmerPlaceHolder)`
-  height: 15px;
-  border-radius: 10px;
-  width: 200px;
-  margin: 10px 0 10px;
-`;
-
-export const ShimmerInfo = styled(ShimmerPlaceHolder)`
-  height: 12px;
-  width: 120px;
-  border-radius: 10px;
-  margin-bottom: 5px;
-`;
-
 export const DateView = styled.View`
   flex-direction: row;
   align-items: center;
@@ -72,21 +58,16 @@ export const DateView = styled.View`
 
 export const DateItem = styled.View``;
 
-export const ButtonView = styled.View`
-  flex-direction: row;
-  border: 1px solid #fafafa;
-  border-radius: 4px;
-  background: #f8f9fd;
-`;
+export const styles = StyleSheet.create({
+  shadowBox: {
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.18,
+    shadowRadius: 1.0,
 
-export const ActionButton = styled.TouchableOpacity`
-  padding: 20px;
-  flex: 1;
-  opacity: ${props => (props.disabled ? 0.8 : 1)};
-  align-items: center;
-`;
-
-export const TextButton = styled.Text`
-  text-align: center;
-  color: #999;
-`;
+    elevation: 1,
+  },
+});

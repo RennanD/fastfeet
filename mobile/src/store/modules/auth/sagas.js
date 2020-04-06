@@ -1,13 +1,12 @@
 import { Keyboard } from 'react-native';
 import { all, takeLatest, call, put } from 'redux-saga/effects';
 
-import { format, parseISO } from 'date-fns';
-import { ptBR } from 'date-fns/locale';
-
 import Snackbar from 'react-native-snackbar';
 
 import api from '~/services/api';
 import { singInSuccess, singFailure } from './actions';
+
+import formatDate from '~/utils/formatDate';
 
 export function* singIn({ payload }) {
   try {
@@ -17,9 +16,7 @@ export function* singIn({ payload }) {
 
     const data = {
       ...response.data,
-      registeredDate: format(parseISO(response.data.created_at), 'dd/MM/yyyy', {
-        locale: ptBR,
-      }),
+      registeredDate: formatDate(response.data.created_at),
     };
 
     yield put(singInSuccess(data.id, data));

@@ -1,4 +1,5 @@
 import styled from 'styled-components/native';
+import { StyleSheet } from 'react-native';
 
 export const Container = styled.View`
   border-radius: 4px;
@@ -56,3 +57,17 @@ export const LinkText = styled.Text`
   color: #7d40e7;
   font-weight: bold;
 `;
+
+export const styles = StyleSheet.create({
+  shadowBox: {
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.18,
+    shadowRadius: 1.0,
+
+    elevation: 1,
+  },
+});

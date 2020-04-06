@@ -2,15 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { ActivityIndicator } from 'react-native';
 import { useSelector } from 'react-redux';
 
-import { format, parseISO } from 'date-fns';
-import { ptBR } from 'date-fns/locale';
-
 import { List, ShimmerCard, ShimmerStepper, ShimmerTitle } from '../styles';
 
 import EmptyList from '~/components/EmptyList';
 import OrderCard from '~/components/OrderCard';
 
 import api from '~/services/api';
+
+import formatDate from '~/utils/formatDate';
 
 export default function Pendings() {
   const userId = useSelector(state => state.auth.userId);
@@ -49,9 +48,7 @@ export default function Pendings() {
 
       const data = response.data.map(order => ({
         ...order,
-        dateFormatted: format(parseISO(order.created_at), 'dd/MM/yyyy', {
-          locale: ptBR,
-        }),
+        dateFormatted: formatDate(order.created_at),
         currentPosition: order.status === 'PENDENTE' ? 1 : 2,
       }));
 

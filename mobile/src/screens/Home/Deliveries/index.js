@@ -19,7 +19,6 @@ export default function Pendings() {
   const [loadingMore, setLoadingMore] = useState(false);
 
   const [deliveries, setDeliveries] = useState([]);
-  const [empty] = useState(!deliveries.length);
 
   const [page, setPage] = useState(1);
   const [total, setTotal] = useState(0);
@@ -85,9 +84,7 @@ export default function Pendings() {
 
   return (
     <>
-      {empty ? (
-        <EmptyList />
-      ) : (
+      {deliveries.length ? (
         <List
           data={deliveries}
           keyExtractor={order => String(order.id)}
@@ -97,6 +94,8 @@ export default function Pendings() {
             <OrderCard key={order.id} order={order} />
           )}
         />
+      ) : (
+        <EmptyList />
       )}
       {loadingMore && (
         <ActivityIndicator

@@ -19,7 +19,6 @@ export default function Pendings() {
   const [loadingMore, setLoadingMore] = useState(false);
 
   const [pendingOrders, setPendingOrders] = useState([]);
-  const [empty] = useState(!pendingOrders.length);
 
   const [page, setPage] = useState(1);
   const [total, setTotal] = useState(0);
@@ -85,7 +84,7 @@ export default function Pendings() {
 
   return (
     <>
-      {!empty ? (
+      {!pendingOrders.length ? (
         <EmptyList />
       ) : (
         <List

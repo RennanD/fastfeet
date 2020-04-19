@@ -16,6 +16,12 @@
 $ git clone https://github.com/RennanD/fastfeet.git
 ```
 
+#### Demo
+
+<h1 align="center">
+    <img src="./.github/clone-repositorio.gif" width="700px" >
+</h1>
+
 # ❗️ Requisites
 
 To runed this all project, you need have be the packages installed:
@@ -71,7 +77,7 @@ $ docker start "CONTAINER DOCKER ID"
 #### Demo
 
 <h1 align="center">
-    <img src="./.github/env.gif" width="600px" >
+    <img src="./.github/env.gif" width="700px" >
 </h1>
 
 ### Now in your terminal:
@@ -94,7 +100,7 @@ $ yarn sequelize db:seed:all
 #### Demo
 
 <h1 align="center">
-    <img src="./.github/init-database.gif" width="600px" >
+    <img src="./.github/init-database.gif" width="700px" >
 </h1>
 
 - To init Fastfeet server, run:
@@ -103,7 +109,7 @@ $ yarn sequelize db:seed:all
 $ yarn dev
 ```
 
-- Open new tab in your terminal and run:
+- Open new tab in your terminal, navigate to the project/backend folder and run:
 
 ```
 $ yarn queue

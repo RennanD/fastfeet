@@ -49,7 +49,7 @@ export default function Pendings() {
       const data = response.data.map(order => ({
         ...order,
         dateFormatted: formatDate(order.end_date),
-        currentPosition: order.status === 'PENDENTE' ? 1 : 2,
+        currentPosition: 3,
       }));
 
       setDeliveries([...deliveries, ...data]);

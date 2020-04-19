@@ -68,9 +68,8 @@ export default function ConfirmDelivery() {
       });
       navigate('Home');
     } catch (err) {
-      console.tron.log(err);
       SnackBar.show({
-        text: 'erro',
+        text: 'Take a photo of the signature',
         backgroundColor: '#DE3B3B',
         duration: SnackBar.LENGTH_LONG,
       });

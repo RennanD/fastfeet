@@ -1,5 +1,5 @@
 <h1 align="center">
-    <img src="https://raw.githubusercontent.com/Rocketseat/bootcamp-gostack-desafio-02/master/.github/logo.png" width="200px" >
+    <img src="https://raw.githubusercontent.com/Rocketseat/bootcamp-gostack-desafio-02/master/.github/logo.png" width="300px" >
 </h1>
 
 <h2 align="center">
@@ -71,7 +71,7 @@ $ docker start "CONTAINER DOCKER ID"
 #### Demo
 
 <h1 align="center">
-    <img src="./.github/env.gif" width="400px" >
+    <img src="./.github/env.gif" width="600px" >
 </h1>
 
 ### Now in your terminal:
@@ -94,7 +94,7 @@ $ yarn sequelize db:seed:all
 #### Demo
 
 <h1 align="center">
-    <img src="./.github/init-database.gif" width="400px" >
+    <img src="./.github/init-database.gif" width="600px" >
 </h1>
 
 - To init Fastfeet server, run:
@@ -112,7 +112,7 @@ $ yarn queue
 #### Demo
 
 <h1 align="center">
-    <img src="./.github/init-server.gif" width="400px" >
+    <img src="./.github/init-server.gif" width="600px" >
 </h1>
 
 #### To debugin, run:

@@ -1,5 +1,5 @@
 <h1 align="center">
-    <img src="https://raw.githubusercontent.com/Rocketseat/bootcamp-gostack-desafio-02/master/.github/logo.png" >
+    <img src="https://raw.githubusercontent.com/Rocketseat/bootcamp-gostack-desafio-02/master/.github/logo.png" width="200px" >
 </h1>
 
 <h2 align="center">
@@ -36,6 +36,8 @@ To runed this all project, you need have be the packages installed:
 
 ### Runing Postgres using DOCKER: 🐋
 
+- In your terminal, run this commands:
+
 ```
 $ docker run --name some-postgres -e POSTGRES_PASSWORD=mysecretpassword -d postgres
 ```
@@ -61,7 +63,20 @@ $ docker run --name some-redis -d redis
 $ docker start "CONTAINER DOCKER ID"
 ```
 
-### Now in your terminal, run:
+### Environments varibles:
+
+- in backend root, add a .env file;
+- Fill in the .env file based on the [.env.example](https://github.com/RennanD/fastfeet/blob/master/backend/.env.example) file;
+
+#### Demo
+
+<h1 align="center">
+    <img src="./.github/env.gif" width="400px" >
+</h1>
+
+### Now in your terminal:
+
+- To init Fastfeet database, navigate to your project folder and run:
 
 ```
 $ cd backend
@@ -74,8 +89,31 @@ $ yarn sequelize db:migrate
 
 $ yarn sequelize db:seed:all
 
+```
+
+#### Demo
+
+<h1 align="center">
+    <img src="./.github/init-database.gif" width="400px" >
+</h1>
+
+- To init Fastfeet server, run:
+
+```
 $ yarn dev
 ```
+
+- Open new tab in your terminal and run:
+
+```
+$ yarn queue
+```
+
+#### Demo
+
+<h1 align="center">
+    <img src="./.github/init-server.gif" width="400px" >
+</h1>
 
 #### To debugin, run:
 

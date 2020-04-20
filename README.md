@@ -166,3 +166,7 @@ Password: 123456
 </h1>
 
 ### Application gif demo
+
+<h1 align="center">
+    <img src="./.github/web-app.gif" width="600px" >
+</h1>

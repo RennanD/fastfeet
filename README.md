@@ -29,11 +29,11 @@ To runed this all project, you need have be the packages installed:
 - [Node.js](https://nodejs.org/en/)
 - [Yarn](https://legacy.yarnpkg.com/en/) (Optional).
 
+# 💾 Backend
+
 <h1 align="center">
     <img src="./.github/api.svg" width="150px" >
 </h1>
-
-# 💾 Backend
 
 - API RESTFUL created with Node.js using [express](https://expressjs.com/pt-br/).
 
@@ -59,7 +59,11 @@ $ docker start "CONTAINER DOCKER ID"
 ```
 
 - For background jobs I'm using Redis with DOCKER.
-- If you don't want installing DOCKER, use convencional installation of [Redis](https://chocolatey.org/packages/redis-64) via [Chocolatey](https://chocolatey.org/docs/installation) .
+- If you don't want installing DOCKER, use convencional installation of [Redis](https://chocolatey.org/packages/redis-64) via package maneger.
+
+-- For windows: [Chocolatey](https://chocolatey.org/docs/installation)
+-- For MacOs: Brew
+-- For linux (Ubuntu/Debian): [Apt](https://www.hostinger.com.br/tutoriais/install-redis-ubuntu/)
 
 ### Runing Redis using DOCKER: 🐋
 
@@ -122,7 +126,7 @@ $ yarn queue
 #### Demo
 
 <h1 align="center">
-    <img src="./.github/init-server.gif" width="600px" >
+    <img src="./.github/init-server.gif" width="700px" >
 </h1>
 
 #### To debugin, run:
@@ -134,7 +138,7 @@ yarn dev:debug
 # 🖥 Frontend web
 
 <h1 align="center">
-    <img src="./.github/browser.sgv" width="150px" >
+    <img src="./.github/browser.svg" width="150px" >
 </h1>
 
 ## ⚡️ Start web application
@@ -169,4 +173,63 @@ Password: 123456
 
 <h1 align="center">
     <img src="./.github/web-app.gif" width="800px" >
+</h1>
+
+# 📱💜 The app mobile
+
+<h1 align="center">
+    <img src="./.github/smartphone.svg" width="150px" >
+</h1>
+
+## ⚡️ Start mobile application
+
+- Use the [react-native-cli](https://www.npmjs.com/package/react-native-cli) to run this app.
+
+- In the services/api.js file, place the host your backend is running on, for example: http://localhost.:3333
+
+- In your terminal, open new tab, navigate to project/mobile folder and run:
+
+```
+$ yarn
+```
+
+### 🍎 IOS
+
+- Runing this app in IOS devices.
+
+#### ❗️ Requisites:
+
+- You need have been installed the [XCode](https://developer.apple.com/xcode/)
+
+```
+$ react-native run-ios
+```
+
+### 👾 Android
+
+- Runing this app in Android devices.
+
+#### ❗️ Requisites:
+
+- You need have been installed the [Android SDK](https://developer.android.com/studio)
+
+```
+$ adb reverse tcp:3333 tcp:3333
+$ react-native run-android
+```
+
+- Obs.: change tcp:3333 for your backend port.
+
+### Login
+
+- sign in aplcations as deliveryman, you use your ID (Deliveryman ID).
+
+<h1 align="center">
+    <img src="./.github/login-app.gif" width="800px" >
+</h1>
+
+### Application gif demo
+
+<h1 align="center">
+    <img src="./.github/app-mobile.gif" width="800px" >
 </h1>

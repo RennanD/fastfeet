@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { TouchableOpacity } from 'react-native';
 
+import { useIsFocused } from '@react-navigation/native';
+
 import { useSelector, useDispatch } from 'react-redux';
 
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -27,6 +29,8 @@ export default function Home() {
 
   const [activeTab, setActiveTab] = useState('pending');
 
+  const isFocused = useIsFocused();
+
   return (
     <Container>
       <Header>
@@ -49,7 +53,11 @@ export default function Home() {
 
       <TopNavigation onChange={setActiveTab} />
 
-      {activeTab === 'pending' ? <Pendings /> : <Deliveries />}
+      {activeTab === 'pending' ? (
+        <Pendings focused={isFocused} />
+      ) : (
+        <Deliveries ocused={isFocused} />
+      )}
     </Container>
   );
 }

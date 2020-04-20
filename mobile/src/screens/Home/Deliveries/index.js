@@ -11,7 +11,7 @@ import api from '~/services/api';
 
 import formatDate from '~/utils/formatDate';
 
-export default function Pendings() {
+export default function Deliveries({ focused }) {
   const userId = useSelector(state => state.auth.userId);
 
   const [loading, setLoading] = useState(false);
@@ -22,7 +22,7 @@ export default function Pendings() {
   const [page, setPage] = useState(1);
   const [total, setTotal] = useState(0);
 
-  async function loadDeliveires() {
+  async function loadDeliveries() {
     try {
       if (total > 0 && deliveries.length === total) {
         return;
@@ -65,9 +65,11 @@ export default function Pendings() {
   }
 
   useEffect(() => {
-    loadDeliveires();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    if (focused) {
+      loadDeliveries();
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }
+  }, [focused]);
 
   if (loading) {
     return (
@@ -104,3 +106,7 @@ export default function Pendings() {
     </>
   );
 }
+
+Deliveries.propTypes = {
+  focused: PropTypes.bool.isRequired,
+};

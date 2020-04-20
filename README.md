@@ -29,6 +29,10 @@ To runed this all project, you need have be the packages installed:
 - [Node.js](https://nodejs.org/en/)
 - [Yarn](https://legacy.yarnpkg.com/en/) (Optional).
 
+<h1 align="center">
+    <img src="./.github/api.sgv" width="150px" >
+</h1>
+
 # 💾 Backend
 
 - API RESTFUL created with Node.js using [express](https://expressjs.com/pt-br/).
@@ -126,3 +130,39 @@ $ yarn queue
 ```
 yarn dev:debug
 ```
+
+# 🖥 Frontend web
+
+<h1 align="center">
+    <img src="./.github/browser.sgv" width="150px" >
+</h1>
+
+## ⚡️ Start web application
+
+- In your terminal, open new tab, navigate to project/frontend folder and run:
+
+```
+$ yarn
+$ yarn start
+```
+
+<h1 align="center">
+    <img src="./.github/start-frontend.gif" width="600px" >
+</h1>
+
+- In the services/api.js file, place the host your backend is running on, for example: http://localhost.:3333
+
+## 🚚💜 The Web app
+
+- To login as admin in web admin aplication, use this credencials
+
+```
+E-mail: admin@fastefeet.com.br
+Password: 123456
+```
+
+<h1 align="center">
+    <img src="./.github/login.gif" width="600px" >
+</h1>
+
+### Application gif demo

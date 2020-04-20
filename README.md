@@ -236,11 +236,11 @@ $ react-native run-android
 - sign in aplcations as deliveryman, you use your ID (Deliveryman ID).
 
 <h1 align="center">
-    <img src="./.github/login-app.gif" width="400px" >
+    <img src="./.github/login-app.gif" width="300px" >
 </h1>
 
 ### Application gif demo
 
 <h1 align="center">
-    <img src="./.github/app-mobile.gif" width="400px" >
+    <img src="./.github/app-mobile.gif" width="300px" >
 </h1>

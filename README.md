@@ -193,6 +193,10 @@ Password: 123456
 $ yarn
 ```
 
+<h1 align="center">
+    <img src="./.github/init-mobile.gif" width="800px" >
+</h1>
+
 ### 🍎 IOS
 
 - Runing this app in IOS devices.
@@ -202,6 +206,9 @@ $ yarn
 - You need have been installed the [XCode](https://developer.apple.com/xcode/)
 
 ```
+$ cd ios
+$ pod install
+$ cd ..
 $ react-native run-ios
 ```
 
@@ -220,16 +227,20 @@ $ react-native run-android
 
 - Obs.: change tcp:3333 for your backend port.
 
+<h1 align="center">
+    <img src="./.github/run-ios.gif" width="800px" >
+</h1>
+
 ### Login
 
 - sign in aplcations as deliveryman, you use your ID (Deliveryman ID).
 
 <h1 align="center">
-    <img src="./.github/login-app.gif" width="800px" >
+    <img src="./.github/login-app.gif" width="600px" >
 </h1>
 
 ### Application gif demo
 
 <h1 align="center">
-    <img src="./.github/app-mobile.gif" width="800px" >
+    <img src="./.github/app-mobile.gif" width="600px" >
 </h1>

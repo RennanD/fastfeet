@@ -30,7 +30,7 @@ To runed this all project, you need have be the packages installed:
 - [Yarn](https://legacy.yarnpkg.com/en/) (Optional).
 
 <h1 align="center">
-    <img src="./.github/api.sgv" width="150px" >
+    <img src="./.github/api.svg" width="150px" >
 </h1>
 
 # 💾 Backend
@@ -162,11 +162,11 @@ Password: 123456
 ```
 
 <h1 align="center">
-    <img src="./.github/login.gif" width="600px" >
+    <img src="./.github/login.gif" width="800px" >
 </h1>
 
 ### Application gif demo
 
 <h1 align="center">
-    <img src="./.github/web-app.gif" width="600px" >
+    <img src="./.github/web-app.gif" width="800px" >
 </h1>
